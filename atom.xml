@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SuperYch</title>
+  
+  <subtitle>超级羊</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://superych.github.io/"/>
+  <updated>2019-10-13T12:28:27.979Z</updated>
+  <id>https://superych.github.io/</id>
+  
+  <author>
+    <name>SuperYch</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>wz</title>
+    <link href="https://superych.github.io/2019/10/13/wz/"/>
+    <id>https://superych.github.io/2019/10/13/wz/</id>
+    <published>2019-10-13T12:28:27.000Z</published>
+    <updated>2019-10-13T12:28:27.979Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>测试页面</title>
+    <link href="https://superych.github.io/2019/10/13/text/"/>
+    <id>https://superych.github.io/2019/10/13/text/</id>
+    <published>2019-10-13T07:04:05.000Z</published>
+    <updated>2019-10-13T07:48:12.995Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="nodejs" scheme="https://superych.github.io/tags/nodejs/"/>
+    
+      <category term="npm" scheme="https://superych.github.io/tags/npm/"/>
+    
+      <category term="nvm" scheme="https://superych.github.io/tags/nvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://superych.github.io/2019/10/13/hello-world/"/>
+    <id>https://superych.github.io/2019/10/13/hello-world/</id>
+    <published>2019-10-13T06:46:00.393Z</published>
+    <updated>2019-10-13T07:53:26.025Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="nodejs" scheme="https://superych.github.io/tags/nodejs/"/>
+    
+      <category term="npm" scheme="https://superych.github.io/tags/npm/"/>
+    
+      <category term="nvm" scheme="https://superych.github.io/tags/nvm/"/>
+    
+  </entry>
+  
+</feed>
