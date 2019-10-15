@@ -44,39 +44,6 @@
   </entry>
   
   <entry>
-    <title>测试页面</title>
-    <link href="https://superych.github.io/2019/10/13/text/"/>
-    <id>https://superych.github.io/2019/10/13/text/</id>
-    <published>2019-10-13T07:04:05.000Z</published>
-    <updated>2019-10-14T16:49:13.866Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return; }
-       
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="nodejs" scheme="https://superych.github.io/tags/nodejs/"/>
-    
-      <category term="npm" scheme="https://superych.github.io/tags/npm/"/>
-    
-      <category term="nvm" scheme="https://superych.github.io/tags/nvm/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Hello World</title>
     <link href="https://superych.github.io/2019/10/13/hello-world/"/>
     <id>https://superych.github.io/2019/10/13/hello-world/</id>
