@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-10-15T11:52:27.024Z</updated>
+  <updated>2019-10-15T11:59:08.639Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://superych.github.io/2019/10/15/text/"/>
     <id>https://superych.github.io/2019/10/15/text/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-10-15T11:52:27.024Z</updated>
+    <updated>2019-10-15T11:59:08.639Z</updated>
     
     <summary type="html">
     
@@ -29,15 +29,18 @@
       
         
         
-          &lt;p&gt;####Web下载文件&lt;br&gt;&lt;em&gt;笔记概要&lt;/em&gt;&lt;/p&gt;
+          &lt;p&gt;####Web下载文件&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;笔记概要&lt;/em&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;sever.py&lt;br&gt;两次请求&lt;br&gt;第一次请求,服务器返回可以访问的文件名&lt;br&gt;第二次请求，服务器判断文件是否存在，存在则返回二进制文件&lt;/p&gt;
-&lt;/blockquote
+&lt;/blockq
         
       
     
     </summary>
     
+    
+      <category term="python" scheme="https://superych.github.io/categories/python/"/>
     
     
       <category term="python" scheme="https://superych.github.io/tags/python/"/>

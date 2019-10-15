@@ -5,14 +5,15 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
-    <meta name="description" content="####Web下载文件笔记概要
+    <meta name="description" content="####Web下载文件
+笔记概要
 
 sever.py两次请求第一次请求,服务器返回可以访问的文件名第二次请求，服务器判断文件是否存在，存在则返回二进制文件
 
 
 client.py两次响应第一次响应为可访问的文件名第二次响应为可访问的文件
 
-知">
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -445,6 +446,15 @@ client.py两次响应第一次响应为可访问的文件名第二次响应为�
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/python/" class="post-category">
+                                python
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -458,14 +468,14 @@ client.py两次响应第一次响应为可访问的文件名第二次响应为�
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        320
+                        801
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        3 分
                     </div>
                     
                 
@@ -481,7 +491,8 @@ client.py两次响应第一次响应为可访问的文件名第二次响应为�
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>####Web下载文件<br><em>笔记概要</em></p>
+                <p>####Web下载文件</p>
+<p><em>笔记概要</em></p>
 <blockquote>
 <p>sever.py<br>两次请求<br>第一次请求,服务器返回可以访问的文件名<br>第二次请求，服务器判断文件是否存在，存在则返回二进制文件</p>
 </blockquote>
@@ -549,7 +560,89 @@ try:
     print("下载完毕", len(data), "字节")
 except Exception as e:
     print(e)
-</code></pre><script>
+</code></pre><hr>
+<p>####POST方法访问网站</p>
+<hr>
+<p><em>笔记概要</em></p>
+<blockquote>
+<p>创建服务器server.py, 客户端client.py<br>启动服务器，再启动客户端<br>对比get,post方法的区别<br>使用post方法<br>get,post方法混用</p>
+</blockquote>
+<hr>
+<p><em>知识点归纳</em></p>
+<blockquote>
+<p><strong>对于server</strong><br>@app.route(“”, methods = [“GET”])默认GET方法<br>需手动添加POST方法，@app.route(“”, methods = [“POST”,”GET”])</p>
+</blockquote>
+<blockquote>
+<p>flask.request.<code>form</code>.get(参数) – post方法<br>flask.request.<code>args</code>.get(参数) –get方法<br>flask.request.<code>values</code>.get(参数) – post,get方法</p>
+</blockquote>
+<blockquote>
+<p><strong>对于client</strong><br>提交的表单data需要转成二进制 data = data.encode()<br>urllib.parse.quote() 转成十六进制 %% %%</p>
+</blockquote>
+<hr>
+<p><em>server.py</em></p>
+<pre><code>import flask
+from datetime import timedelta
+
+app = flask.Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=2)
+# app.config['DEBUG'] = True
+
+
+@app.route("/", methods=["POST"])
+def index():
+
+    """
+    服务器获取POST的数据
+    """
+    try:
+        # 解析过的的表单对象的 MultiDict
+        p = flask.request.form.get(
+            "province") if "province" in flask.request.form else""
+        c = flask.request.form.get(
+            "city") if "city" in flask.request.form else""
+        n = flask.request.form.get(
+            "note") if "note" in flask.request.form else""
+        print(p)
+        print(c)
+        print(n)
+
+        return p + "\n" + c + "\n" + n
+    except Exception as e:
+        return str(e)
+
+if __name__ == '__main__':
+    app.run()
+</code></pre><hr>
+<p><em>client.py</em></p>
+<pre><code>import urllib.request
+import urllib.parse
+
+"""
+客户端发生POST数据
+"""
+
+url = "http://127.0.0.1:5000"
+try:
+    p = urllib.parse.quote("福建")  # 十六进制
+    c = urllib.parse.quote("福州")
+    note = """
+    福州，别称榕城，简称福、榕，隶属于福建省，位于福建省东部、闽江下游及沿海地区，是福建省省会，福建省的政治、文化、交通中心，
+    海峡西岸经济区中心城市之一。福州建城于公元前202年，历史上曾长期作为福建的政治中心。是中国东南沿海重要都市、东部战区陆军机关驻地。
+    福州地貌属典型的河口盆地，盆地四周被群山峻岭所环抱，其海拔多在600~1000米之间。
+    """
+    note = urllib.parse.quote(note)
+
+    data = "province=" + p + "&amp;city=" + c + "&amp;note=" + note
+    data = data.encode()  # 二进制
+    resp = urllib.request.urlopen(url, data=data)
+    html = resp.read()  # 对HTTPResponse类型进行处理
+    html = html.decode()  # 解码
+    print(html)
+
+except Exception as e:
+    print(e)
+</code></pre><hr>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -786,14 +879,15 @@ except Exception as e:
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ####Web下载文件笔记概要
+                            ####Web下载文件
+笔记概要
 
 sever.py两次请求第一次请求,服务器返回可以访问的文件名第二次请求，服务器判断文件是否存在，存在则返回二进制文件
 
 
 client.py两次响应第一次响应为可访问的文件名第二次响应为可访问的文件
 
-知
+
                         
                     </div>
                     <div class="publish-info">
@@ -802,8 +896,12 @@ client.py两次响应第一次响应为可访问的文件名第二次响应为�
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            SuperYch
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/python/" class="post-category">
+                                    python
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -983,7 +1081,7 @@ client.py两次响应第一次响应为可访问的文件名第二次响应为�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">497</span>&nbsp;字
+                class="white-color">978</span>&nbsp;字
             
             
             
