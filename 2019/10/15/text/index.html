@@ -4,8 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="wz, SuperYch,github">
-    <meta name="description" content="wz | SuperYch">
+    <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
+    <meta name="description" content="####Web下载文件笔记概要
+
+sever.py两次请求第一次请求,服务器返回可以访问的文件名第二次请求，服务器判断文件是否存在，存在则返回二进制文件
+
+
+client.py两次响应第一次响应为可访问的文件名第二次响应为可访问的文件
+
+知">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>wz | SuperYch</title>
+    <title>Python网络爬虫程序技术 | SuperYch</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -307,13 +314,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        wz
+                        Python网络爬虫程序技术
                     </div>
                 </div>
             </div>
@@ -423,9 +430,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/python/">
+                                <span class="chip bg-color">python</span>
+                            </a>
+                        
+                            <a href="/tags/flask/">
+                                <span class="chip bg-color">flask</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -436,14 +451,14 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-13
+                    2019-10-15
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        52
+                        320
                     </div>
                     
 
@@ -466,7 +481,75 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>####Web下载文件<br><em>笔记概要</em></p>
+<blockquote>
+<p>sever.py<br>两次请求<br>第一次请求,服务器返回可以访问的文件名<br>第二次请求，服务器判断文件是否存在，存在则返回二进制文件</p>
+</blockquote>
+<blockquote>
+<p>client.py<br>两次响应<br>第一次响应为可访问的文件名<br>第二次响应为可访问的文件</p>
+</blockquote>
+<p><em>知识点归纳</em></p>
+<blockquote>
+<p>urllib.request.urlretrieve()使用<br>其他见笔记</p>
+</blockquote>
+<hr>
+<p><img src="./1570902306329.png" alt="Alt text"><br><img src="./1570902313783.png" alt="Alt text"></p>
+<p><em>工程目录</em><br><img src="./1570902446454.png" alt="Alt text"></p>
+<hr>
+<p><em>server.py</em></p>
+<pre><code>import flask
+from datetime import timedelta
+import os
+app = flask.Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+# app.config['DEBUG'] = True
+
+"""
+Web返回数据
+"""
+@app.route("/")
+def index():
+    if "fileName" not in flask.request.values:
+        return "图像.jpg"
+    else:
+        # data = b""
+        try:
+            fileName = flask.request.values.get("fileName")
+            if fileName != "" and os.path.exists(fileName):
+                fobj = open(fileName, "rb")
+                data = fobj.read()
+                fobj.close()
+                return data
+        except Exception as e:
+            return b""
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre><p><em>client.py</em></p>
+<pre><code>import urllib.request
+import urllib.parse
+
+"""
+Web下载文件
+"""
+
+url = "http://127.0.0.1:5000"
+try:
+    resp = urllib.request.urlopen(url)
+    resp = resp.read()
+    fileName = resp.decode()
+    print("准备下载" + fileName)
+    data = urllib.request.urlopen(
+        url + "?fileName=" + urllib.parse.quote(fileName))
+    data = data.read()
+    fobj = open("download" + fileName, "wb")
+    fobj.write(data)
+    fobj.close()
+    print("下载完毕", len(data), "字节")
+except Exception as e:
+    print(e)
+</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -644,8 +727,8 @@
                 </a>
             </div>
             <br/>
-            <a  href="/wz/index.html">
-                    《wz》
+            <a  href="/2019/10/15/text/">
+                    《Python网络爬虫程序技术》
             </a> 由
             <a href="https://superych.github.io">
                 SuperYch
@@ -691,27 +774,31 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/wz/index.html">
+                <a href="/2019/10/15/text/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="wz">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Python网络爬虫程序技术">
                         
-                        <span class="card-title">wz</span>
+                        <span class="card-title">Python网络爬虫程序技术</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            ####Web下载文件笔记概要
+
+sever.py两次请求第一次请求,服务器返回可以访问的文件名第二次请求，服务器判断文件是否存在，存在则返回二进制文件
+
+
+client.py两次响应第一次响应为可访问的文件名第二次响应为可访问的文件
+
+知
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-15
                             </span>
                         <span class="publish-author">
                             
@@ -723,16 +810,28 @@
                 </div>
 
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                    <a href="/tags/flask/">
+                        <span class="chip bg-color">flask</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/wz/index.html">
+                <a href="/2019/10/13/wz/">
                     <div class="card-image">
                         
                         
@@ -762,7 +861,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

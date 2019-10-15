@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>Python网络爬虫程序技术</title>
+      <link href="/2019/10/15/text/"/>
+      <url>/2019/10/15/text/</url>
+      
+        <content type="html"><![CDATA[<p>####Web下载文件<br><em>笔记概要</em></p><blockquote><p>sever.py<br>两次请求<br>第一次请求,服务器返回可以访问的文件名<br>第二次请求，服务器判断文件是否存在，存在则返回二进制文件</p></blockquote><blockquote><p>client.py<br>两次响应<br>第一次响应为可访问的文件名<br>第二次响应为可访问的文件</p></blockquote><p><em>知识点归纳</em></p><blockquote><p>urllib.request.urlretrieve()使用<br>其他见笔记</p></blockquote><hr><p><img src="./1570902306329.png" alt="Alt text"><br><img src="./1570902313783.png" alt="Alt text"></p><p><em>工程目录</em><br><img src="./1570902446454.png" alt="Alt text"></p><hr><p><em>server.py</em></p><pre><code>import flaskfrom datetime import timedeltaimport osapp = flask.Flask(__name__)app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)# app.config['DEBUG'] = True"""Web返回数据"""@app.route("/")def index():    if "fileName" not in flask.request.values:        return "图像.jpg"    else:        # data = b""        try:            fileName = flask.request.values.get("fileName")            if fileName != "" and os.path.exists(fileName):                fobj = open(fileName, "rb")                data = fobj.read()                fobj.close()                return data        except Exception as e:            return b""if __name__ == '__main__':    app.run()</code></pre><p><em>client.py</em></p><pre><code>import urllib.requestimport urllib.parse"""Web下载文件"""url = "http://127.0.0.1:5000"try:    resp = urllib.request.urlopen(url)    resp = resp.read()    fileName = resp.decode()    print("准备下载" + fileName)    data = urllib.request.urlopen(        url + "?fileName=" + urllib.parse.quote(fileName))    data = data.read()    fobj = open("download" + fileName, "wb")    fobj.write(data)    fobj.close()    print("下载完毕", len(data), "字节")except Exception as e:    print(e)</code></pre><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> flask </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>wz</title>
       <link href="/2019/10/13/wz/"/>
       <url>/2019/10/13/wz/</url>
