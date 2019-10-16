@@ -190,11 +190,12 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    background-image: linear-gradient(to right, #3B2AB6 0%, #3333CC 100%);
+    /*background-image: linear-gradient(right, rgba(59 42 182,0), rgba(53 38 164,0))*/
 }
 
 .text-color {
-    color: #0f9d58 !important;
+    color: #4937C8 !important;
 }
 
 .white-color {
