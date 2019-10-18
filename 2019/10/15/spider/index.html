@@ -4,7 +4,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="SuperYch,github">
+    <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
     <meta name="description" content="get方法访问网站
 笔记概要
 
@@ -20,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SuperYch</title>
+    <title>Python网络爬虫程序技术 | SuperYch</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -251,13 +251,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        Python网络爬虫程序技术
                     </div>
                 </div>
             </div>
@@ -404,14 +404,14 @@
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.1k
+                        3.5k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        16 分
                     </div>
                     
                 
@@ -627,9 +627,440 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
         <span class="token keyword">return</span> str<span class="token punctuation">(</span>e<span class="token punctuation">)</span>
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
-<script>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h4 id="Web学生管理系统"><a href="#Web学生管理系统" class="headerlink" title="Web学生管理系统"></a>Web学生管理系统</h4><hr>
+<p><em>笔记概要</em></p>
+<ul>
+<li>创建服务器（server)和客户端（client)</li>
+<li><details> <summary><mark>服务器的作用是建立与维护一个[sqllite3](https://blog.csdn.net/sinat_35886587/article/details/80561959)的学生数据库students.db中学生记录表students:</mark></summary>
+
+</details></li>
+</ul>
+<blockquote>
+<ul>
+<li>学生的记录包括学号No, 姓名Name, 性别Sex与年龄Age, 服务器的作用是建立与维护一个sqllite的学生数据库students.db中的学生记录表studnet:<br><code>create table students  (No varchar(16) primary key, Name varchar(16), Sex varchar(8), Age int)</code></li>
+<li>服务器建立一个Web网站， 同时提供<strong>查询学生记录， 增加学生记录，删除学生记录</strong>等接口服务。服务器为了与客户端通讯， 建立了opt参数如表：<table>
+<thead>
+<tr>
+<th align="left">opt值</th>
+<th align="right">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">init</td>
+<td align="right">初始化学生列表</td>
+</tr>
+<tr>
+<td align="left">insert</td>
+<td align="right">增加学生</td>
+</tr>
+<tr>
+<td align="left">delete</td>
+<td align="right">删除学生</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="right">获取学生记录</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</blockquote>
+<p><img src="./0.jpg" alt="Alt text"></p>
+
+
+<ul>
+<li><strong>服务端和客户端是互相协商的</strong>, 服务器的数据库更新, 客户端students列表也更新(students里存的是每个学生的信息, 学生的信息是个字典eg:  ‘No’: ‘ ‘, ‘Name’: ‘ ‘, ‘Sex’: ‘ ‘, ‘Age’: ‘int类型 ‘)</li>
+<li>只要服务器不重启(实际上是重新建立新的数据库), 那么即使students列<code>students.clear()</code>，依旧可以通过<code>urllib.request.urlopen(url)</code>访问服务器,<strong>服务器的opt=””,则返回数据库里所以的学生记录</strong></li>
+<li><details> <summary><mark>客户端的作用是向服务端发送请求，传递get数据，post的数据,对服务端的数据库进行访问,进行查询,删除,增加,初始化等操作</mark></summary>
+![Alt text](./1.png)
+
+</details></li>
+</ul>
+
+
+<p><em>知识点归纳</em></p>
+<ul>
+<li><p>了解sqlite3库的使用</p>
+</li>
+<li><p>服务端与客户端的联系</p>
+<hr>
+</li>
+</ul>
+<p><em>stu_server框架</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">import</span> sqlite3
+<span class="token keyword">import</span> json
+
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">StudentDB</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">openDB</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">def</span> <span class="token function">closeDB</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">def</span> <span class="token function">initTable</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">def</span> <span class="token function">insertRow</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> No<span class="token punctuation">,</span> Name<span class="token punctuation">,</span> Sex<span class="token punctuation">,</span> Age<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">def</span> <span class="token function">deleteRow</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> NO<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">def</span> <span class="token function">selectRows</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"GET"</span><span class="token punctuation">,</span> <span class="token string">"POST"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<hr>
+<p><em>stu_client框架</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urlib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> json
+
+
+<span class="token keyword">class</span> <span class="token class-name">Student</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> No<span class="token punctuation">,</span> Nane<span class="token punctuation">,</span> Sex<span class="token punctuation">,</span> Age<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+students <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+url <span class="token operator">=</span> <span class="token string">""</span>
+<span class="token keyword">def</span> <span class="token function">listStudents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> students
+    <span class="token keyword">pass</span>
+<span class="token keyword">def</span> <span class="token function">insertStudent</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">def</span> <span class="token function">deleteRow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+<span class="token keyword">try</span><span class="token punctuation">:</span>
+    readStudents<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"***学生名单***"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"0.初始化学生表"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"1.查看学生列表"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"2.增加学生记录"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"3.删除学生记录"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"4.退出这个程序"</span><span class="token punctuation">)</span>
+
+        s <span class="token operator">=</span> input<span class="token punctuation">(</span><span class="token string">"请选择(0,1,2,3,4):"</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>s <span class="token operator">==</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            initialize<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span><span class="token punctuation">(</span>s <span class="token operator">==</span> <span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            listStudents<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span><span class="token punctuation">(</span>s <span class="token operator">==</span> <span class="token string">"2"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            insertRow<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span><span class="token punctuation">(</span>s <span class="token operator">==</span> <span class="token string">"3"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            deleteRow<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span><span class="token punctuation">(</span>s <span class="token operator">==</span> <span class="token string">"4"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+<span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span></code></pre>
+<hr>
+<details>
+  <summary><mark><font color="darkred">server具体代码</font></mark></summary>
+  <p> - 建议移到编辑器查看</p>
+  <pre><code>  
+
+<pre><code># Web学生管理程序
+# 服务器程序
+
+import flask
+import sqlite3
+import json
+from datetime import timedelta
+
+app = flask.Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+
+
+class StudentDB:
+
+def openDB(self):  # 一个学生类OpenDB 打开一个数据库
+    self.con = sqlite3.connect("students.db")  # 数据库我们用sqlite3来连接
+    self.cursor = self.con.cursor()  # 获取学员的数据库的它的操作游标
+
+def closeDB(self):  # 然后closeDB是关闭数据库
+    self.con.commit()
+    self.con.close()
+
+def initTable(self):  # 创建学生表
+    res = {}
+    try:
+        self.cursor.execute(
+            "create table students(No varchar(16) primary key, Name varchar(16), Sex varchar(8), Age int)")
+        res["msg"] = "OK"
+    except Exception as e:
+        res["msg"] = str(e)
+    return res
+
+def insertRow(self, No, Name, Sex, Age):  # 插入一张学生表
+    res = {}
+    try:
+        self.cursor.execute(
+            "insert  into  students(No, Name, Sex, Age) values(?,?,?,?)", (No, Name, Sex, Age))  # 数据库插入学生的记录
+        res["msg"] = "OK"
+    except Exception as e:
+        res["msg"] = str(e)
+    return res
+
+def deleteRow(self, No):  # 删除一个学生记录
+    res = {}
+    try:
+        self.cursor.execute(
+            "delete from students where No = ?", (No,))  # 对这个No的学生进行删除
+        res["msg"] = "OK"
+    except Exception as e:
+        res["msg"] = str(e)
+    return res
+
+def selectRows(self):  # 获取学生的所以信息
+    res = {}
+    try:
+        data = []
+        self.cursor.execute("select *from students order by No")
+        rows = self.cursor.fetchall()
+        for row in rows:
+            # 每一个学生记录都是一个字典，然后又很多的记录，这个记录做成一个列表，做一个data的列表
+            d = {}
+            d["No"] = row[0]
+            d["Name"] = row[1]
+            d["Sex"] = row[2]
+            d["Age"] = row[3]
+            data.append(d)
+            # 这个data的列表放在另一个字典当中，在一个res的字典当中
+        res["msg"] = "OK"
+        res["data"] = data
+    except Exception as e:
+        res["msg"] = str(e)
+    return res
+
+# 服务器这端必须要识别它是进行什么操作
+
+
+@app.route("/", methods=["GET", "POST"])
+def process():
+# 所以它首先要获取一个opt的值, 这个opt的值知道客户端要做什么事情
+opt = flask.request.values.get(
+    "opt") if "opt" in flask.request.values else ""
+res = {}
+db = StudentDB()  # opt值获取以后，那么它就创建这个一个studentDB一个对象db
+
+db.openDB()  # 这个对象叫db, 我们打开这个数据库
+if opt == "init":  # 如果 opt等于init, 那我就DB掉initTable, 就是创建这个DB， 这个数据库的表格
+    res = db.initTable()
+elif opt == "insert":  # 如果 opt等于insert， 那么这个时候我就获取No, Name, Sex, Age然后
+    No = flask.request.values.get(
+        "No") if "No" in flask.request.values else ""
+    Name = flask.request.values.get(
+        "Name") if "Name" in flask.request.values else ""
+    Sex = flask.request.values.get(
+        "Sex") if "Sex" in flask.request.values else ""
+    Age = flask.request.values.get(
+        "Age") if "No" in flask.request.values else ""
+    # 调用insertRow创建一个学生记录, 把这个学生记录插入到数据库当中
+    res = db.insertRow(No, Name, Sex, Age)
+elif opt == "delete":  # 如果opt 等于delete, 那我就获取学生的No, 然后
+    No = flask.request.values.get(
+        "No") if "No" in flask.request.values else ""
+    res = db.deleteRow(No)  # 调用db.deleteRow删除这个学生这条记录
+else:
+    res = db.selectRows()  # 不然的话我就selectRows获取学生的所以信息
+db.closeDB()
+# 返回给客户端, 数据化的数据调用json.dumps(res), 也就是把这些数据，做出一个json字符串, 把它传递给客户端,
+# 那么客户端那一端把它反编译过来, 就是反序列化过来, 变成一个对象, 变成一个python一个对象,这样双方就可以通讯
+return json.dumps(res)
+
+
+if __name__ == '__main__':
+    app.run()</code></pre><p>  </p></code></pre><p></p>
+</details>
+
+<hr>
+<details>
+  <summary><mark><font color="darkred">client具体代码</font></mark></summary>
+  <p> - 建议移到编辑器查看</p>
+  <pre><code> 
+      # Web学生管理程序
+
+<pre><code># 客户端程序
+import urllib.request
+import json
+
+
+class Student:  # 创建一个Student的对象
+
+    def __init__(self, No, Name, Sex, Age):  # 有No, Name, Sex, Age四个参数
+        self.No = No
+        self.Name = Name
+        self.Sex = Sex
+        self.Age = Age
+
+    def show(self):  # 打印的方法
+        print("%-16s%-16s%-8s%-4d" % (self.No, self.Name, self.Sex, self.Age))
+
+
+students = []  # 所以的学生放在一个列表当中
+url = "http://127.0.0.1:5000"  # http的网址
+
+
+def listStudents():  # 列举所以的学生
+    global students  # 调用全局变量
+    print("%-16s%-16s%-8s%-4s" % ("No", "Name", "Sex", "Age"))
+    for s in students:
+        s.show()
+
+
+def insertStudent(s):  # 插入一个学生记录
+    global students
+    i = 0
+    # 看学生是否存在,就在students的表格里, 是否已经存在， 如果存在就不插入
+    while (i &lt; len(students) and s.No &gt; students[i].No):
+        i = i + 1
+    if(i &lt; len(students) and s.No == students[i].No):
+        print(s.No + "already exists")
+        return False
+    students.insert(i, s)  # 进行插入
+    return True
+
+
+def deleteRow():
+    global students
+    No = input("No=")  # 获取学生的No
+    if(No != ""):
+        for i in range(len(students)):
+            if(students[i].No == No):
+                st = ""
+                try:
+                    st = "No=" + urllib.request.quote(No)
+                    st = st.encode()
+                    # opt = delte --get的方式传递过去, 向服务器发送我们这个No的数据 --post方式传递过去
+                    content = urllib.request.urlopen(url + "?opt=delete", st)
+                    st = content.readline()
+                    st = json.loads(st.decode())  # 返回回来是结构化的数据, 是个json数据
+                    st = st["msg"]
+                except Exception as e:
+                    st = str(e)
+                if(st == "OK"):  # 如果OK, 那就表示已经删除
+                    del students[i]  # 删除对应列表里的学生数据
+                    print("删除成功")
+                else:
+                    print(st)
+                break
+
+
+def insertRow():
+    No = input("No=")  # 获取No
+    Name = input("Name=")  # 获取Name
+    while True:
+        Sex = input("Sex=")  # 获取Sex
+        if(Sex == "男" or Sex == "女"):  # 这个性别的输入是有效的
+            break
+        else:
+            print("Sex is not valid")
+    Age = input("Age=")  # 获取年龄
+    if(Age == ""):
+        Age = 0
+    else:
+        Age = int(Age)
+    if No != "" and Name != "":  # 因为No为主键, 不能为空
+        s = Student(No, Name, Sex, Age)
+        for x in students:  # 看这是学生对象是否已经存在列表students中
+            if(x.No == No):
+                print(No + "already exists")
+                return  # 若存在则跳出
+        st = ""
+        try:  # 不存在
+            st = "No=" + urllib.request.quote(No) + "&amp;Name=" + urllib.request.quote(
+                Name) + "&amp;Sex=" + urllib.request.quote(Sex) + "&amp;Age=" + urllib.request.quote(str(Age))
+            st = st.encode()
+            content = urllib.request.urlopen(url + "?opt=insert", st)  # 调用远程协议
+            st = content.read()
+            st = json.loads(st.decode())
+            st = st["msg"]
+        except Exception as e:
+            st = str(e)
+        if(st == "OK"):
+            #  服务器那端插入成功, 客户端也要插入成功
+            insertStudent(s)
+            print("增加成功")
+        else:
+            print(st)
+    else:
+        print("学号,姓名不能为空")
+
+
+def initialize():  # 初始化
+    st = ""
+    try:
+
+        content = urllib.request.urlopen(url + "?opt=init")
+        st = content.read()
+        st = json.loads(st.decode())
+        st = st["msg"]
+    except Exception as e:
+        st = str(e)
+    if(st == "OK"):
+        print("初始成功")
+    else:
+        print(st)
+    return st
+
+
+def readStudents():  # 客户端与服务端互相协商起来工作的,对于客户端,我们可以把相应的数据给它进行读取
+    global students
+    try:
+        students.clear()
+        # 只要服务端的数据库没有清空,依旧可以读取到
+        content = urllib.request.urlopen(url)
+        data = b""
+        while True:
+            buf = content.read(1024)  # 因为读取数据可能有点大, 所以我们分段读, 一次读20个字节出来
+            if(len(buf) &gt; 0):
+                data = data + buf
+            else:
+                break
+        data = data.decode()  # 读取的信息储存在data里, 编译成字符串
+        data = json.loads(data)  # 用json的方法把它反序列化成为一个结构化的数据,结构化的数据就是students列表
+        if(data["msg"] == "OK"):
+            data = data["data"]
+            for d in data:
+                # each d is a dictionary
+                # 客户端是用studnets的对象来维护学生记录,我们可以把它转化成一个列表
+                s = Student(d["No"], d["Name"], d["Sex"], d["Age"])
+                students.append(s)
+    except Exception as e:
+        print(e)
+
+try:
+    readStudents()
+    while True:
+        print("")
+        print("***学生名单***")
+        print("0.初始化学生表")
+        print("1.查看学生列表")
+        print("2.增加学生记录")
+        print("3.删除学生记录")
+        print("4.退出这个程序")
+
+        s = input("请选择(0,1,2,3,4):")
+        if(s == "0"):
+            initialize()
+        elif(s == "1"):
+            listStudents()
+        elif(s == "2"):
+            insertRow()
+        elif(s == "3"):
+            deleteRow()
+        elif(s == "4"):
+            break
+except Exception as e:
+    print(e)</code></pre><p>  </p></code></pre><p></p>
+</details><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -808,7 +1239,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
             </div>
             <br/>
             <a  href="/2019/10/15/spider/">
-                    《》
+                    《Python网络爬虫程序技术》
             </a> 由
             <a href="https://superych.github.io">
                 SuperYch
@@ -858,9 +1289,9 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Python网络爬虫程序技术">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Python网络爬虫程序技术</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -915,55 +1346,49 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/15/text/">
+                <a href="/2019/10/13/wz/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Python网络爬虫程序技术">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="wz">
                         
-                        <span class="card-title">Python网络爬虫程序技术</span>
+                        <span class="card-title">wz</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            get方法访问网站
+                            Web学生管理系统
 笔记概要
 
-创建一个服务端，server.py, 一个客户端，client.py客户端GET方式发送数据服务器获取GET发送的数据客户端接收response,并进行解码
+创建服务器（server)和客户端（client)
 
-知识要点
+ 服务器的作用是建立与维护一个sqllite3的学生数据库students.db中学生记录表students:
 
-1,urllib.request.u
+
+
+
+
+
+
+
+opt值
+含义
+Col3
+
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-13
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/python/" class="post-category">
-                                    python
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            SuperYch
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
-                    </a>
-                    
-                    <a href="/tags/flask/">
-                        <span class="chip bg-color">flask</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -1087,7 +1512,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">2.4k</span>&nbsp;字
+                class="white-color">3.8k</span>&nbsp;字
             
             
             

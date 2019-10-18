@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-10-18T09:20:00.137Z</updated>
+  <updated>2019-10-18T13:36:03.678Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -17,40 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>Python网络爬虫程序技术</title>
     <link href="https://superych.github.io/2019/10/15/spider/"/>
     <id>https://superych.github.io/2019/10/15/spider/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-10-18T09:20:00.137Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;get方法访问网站&quot;&gt;&lt;a href=&quot;#get方法访问网站&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="python" scheme="https://superych.github.io/categories/python/"/>
-    
-    
-      <category term="python" scheme="https://superych.github.io/tags/python/"/>
-    
-      <category term="flask" scheme="https://superych.github.io/tags/flask/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python网络爬虫程序技术</title>
-    <link href="https://superych.github.io/2019/10/15/text/"/>
-    <id>https://superych.github.io/2019/10/15/text/</id>
-    <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-10-18T10:39:01.564Z</updated>
+    <updated>2019-10-18T13:36:03.678Z</updated>
     
     <summary type="html">
     
@@ -79,7 +50,7 @@
     <link href="https://superych.github.io/2019/10/13/wz/"/>
     <id>https://superych.github.io/2019/10/13/wz/</id>
     <published>2019-10-13T12:28:27.000Z</published>
-    <updated>2019-10-18T09:42:31.732Z</updated>
+    <updated>2019-10-18T11:16:48.934Z</updated>
     
     <summary type="html">
     
@@ -87,14 +58,7 @@
       
         
         
-          &lt;details&gt;
-    &lt;summary&gt;  代码块Highlight  &lt;/summary&gt;
-        &lt;pre&gt;&lt;code&gt;
-            print(&quot;hello&quot;)
-    &lt;/code&gt;&lt;/pre&gt;
-&lt;/details&gt;
-&lt;script&gt;
-    
+          &lt;h4 id=&quot;Web学生管理系统&quot;&gt;&lt;a href=&quot;#Web学生管理系统&quot; class=&quot;headerlink&quot;
         
       
     
