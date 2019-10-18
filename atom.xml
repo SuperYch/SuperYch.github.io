@@ -50,7 +50,7 @@
     <link href="https://superych.github.io/2019/10/13/wz/"/>
     <id>https://superych.github.io/2019/10/13/wz/</id>
     <published>2019-10-13T12:28:27.000Z</published>
-    <updated>2019-10-18T09:32:53.847Z</updated>
+    <updated>2019-10-18T09:42:31.732Z</updated>
     
     <summary type="html">
     
@@ -59,11 +59,13 @@
         
         
           &lt;details&gt;
-    &lt;summary&gt;
-        &lt;mark&gt;&lt;font color=&quot;darked&quot;&gt;点击查看详细内容&lt;/font&gt;&lt;/mark&gt;
-    &lt;/summary&gt;
-    &lt;p&gt;-测试 测试测试&lt;/p&gt;
-    &lt;pre&gt;       
+    &lt;summary&gt;  代码块Highlight  &lt;/summary&gt;
+        &lt;pre&gt;&lt;code&gt;
+            print(&quot;hello&quot;)
+    &lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;script&gt;
+    
         
       
     
