@@ -4,16 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="wz, SuperYch,github">
-    <meta name="description" content="
-      代码块Highlight  
-        
-            print(&#34;hello&#34;)
-    
+    <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
+    <meta name="description" content="get方法访问网站
+笔记概要
 
+创建一个服务端，server.py, 一个客户端，client.py客户端GET方式发送数据服务器获取GET发送的数据客户端接收response,并进行解码
 
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-    ">
+知识要点
+
+1,urllib.request.u">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>wz | SuperYch</title>
+    <title>Python网络爬虫程序技术 | SuperYch</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -252,13 +251,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        wz
+                        Python网络爬虫程序技术
                     </div>
                 </div>
             </div>
@@ -368,12 +367,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/python/">
+                                <span class="chip bg-color">python</span>
+                            </a>
+                        
+                            <a href="/tags/flask/">
+                                <span class="chip bg-color">flask</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/python/" class="post-category">
+                                python
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -381,21 +397,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-13
+                    2019-10-15
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        58
+                        1.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        5 分
                     </div>
                     
                 
@@ -411,12 +427,208 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <details>
-    <summary>  代码块Highlight  </summary>
-        <pre><code>
-            print("hello")
-    </code></pre>
-</details>
+                <h4 id="get方法访问网站"><a href="#get方法访问网站" class="headerlink" title="get方法访问网站"></a>get方法访问网站</h4><hr>
+<p><em>笔记概要</em></p>
+<blockquote>
+<p>创建一个服务端，server.py, 一个客户端，client.py<br>客户端GET方式发送数据<br>服务器获取GET发送的数据<br>客户端接收response,并进行解码</p>
+</blockquote>
+<p><em>知识要点</em></p>
+<blockquote>
+<p><strong><a href="https://www.imooc.com/article/49788" target="_blank" rel="noopener">1,urllib.request.urlopen()函数用于实现对目标url的访问。</a></strong><br>函数原型如下：urllib.request.urlopen(url, data=None, [timeout, ]*, cafile=None, capath=None, cadefault=False, context=None)　<br>url:  需要打开的网址<br>data：Post提交的数据<br>timeout：设置网站的访问超时时间</p>
+</blockquote>
+<blockquote>
+<p><strong>2,urllib.parse.quote(“参数”)</strong><br>如果参数是”中文”，必须使用quote进行编码</p>
+</blockquote>
+<blockquote>
+<p><strong>3,flask.request.args.get(“参数”)来获取参数的值</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>4,先启动服务器，再启动客户端</strong></p>
+</blockquote>
+<hr>
+<p><img src="./1570800515258.png" alt="Alt text"></p>
+<p><img src="./1570800504504.png" alt="Alt text"></p>
+<hr>
+<p><em>server.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'DEBUG'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    实现对客户端请求的响应
+    """</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># if 防止参数不存在的情况</span>
+        province <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>args<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"province"</span><span class="token punctuation">)</span> <span class="token keyword">if</span><span class="token string">"province"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>args <span class="token keyword">else</span> <span class="token string">""</span>
+
+        city <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>args<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"city"</span><span class="token punctuation">)</span> <span class="token keyword">if</span><span class="token string">"city"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>args <span class="token keyword">else</span><span class="token string">""</span>
+        <span class="token keyword">return</span> province <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> city
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">return</span><span class="token punctuation">(</span>str<span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<hr>
+<p><em>client.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse
+
+<span class="token triple-quoted-string string">"""
+客户端GET方法发送数据
+"""</span>
+url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000"</span>
+<span class="token keyword">try</span><span class="token punctuation">:</span>
+    p <span class="token operator">=</span> urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span><span class="token string">"广东"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 对中文汉字进行编码</span>
+    c <span class="token operator">=</span> urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span><span class="token string">"深圳"</span><span class="token punctuation">)</span>
+
+    data <span class="token operator">=</span> <span class="token string">"province="</span> <span class="token operator">+</span> p <span class="token operator">+</span> <span class="token string">"&amp;city="</span> <span class="token operator">+</span> c
+    resp <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>url <span class="token operator">+</span> <span class="token string">"?"</span> <span class="token operator">+</span> data<span class="token punctuation">)</span>
+    html <span class="token operator">=</span> resp<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    html <span class="token operator">=</span> html<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+<span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+</code></pre>
+<h4 id="POST方法访问网站"><a href="#POST方法访问网站" class="headerlink" title="POST方法访问网站"></a>POST方法访问网站</h4><hr>
+<p><em>笔记概要</em></p>
+<blockquote>
+<p>创建服务器server.py, 客户端client.py<br>启动服务器，再启动客户端<br>对比get,post方法的区别<br>使用post方法<br>get,post方法混用</p>
+</blockquote>
+<hr>
+<p><em>知识点归纳</em></p>
+<blockquote>
+<p><strong>对于server</strong><br>@app.route(“”, methods = [“GET”])默认GET方法<br>需手动添加POST方法，@app.route(“”, methods = [“POST”,”GET”])</p>
+</blockquote>
+<blockquote>
+<p>flask.request.<code>form</code>.get(参数) – post方法<br>flask.request.<code>args</code>.get(参数) –get方法<br>flask.request.<code>values</code>.get(参数) – post,get方法</p>
+</blockquote>
+<blockquote>
+<p><strong>对于client</strong><br>提交的表单data需要转成二进制 data = data.encode()<br>urllib.parse.quote() 转成十六进制 %% %%</p>
+</blockquote>
+<hr>
+<p><em>server.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># app.config['DEBUG'] = True</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"POST"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    服务器获取POST的数据
+    """</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 解析过的的表单对象的 MultiDict</span>
+        p <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"province"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token string">"province"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form <span class="token keyword">else</span><span class="token string">""</span>
+        c <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"city"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token string">"city"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form <span class="token keyword">else</span><span class="token string">""</span>
+        n <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"note"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token string">"note"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form <span class="token keyword">else</span><span class="token string">""</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> p <span class="token operator">+</span> <span class="token string">"\n"</span> <span class="token operator">+</span> c <span class="token operator">+</span> <span class="token string">"\n"</span> <span class="token operator">+</span> n
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> str<span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<hr>
+<p><em>client.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse
+
+<span class="token triple-quoted-string string">"""
+客户端发生POST数据
+"""</span>
+
+url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000"</span>
+<span class="token keyword">try</span><span class="token punctuation">:</span>
+    p <span class="token operator">=</span> urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span><span class="token string">"福建"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 十六进制</span>
+    c <span class="token operator">=</span> urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span><span class="token string">"福州"</span><span class="token punctuation">)</span>
+    note <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+    福州，别称榕城，简称福、榕，隶属于福建省，位于福建省东部、闽江下游及沿海地区，是福建省省会，福建省的政治、文化、交通中心，
+    海峡西岸经济区中心城市之一。福州建城于公元前202年，历史上曾长期作为福建的政治中心。是中国东南沿海重要都市、东部战区陆军机关驻地。
+    福州地貌属典型的河口盆地，盆地四周被群山峻岭所环抱，其海拔多在600~1000米之间。
+    """</span>
+    note <span class="token operator">=</span> urllib<span class="token punctuation">.</span>parse<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>note<span class="token punctuation">)</span>
+
+    data <span class="token operator">=</span> <span class="token string">"province="</span> <span class="token operator">+</span> p <span class="token operator">+</span> <span class="token string">"&amp;city="</span> <span class="token operator">+</span> c <span class="token operator">+</span> <span class="token string">"&amp;note="</span> <span class="token operator">+</span> note
+    data <span class="token operator">=</span> data<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 二进制</span>
+    resp <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>url<span class="token punctuation">,</span> data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+    html <span class="token operator">=</span> resp<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 对HTTPResponse类型进行处理</span>
+    html <span class="token operator">=</span> html<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 解码</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+
+<span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+</code></pre>
+<h4 id="Web下载文件"><a href="#Web下载文件" class="headerlink" title="Web下载文件"></a>Web下载文件</h4><p><em>笔记概要</em></p>
+<blockquote>
+<p>创建服务器server.py, 客户端client.py<br>启动服务器，再启动客户端<br>对比get,post方法的区别<br>使用post方法<br>get,post方法混用</p>
+</blockquote>
+<hr>
+<p><em>知识点归纳</em></p>
+<blockquote>
+<p><strong>对于server</strong><br>@app.route(“”, methods = [“GET”])默认GET方法<br>需手动添加POST方法，@app.route(“”, methods = [“POST”,”GET”])</p>
+</blockquote>
+<blockquote>
+<p>flask.request.<code>form</code>.get(参数) – post方法<br>flask.request.<code>args</code>.get(参数) –get方法<br>flask.request.<code>values</code>.get(参数) – post,get方法</p>
+</blockquote>
+<blockquote>
+<p><strong>对于client</strong><br>提交的表单data需要转成二进制 data = data.encode()<br>urllib.parse.quote() 转成十六进制 %% %%</p>
+</blockquote>
+<hr>
+<p><em>server.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># app.config['DEBUG'] = True</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"POST"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token triple-quoted-string string">"""
+    服务器获取POST的数据
+    """</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 解析过的的表单对象的 MultiDict</span>
+        p <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"province"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token string">"province"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form <span class="token keyword">else</span><span class="token string">""</span>
+        c <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"city"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token string">"city"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form <span class="token keyword">else</span><span class="token string">""</span>
+        n <span class="token operator">=</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form<span class="token punctuation">.</span>get<span class="token punctuation">(</span>
+            <span class="token string">"note"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token string">"note"</span> <span class="token keyword">in</span> flask<span class="token punctuation">.</span>request<span class="token punctuation">.</span>form <span class="token keyword">else</span><span class="token string">""</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> p <span class="token operator">+</span> <span class="token string">"\n"</span> <span class="token operator">+</span> c <span class="token operator">+</span> <span class="token string">"\n"</span> <span class="token operator">+</span> n
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> str<span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -595,8 +807,8 @@
                 </a>
             </div>
             <br/>
-            <a  href="/2019/10/13/wz/">
-                    《wz》
+            <a  href="/2019/10/15/text/">
+                    《Python网络爬虫程序技术》
             </a> 由
             <a href="https://superych.github.io">
                 SuperYch
@@ -641,13 +853,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/10/15/text/">
+                <a href="/2019/10/15/spider/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Python网络爬虫程序技术">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">Python网络爬虫程序技术</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -701,19 +913,27 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/13/hello-world/">
+                <a href="/2019/10/13/wz/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="wz">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">wz</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                            
+      代码块Highlight  
+        
+            print("hello")
+    
+
+
+        document.querySelectorAll('.github-emoji')
+    
                         
                     </div>
                     <div class="publish-info">
@@ -727,22 +947,6 @@
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/nodejs/">
-                        <span class="chip bg-color">nodejs</span>
-                    </a>
-                    
-                    <a href="/tags/npm/">
-                        <span class="chip bg-color">npm</span>
-                    </a>
-                    
-                    <a href="/tags/nvm/">
-                        <span class="chip bg-color">nvm</span>
-                    </a>
-                    
                 </div>
                 
             </div>
