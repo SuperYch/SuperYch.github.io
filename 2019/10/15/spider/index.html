@@ -631,15 +631,14 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <h4 id="Web学生管理系统"><a href="#Web学生管理系统" class="headerlink" title="Web学生管理系统"></a>Web学生管理系统</h4><hr>
 <p><em>笔记概要</em></p>
 <ul>
-<li>创建服务器（server)和客户端（client)</li>
-<li><details> <summary><mark>服务器的作用是建立与维护一个[sqllite3](https://blog.csdn.net/sinat_35886587/article/details/80561959)的学生数据库students.db中学生记录表students:</mark></summary>
+<li><p>创建服务器（server)和客户端（client)</p>
+</li>
+<li><details> <summary><mark>服务器的作用是建立与维护一个sqllite3的学生数据库students.db中学生记录表students:
+<mark></mark></mark></summary>
 
-</details></li>
-</ul>
 <blockquote>
-<ul>
-<li>学生的记录包括学号No, 姓名Name, 性别Sex与年龄Age, 服务器的作用是建立与维护一个sqllite的学生数据库students.db中的学生记录表studnet:<br><code>create table students  (No varchar(16) primary key, Name varchar(16), Sex varchar(8), Age int)</code></li>
-<li>服务器建立一个Web网站， 同时提供<strong>查询学生记录， 增加学生记录，删除学生记录</strong>等接口服务。服务器为了与客户端通讯， 建立了opt参数如表：<table>
+<p>学生的记录包括学号No, 姓名Name, 性别Sex与年龄Age, 服务器的作用是建立与维护一个sqllite的学生数据库students.db中的学生记录表studnet:<br>  <code>create table students  (No varchar(16) primary key, Name varchar(16), Sex varchar(8), Age int)</code><br>   服务器建立一个Web网站， 同时提供<strong>查询学生记录， 增加学生记录，删除学生记录</strong>等接口服务。服务器为了与客户端通讯， 建立了opt参数如表：</p>
+<table>
 <thead>
 <tr>
 <th align="left">opt值</th>
@@ -663,22 +662,23 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <td align="right">获取学生记录</td>
 </tr>
 </tbody></table>
+</blockquote>
+<p>  图片上传中</p>
+</details>
+
+
+
 </li>
 </ul>
-</blockquote>
-<p><img src="./0.jpg" alt="Alt text"></p>
-
-
 <ul>
 <li><strong>服务端和客户端是互相协商的</strong>, 服务器的数据库更新, 客户端students列表也更新(students里存的是每个学生的信息, 学生的信息是个字典eg:  ‘No’: ‘ ‘, ‘Name’: ‘ ‘, ‘Sex’: ‘ ‘, ‘Age’: ‘int类型 ‘)</li>
 <li>只要服务器不重启(实际上是重新建立新的数据库), 那么即使students列<code>students.clear()</code>，依旧可以通过<code>urllib.request.urlopen(url)</code>访问服务器,<strong>服务器的opt=””,则返回数据库里所以的学生记录</strong></li>
 <li><details> <summary><mark>客户端的作用是向服务端发送请求，传递get数据，post的数据,对服务端的数据库进行访问,进行查询,删除,增加,初始化等操作</mark></summary>
-![Alt text](./1.png)
+  图片上传中
+</details>
 
-</details></li>
+</li>
 </ul>
-
-
 <p><em>知识点归纳</em></p>
 <ul>
 <li><p>了解sqlite3库的使用</p>
@@ -1370,11 +1370,11 @@ except Exception as e:
 
 
 
-
-
 opt值
 含义
 Col3
+
+
 
                         
                     </div>
@@ -1512,7 +1512,7 @@ Col3
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3.8k</span>&nbsp;字
+                class="white-color">4k</span>&nbsp;字
             
             
             
