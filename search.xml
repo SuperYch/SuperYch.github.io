@@ -31,19 +31,6 @@
     
     
     <entry>
-      <title>wz</title>
-      <link href="/2019/10/13/wz/"/>
-      <url>/2019/10/13/wz/</url>
-      
-        <content type="html"><![CDATA[<h4 id="Web学生管理系统"><a href="#Web学生管理系统" class="headerlink" title="Web学生管理系统"></a>Web学生管理系统</h4><hr><p><em>笔记概要</em></p><ul><li>创建服务器（server)和客户端（client)</li></ul><details> <summary>服务器的作用是建立与维护一个sqllite3的学生数据库students.db中学生记录表students:</summary><blockquote><table><thead><tr><th align="left">opt值</th><th align="right">含义</th><th align="center">Col3</th></tr></thead><tbody><tr><td align="left">init</td><td align="right">field2</td><td align="center">field3</td></tr><tr><td align="left">insert</td><td align="right">field2</td><td align="center">field3</td></tr><tr><td align="left">delete</td><td align="right">field2</td><td align="center">field3</td></tr></tbody></table></blockquote></details><details>  <summary>折叠代码块</summary><blockquote><p>学生的记录包括学号No, 姓名Name, 性别Sex与年龄Age, 服务器的作用是建立与维护一个sqllite的学生数据库students.db中的学生记录表studnet:<br><code>create table students  (No varchar(16) primary key, Name varchar(16), Sex varchar(8), Age int)</code></p><ul><li>服务器建立一个Web网站， 同时提供<strong>查询学生记录， 增加学生记录，删除学生记录</strong>等接口服务。服务器为了与客户端通讯， 建立了opt参数如表：<table><thead><tr><th align="left">opt值</th><th align="right">含义</th></tr></thead><tbody><tr><td align="left">init</td><td align="right">初始化学生列表</td></tr><tr><td align="left">insert</td><td align="right">增加学生</td></tr><tr><td align="left">delete</td><td align="right">删除学生</td></tr><tr><td align="left"></td><td align="right">获取学生记录</td></tr></tbody></table></li></ul></blockquote></details><details>  <summary>折叠代码块</summary>  <pre><blockcode>      System.out.println("虽然可以折叠代码块");     System.out.println("但是代码无法高亮");  </blockcode></pre></details><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Hello World</title>
       <link href="/2019/10/13/hello-world/"/>
       <url>/2019/10/13/hello-world/</url>
@@ -59,56 +46,6 @@
             <tag> npm </tag>
             
             <tag> nvm </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>TypeScript声明文件</title>
-      <link href="/2019/09/05/page-1/"/>
-      <url>/2019/09/05/page-1/</url>
-      
-        <content type="html"><![CDATA[<p>```python<br>print(2)</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      <categories>
-          
-          <category> TypeScript </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> TypeScript </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>TypeScript声明文件</title>
-      <link href="/2019/09/05/page/"/>
-      <url>/2019/09/05/page/</url>
-      
-        <content type="html"><![CDATA[<pre class=" language-python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span></code></pre><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      <categories>
-          
-          <category> TypeScript </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> TypeScript </tag>
             
         </tags>
       

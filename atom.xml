@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-10-18T14:00:14.691Z</updated>
+  <updated>2019-10-18T14:31:26.484Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://superych.github.io/2019/10/15/spider/"/>
     <id>https://superych.github.io/2019/10/15/spider/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-10-18T14:00:14.691Z</updated>
+    <updated>2019-10-18T14:31:26.484Z</updated>
     
     <summary type="html">
     
@@ -42,29 +42,6 @@
       <category term="python" scheme="https://superych.github.io/tags/python/"/>
     
       <category term="flask" scheme="https://superych.github.io/tags/flask/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>wz</title>
-    <link href="https://superych.github.io/2019/10/13/wz/"/>
-    <id>https://superych.github.io/2019/10/13/wz/</id>
-    <published>2019-10-13T12:28:27.000Z</published>
-    <updated>2019-10-18T13:47:16.594Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;Web学生管理系统&quot;&gt;&lt;a href=&quot;#Web学生管理系统&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
     
   </entry>
   
@@ -94,64 +71,6 @@
       <category term="npm" scheme="https://superych.github.io/tags/npm/"/>
     
       <category term="nvm" scheme="https://superych.github.io/tags/nvm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TypeScript声明文件</title>
-    <link href="https://superych.github.io/2019/09/05/page-1/"/>
-    <id>https://superych.github.io/2019/09/05/page-1/</id>
-    <published>2019-09-05T10:29:29.000Z</published>
-    <updated>2019-10-18T14:09:27.243Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;```python&lt;br&gt;print(2)&lt;/p&gt;
-&lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if
-        
-      
-    
-    </summary>
-    
-    
-      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
-    
-    
-      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TypeScript声明文件</title>
-    <link href="https://superych.github.io/2019/09/05/page/"/>
-    <id>https://superych.github.io/2019/09/05/page/</id>
-    <published>2019-09-05T10:29:29.000Z</published>
-    <updated>2019-10-18T14:08:56.944Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;pre class=&quot; language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token
-        
-      
-    
-    </summary>
-    
-    
-      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
-    
-    
-      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
     
   </entry>
   
