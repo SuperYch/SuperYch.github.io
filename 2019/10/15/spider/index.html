@@ -385,8 +385,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/python/" class="post-category">
-                                python
+                            <a href="/categories/后端/" class="post-category">
+                                后端
                             </a>
                         
                     </div>
@@ -404,14 +404,14 @@
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.5k
+                        4.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        16 分
+                        18 分
                     </div>
                     
                 
@@ -663,7 +663,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 </tr>
 </tbody></table>
 </blockquote>
-<p>  图片上传中</p>
+<p>  <img src="%22F:%5CHexo%5Csource%5Cspic%5C0.jpg%22" alt="0.jpg"></p>
 </details>
 
 
@@ -1060,7 +1060,123 @@ try:
             break
 except Exception as e:
     print(e)</code></pre><p>  </p></code></pre><p></p>
-</details><script>
+
+
+<hr>
+<h4 id="python正则表达式"><a href="#python正则表达式" class="headerlink" title="python正则表达式"></a>python正则表达式</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><blockquote>
+<p>正则表达式是用来匹配与查找字符串的,从网上爬取数据自然或多或少会用到正则表达式。Python的正则表达式要先引入re模块,正则表达式以r引导,例如:</p>
+</blockquote>
+<blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> re
+reg <span class="token operator">=</span> r<span class="token string">"\d+"</span>
+m <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span>reg<span class="token punctuation">,</span> <span class="token string">"abc123cd"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span></code></pre>
+</blockquote>
+<p>```</p>
+<blockquote>
+<p>其中<code>r"\d"+</code>正则表达式表示匹配连续的多个数值,search是re中的函数,从”abc123cd”字符串中搜索连续的数值,得到”123”,返回一个匹配对象,因此程序结果如下:<br><code>&lt;sre.SRE_Match.object; span = (3,6), match='123'&gt;</code><br>从结果看出,在指定的字符串中找到了连续的数值,得到”123”,span(3,6)表示开始的位置是3,结束的位置是6,这正好是”123”在”abc123cd”中的位置。</p>
+</blockquote>
+<p><em>知识点归纳</em></p>
+<blockquote>
+<p>re库的使用<br>常用的正则表达式<br>r””,保留字符串的原始形式</p>
+</blockquote>
+<p><em>笔记概要</em></p>
+<details>
+    <summary>**1.字符"\d"匹配0-9之间的一个数值**</summary>
+    <pre>        <code>
+            import re
+            reg = r"\d"
+            m = re.search(reg, "abc123cd")
+            print(m)
+        </code>
+        结果找到第一个数值"1"
+        `<sre.sre_match object;="" span="(3," 4),="" match="1">`
+    </sre.sre_match></pre>
+</details>
+
+<details>
+    <summary>**2.字符"+"重复前一个匹配字符`一次或多次`**</summary>
+    <pre>        <code>
+            import re
+            reg = r"b\d+"
+            m = re.search(reg, "a12b123c")
+            print(m)
+        </code>
+        结果找到了"b123"
+        `<sre.sre_match object;="" span="(3," 7),="" match="b123">`
+        注意:r"b\d+"第一个字符匹配"b",后面是连续的多个数字,因此是"b123",不是"a12",(如果多个b呢)
+    </sre.sre_match></pre>
+</details>
+
+<details>
+    <summary>**3.字符"*"重复前一个匹配字符`零次或多次`**</summary>
+    <pre>        "*"与"+"类似,但有区别,例如:
+        <code>
+            import re
+            reg = r"ab+"
+            m = re.search(reg, "acabc")
+            print(m)
+            reg = r"ab*"
+            m = re.search(reg, "acabc")
+            print(m)
+        </code>
+        结果:
+        `<sre.sre_match object;="" span="(2," 4),="" match="ab">`
+        `<sre.sre_match object;="" span="(0," 1),="" match="a">`
+    </sre.sre_match></sre.sre_match></pre>
+</details>
+
+<details>
+    <summary>**4.字符"?"重复前一个匹配字符`零次或一次`**</summary>
+    <pre>        <code>
+            import re
+            reg = r"ab?"
+            m = re.search(reg, "abbcabc")
+            print(m)
+        </code>
+        结果:
+        `<sre.sre_match object;="" span="(0," 2),="" match="ab">`
+        匹配结果是"ab",其中b重复一次
+    </sre.sre_match></pre>
+</details>
+<details>
+    <summary>**5.字符"."代表任何一个字符,但是没有特别声明时不代表字符"\n"**</summary>
+    <pre>        <code>
+            import re
+            s = "xaxby"
+            m = re.search(r"a.b", s)
+            print(m)
+        </code>
+        结果"."代表了字符"x"
+        `<sre.sre_match object;="" span="(1," 4),="" match="axb">`
+    </sre.sre_match></pre>
+</details>
+
+<details>
+    <summary>**6.字符"|"代表把左右分成两个部分**</summary>
+    <pre>        <code>
+            import re
+            s = "xaabababy"
+            m = re.search(r"ab|ba", s)
+            print(m)
+        </code>
+        结果匹配"ab"或者"ba"的可以:
+        `<sre.sre_match object;="" span="(2,4)," match="ab">`
+    </sre.sre_match></pre>
+</details>
+
+<details>
+    <summary>**7.特殊字符使用反斜线"\"引导,例如"\r", "\n", "\t", "\\"分别表示回车,换行,制表符号与反斜线主键本身**</summary>
+    <pre>        <code>
+            import re
+            reg = r"a\nb"
+            m = re.search(reg, "ca\nbcabc")
+            print(m)
+        </code>
+        结果匹配"a\n\b":
+        `<sre.sre_match object;="" span="(1," 4),="" match="a\nb">`
+    </sre.sre_match></pre>
+</details></details><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1315,8 +1431,8 @@ except Exception as e:
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/python/" class="post-category">
-                                    python
+                            <a href="/categories/后端/" class="post-category">
+                                    后端
                                 </a>
                             
                             
@@ -1511,7 +1627,7 @@ except Exception as e:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3.6k</span>&nbsp;字
+                class="white-color">4.2k</span>&nbsp;字
             
             
             

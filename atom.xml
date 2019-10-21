@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-10-18T14:31:26.484Z</updated>
+  <updated>2019-10-21T10:17:14.287Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://superych.github.io/2019/10/15/spider/"/>
     <id>https://superych.github.io/2019/10/15/spider/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-10-18T14:31:26.484Z</updated>
+    <updated>2019-10-21T10:17:14.287Z</updated>
     
     <summary type="html">
     
@@ -36,7 +36,7 @@
     </summary>
     
     
-      <category term="python" scheme="https://superych.github.io/categories/python/"/>
+      <category term="后端" scheme="https://superych.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
     
     
       <category term="python" scheme="https://superych.github.io/tags/python/"/>
