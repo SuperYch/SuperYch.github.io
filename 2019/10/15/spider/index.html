@@ -404,14 +404,14 @@
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        4.1k
+                        5.2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        18 分
+                        24 分
                     </div>
                     
                 
@@ -760,7 +760,6 @@ url <span class="token operator">=</span> <span class="token string">""</span>
             <span class="token keyword">break</span>
 <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span></code></pre>
-<hr>
 <details>
   <summary><mark><font color="darkred">server具体代码</font></mark></summary>
   <p> - 建议移到编辑器查看</p>
@@ -880,17 +879,16 @@ if __name__ == '__main__':
     app.run()</code></pre><p>  </p></code></pre><p></p>
 </details>
 
-<hr>
 <details>
   <summary><mark><font color="darkred">client具体代码</font></mark></summary>
   <p> - 建议移到编辑器查看</p>
-  <pre><code> 
-      # Web学生管理程序
+  <pre><code>
 
-<pre><code># 客户端程序
-import urllib.request
-import json
+<pre><code>    # Web学生管理程序
+    # 客户端程序
 
+    import urllib.request
+    import json
 
 class Student:  # 创建一个Student的对象
 
@@ -903,17 +901,14 @@ class Student:  # 创建一个Student的对象
     def show(self):  # 打印的方法
         print("%-16s%-16s%-8s%-4d" % (self.No, self.Name, self.Sex, self.Age))
 
-
 students = []  # 所以的学生放在一个列表当中
 url = "http://127.0.0.1:5000"  # http的网址
-
 
 def listStudents():  # 列举所以的学生
     global students  # 调用全局变量
     print("%-16s%-16s%-8s%-4s" % ("No", "Name", "Sex", "Age"))
     for s in students:
         s.show()
-
 
 def insertStudent(s):  # 插入一个学生记录
     global students
@@ -1060,6 +1055,7 @@ try:
             break
 except Exception as e:
     print(e)</code></pre><p>  </p></code></pre><p></p>
+</details>
 
 
 <hr>
@@ -1072,46 +1068,52 @@ reg <span class="token operator">=</span> r<span class="token string">"\d+"</spa
 m <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span>reg<span class="token punctuation">,</span> <span class="token string">"abc123cd"</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span></code></pre>
 </blockquote>
-<p>```</p>
-<blockquote>
-<p>其中<code>r"\d"+</code>正则表达式表示匹配连续的多个数值,search是re中的函数,从”abc123cd”字符串中搜索连续的数值,得到”123”,返回一个匹配对象,因此程序结果如下:<br><code>&lt;sre.SRE_Match.object; span = (3,6), match='123'&gt;</code><br>从结果看出,在指定的字符串中找到了连续的数值,得到”123”,span(3,6)表示开始的位置是3,结束的位置是6,这正好是”123”在”abc123cd”中的位置。</p>
-</blockquote>
-<p><em>知识点归纳</em></p>
-<blockquote>
-<p>re库的使用<br>常用的正则表达式<br>r””,保留字符串的原始形式</p>
-</blockquote>
-<p><em>笔记概要</em></p>
-<details>
-    <summary>**1.字符"\d"匹配0-9之间的一个数值**</summary>
-    <pre>        <code>
+<pre><code>&gt;其中`r"\d"+`正则表达式表示匹配连续的多个数值,search是re中的函数,从"abc123cd"字符串中搜索连续的数值,得到"123",返回一个匹配对象,因此程序结果如下:
+&gt;`&lt;sre.SRE_Match.object; span = (3,6), match='123'&gt;`
+&gt;从结果看出,在指定的字符串中找到了连续的数值,得到"123",span(3,6)表示开始的位置是3,结束的位置是6,这正好是"123"在"abc123cd"中的位置。
+
+*知识点归纳*
+&gt;re库的使用
+&gt;常用的正则表达式
+&gt;r"",保留字符串的原始形式
+&gt;re库遵循贪婪匹配,匹配最长字符串,若在正则表达式中+'?'则是最小匹配数
+&gt;span()遵循前闭后开
+
+*笔记概要*
+&lt;details&gt;
+    &lt;summary&gt;**1.字符"\d"匹配0-9之间的一个数值**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
             import re
             reg = r"\d"
             m = re.search(reg, "abc123cd")
             print(m)
-        </code>
+        &lt;/code&gt;
         结果找到第一个数值"1"
-        `<sre.sre_match object;="" span="(3," 4),="" match="1">`
-    </sre.sre_match></pre>
-</details>
+        `&lt;sre.SRE_Match object; span = (3, 4), match = '1'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
 
-<details>
-    <summary>**2.字符"+"重复前一个匹配字符`一次或多次`**</summary>
-    <pre>        <code>
+&lt;details&gt;
+    &lt;summary&gt;**2.字符"+"重复前一个匹配字符`一次或多次`**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
             import re
             reg = r"b\d+"
             m = re.search(reg, "a12b123c")
             print(m)
-        </code>
+        &lt;/code&gt;
         结果找到了"b123"
-        `<sre.sre_match object;="" span="(3," 7),="" match="b123">`
+        `&lt;sre.SRE_Match object; span = (3, 7), match = 'b123'&gt;`
         注意:r"b\d+"第一个字符匹配"b",后面是连续的多个数字,因此是"b123",不是"a12",(如果多个b呢)
-    </sre.sre_match></pre>
-</details>
+    &lt;/pre&gt;
+&lt;/details&gt;
 
-<details>
-    <summary>**3.字符"*"重复前一个匹配字符`零次或多次`**</summary>
-    <pre>        "*"与"+"类似,但有区别,例如:
-        <code>
+&lt;details&gt;
+    &lt;summary&gt;**3.字符"\*"重复前一个匹配字符`零次或多次`**&lt;/summary&gt;
+    &lt;pre&gt;
+        "*"与"+"类似,但有区别,例如:
+        &lt;code&gt;
             import re
             reg = r"ab+"
             m = re.search(reg, "acabc")
@@ -1119,64 +1121,206 @@ m <span class="token operator">=</span> re<span class="token punctuation">.</spa
             reg = r"ab*"
             m = re.search(reg, "acabc")
             print(m)
-        </code>
+        &lt;/code&gt;
         结果:
-        `<sre.sre_match object;="" span="(2," 4),="" match="ab">`
-        `<sre.sre_match object;="" span="(0," 1),="" match="a">`
-    </sre.sre_match></sre.sre_match></pre>
-</details>
+        `&lt;sre.SRE_Match object; span = (2, 4), match = 'ab'&gt;`
+        `&lt;sre.SRE_Match object; span = (0, 1), match = 'a'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
 
-<details>
-    <summary>**4.字符"?"重复前一个匹配字符`零次或一次`**</summary>
-    <pre>        <code>
+&lt;details&gt;
+    &lt;summary&gt;**4.字符"?"重复前一个匹配字符`零次或一次`**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
             import re
             reg = r"ab?"
             m = re.search(reg, "abbcabc")
             print(m)
-        </code>
+        &lt;/code&gt;
         结果:
-        `<sre.sre_match object;="" span="(0," 2),="" match="ab">`
+        `&lt;sre.SRE_Match object; span = (0, 2), match = 'ab'&gt;`
         匹配结果是"ab",其中b重复一次
-    </sre.sre_match></pre>
-</details>
-<details>
-    <summary>**5.字符"."代表任何一个字符,但是没有特别声明时不代表字符"\n"**</summary>
-    <pre>        <code>
+    &lt;/pre&gt;
+&lt;/details&gt;
+&lt;details&gt;
+    &lt;summary&gt;**5.字符"."代表任何一个字符,但是没有特别声明时`不代表字符"\n"`**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
             import re
             s = "xaxby"
             m = re.search(r"a.b", s)
             print(m)
-        </code>
+        &lt;/code&gt;
         结果"."代表了字符"x"
-        `<sre.sre_match object;="" span="(1," 4),="" match="axb">`
-    </sre.sre_match></pre>
-</details>
+        `&lt;sre.SRE_Match object; span = (1, 4), match = 'axb'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
 
-<details>
-    <summary>**6.字符"|"代表把左右分成两个部分**</summary>
-    <pre>        <code>
+&lt;details&gt;
+    &lt;summary&gt;**6.字符"|"代表把左右分成两个部分**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
             import re
             s = "xaabababy"
             m = re.search(r"ab|ba", s)
             print(m)
-        </code>
+        &lt;/code&gt;
         结果匹配"ab"或者"ba"的可以:
-        `<sre.sre_match object;="" span="(2,4)," match="ab">`
-    </sre.sre_match></pre>
-</details>
+        `&lt;sre.SRE_Match object; span = (2,4), match = 'ab'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
 
-<details>
-    <summary>**7.特殊字符使用反斜线"\"引导,例如"\r", "\n", "\t", "\\"分别表示回车,换行,制表符号与反斜线主键本身**</summary>
-    <pre>        <code>
+&lt;details&gt;
+    &lt;summary&gt;**7.特殊字符使用反斜线"\"引导,例如"\r", "\n", "\t", "\\\\"分别表示回车,换行,制表符号与反斜线主键本身**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
             import re
             reg = r"a\nb"
             m = re.search(reg, "ca\nbcabc")
             print(m)
-        </code>
+        &lt;/code&gt;
         结果匹配"a\n\b":
-        `<sre.sre_match object;="" span="(1," 4),="" match="a\nb">`
-    </sre.sre_match></pre>
-</details></details><script>
+        `&lt;sre.SRE_Match object; span = (1, 4), match = 'a\nb'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**8.字符"\b"表示单词的结尾,单词的结尾包括各种空白字符或者字符串结尾**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"car\b"
+            m = re.search(reg, "The car is black")
+            print(m)
+        &lt;/code&gt;
+        结果匹配"car",因为"car"后面是一个空格:
+        `&lt;sre.SRE_Match object; span = (4, 7), match = 'car'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**9,"[]"中字符是任选择一个,如果字符是ASCII码中连续的一组,那么可以使用"."符号连接,例如
+    [0-9]表示0-9其中一个数字,[A-Z]的其中一个大写字符,[0-9A-Z]表示0-9的其中一个数字或者是A-Z的其中一个大写字符**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"x[0-9]y"
+            m = re.search(reg, "xyx2y")
+            print(m)
+        &lt;/code&gt;
+        结果匹配"x2y":
+        `&lt;sre.SRE_Match object; span = (2, 5), match = 'x2y'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**10,"^"出现在[]的第一个字符位置,就代表取反,例如[^ab0-9]表示不是a,b,也不是0-9的数字**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"x[^ab0-9]y"
+            m = re.search(reg, "xayx2yxcy")
+            print(m)
+        &lt;/code&gt;
+        结果匹配"xcy":
+        `&lt;sre.SRE_Match object; span = (6, 9), match = 'xcy'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**11,"\s"匹配任何空白字符,等价"[\r\n\x20\t\f\v]"**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            s = "1a ba\tbxy"
+            m = re.search(r"a\sb", s)
+            print(m)
+        &lt;/code&gt;
+        结果匹配"a b":
+        `&lt;sre.SRE_Match object; span = (1, 4), match = 'a b'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**12,"\w"匹配包括下划线内的单词字符,等价"[a-zA-Z0-9_]"**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"\w+"
+            m = re.search(reg, "Python is easy")
+            print(m)
+        &lt;/code&gt;
+        结果匹配"Python":
+        `&lt;sre.SRE_Match object; span = (0, 6), match = 'Python'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**13,"^"匹配字符串的开头位置**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"^ab"
+            m = re.search(reg, "cabcab")
+            print(m)
+        &lt;/code&gt;
+        结果:None
+        没有匹配到任何字符,因为"cabcab"中虽然有"ab",但不是"ab"开头
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**14,"$"字符匹配字符串的结尾位置**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"ab$"
+            m = re.search(reg, "abcab")
+            print(m)
+        &lt;/code&gt;
+        匹配结果是最后一个"ab",而不是第一个"ab":
+        `&lt;sre.SRE_Match object; span = (3, 5), match = 'ab'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**15,使用括号(...)可以把(...)看成一个整体,经常与"+","*","?"的连续使用,对(...)部分进行重复**&lt;/summary&gt;
+    &lt;pre&gt;
+        &lt;code&gt;
+            import re
+            reg = r"(ab)+"
+            m = re.search(reg, "ababcab")
+            print(m)
+        &lt;/code&gt;
+        结果匹配"abab","+"对ab进行了重复:
+        `&lt;sre.SRE_Match object; span = (0, 4), match = 'abab'&gt;`
+    &lt;/pre&gt;
+&lt;/details&gt;
+
+
+*练习*
+
+```python
+import re
+
+s = "I am testing search function"
+reg = r"[A-Za-z]+\b"
+m = re.search(reg,s)
+while m != None:
+    start = m.start()
+    end = m.end()
+    print(s[start:end])
+    s = s[end:]
+    m = re.search(reg,s)
+
+"""
+I
+am
+testing
+search
+function
+
+程序开始匹配到一个单词后m.start(),m.end()就是单词的起始位置,s[start:end]为截取的单词,之后程序再次匹配字符串s=s[end:],即字符串的后半段,一直匹配完毕为止就找出每个单词
+"""</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1627,7 +1771,7 @@ m <span class="token operator">=</span> re<span class="token punctuation">.</spa
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">4.2k</span>&nbsp;字
+                class="white-color">5.3k</span>&nbsp;字
             
             
             
