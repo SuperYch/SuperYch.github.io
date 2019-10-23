@@ -5,8 +5,8 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
-    <meta name="description" content="get方法访问网站
-笔记概要
+    <meta name="description" content="
+get方法访问网站笔记概要
 
 创建一个服务端，server.py, 一个客户端，client.py客户端GET方式发送数据服务器获取GET发送的数据客户端接收response,并进行解码
 
@@ -427,8 +427,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="get方法访问网站"><a href="#get方法访问网站" class="headerlink" title="get方法访问网站"></a>get方法访问网站</h4><hr>
-<p><em>笔记概要</em></p>
+                <hr>
+<h4 id="get方法访问网站"><a href="#get方法访问网站" class="headerlink" title="get方法访问网站"></a>get方法访问网站</h4><p><em>笔记概要</em></p>
 <blockquote>
 <p>创建一个服务端，server.py, 一个客户端，client.py<br>客户端GET方式发送数据<br>服务器获取GET发送的数据<br>客户端接收response,并进行解码</p>
 </blockquote>
@@ -445,10 +445,8 @@
 <blockquote>
 <p><strong>4,先启动服务器，再启动客户端</strong></p>
 </blockquote>
-<hr>
 <p><img src="./1570800515258.png" alt="Alt text"></p>
 <p><img src="./1570800504504.png" alt="Alt text"></p>
-<hr>
 <p><em>server.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
 <span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
@@ -478,7 +476,6 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<hr>
 <p><em>client.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
 <span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse
@@ -499,12 +496,11 @@ url <span class="token operator">=</span> <span class="token string">"http://127
 <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
 </code></pre>
-<h4 id="POST方法访问网站"><a href="#POST方法访问网站" class="headerlink" title="POST方法访问网站"></a>POST方法访问网站</h4><hr>
-<p><em>笔记概要</em></p>
+<hr>
+<h4 id="POST方法访问网站"><a href="#POST方法访问网站" class="headerlink" title="POST方法访问网站"></a>POST方法访问网站</h4><p><em>笔记概要</em></p>
 <blockquote>
 <p>创建服务器server.py, 客户端client.py<br>启动服务器，再启动客户端<br>对比get,post方法的区别<br>使用post方法<br>get,post方法混用</p>
 </blockquote>
-<hr>
 <p><em>知识点归纳</em></p>
 <blockquote>
 <p><strong>对于server</strong><br>@app.route(“”, methods = [“GET”])默认GET方法<br>需手动添加POST方法，@app.route(“”, methods = [“POST”,”GET”])</p>
@@ -515,7 +511,6 @@ url <span class="token operator">=</span> <span class="token string">"http://127
 <blockquote>
 <p><strong>对于client</strong><br>提交的表单data需要转成二进制 data = data.encode()<br>urllib.parse.quote() 转成十六进制 %% %%</p>
 </blockquote>
-<hr>
 <p><em>server.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
 <span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
@@ -549,7 +544,6 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<hr>
 <p><em>client.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
 <span class="token keyword">import</span> urllib<span class="token punctuation">.</span>parse
@@ -579,11 +573,11 @@ url <span class="token operator">=</span> <span class="token string">"http://127
 <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
 </code></pre>
+<hr>
 <h4 id="Web下载文件"><a href="#Web下载文件" class="headerlink" title="Web下载文件"></a>Web下载文件</h4><p><em>笔记概要</em></p>
 <blockquote>
 <p>创建服务器server.py, 客户端client.py<br>启动服务器，再启动客户端<br>对比get,post方法的区别<br>使用post方法<br>get,post方法混用</p>
 </blockquote>
-<hr>
 <p><em>知识点归纳</em></p>
 <blockquote>
 <p><strong>对于server</strong><br>@app.route(“”, methods = [“GET”])默认GET方法<br>需手动添加POST方法，@app.route(“”, methods = [“POST”,”GET”])</p>
@@ -594,7 +588,6 @@ url <span class="token operator">=</span> <span class="token string">"http://127
 <blockquote>
 <p><strong>对于client</strong><br>提交的表单data需要转成二进制 data = data.encode()<br>urllib.parse.quote() 转成十六进制 %% %%</p>
 </blockquote>
-<hr>
 <p><em>server.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
 <span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
@@ -628,8 +621,8 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<h4 id="Web学生管理系统"><a href="#Web学生管理系统" class="headerlink" title="Web学生管理系统"></a>Web学生管理系统</h4><hr>
-<p><em>笔记概要</em></p>
+<hr>
+<h4 id="实践项目-Web学生管理系统"><a href="#实践项目-Web学生管理系统" class="headerlink" title="实践项目-Web学生管理系统"></a>实践项目-Web学生管理系统</h4><p><em>笔记概要</em></p>
 <ul>
 <li><p>创建服务器（server)和客户端（client)</p>
 </li>
@@ -681,11 +674,8 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 </ul>
 <p><em>知识点归纳</em></p>
 <ul>
-<li><p>了解sqlite3库的使用</p>
-</li>
-<li><p>服务端与客户端的联系</p>
-<hr>
-</li>
+<li>了解sqlite3库的使用</li>
+<li>服务端与客户端的联系</li>
 </ul>
 <p><em>stu_server框架</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
@@ -713,7 +703,6 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
     <span class="token keyword">pass</span>
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<hr>
 <p><em>stu_client框架</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> urlib<span class="token punctuation">.</span>request
 <span class="token keyword">import</span> json
@@ -1548,8 +1537,8 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            get方法访问网站
-笔记概要
+                            
+get方法访问网站笔记概要
 
 创建一个服务端，server.py, 一个客户端，client.py客户端GET方式发送数据服务器获取GET发送的数据客户端接收response,并进行解码
 
