@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-10-23T15:07:17.762Z</updated>
+  <updated>2019-10-23T15:21:34.642Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://superych.github.io/2019/10/15/spider/"/>
     <id>https://superych.github.io/2019/10/15/spider/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-10-23T15:07:17.762Z</updated>
+    <updated>2019-10-23T15:21:34.642Z</updated>
     
     <summary type="html">
     
@@ -71,6 +71,37 @@
       <category term="npm" scheme="https://superych.github.io/tags/npm/"/>
     
       <category term="nvm" scheme="https://superych.github.io/tags/nvm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>markdown使用</title>
+    <link href="https://superych.github.io/2019/09/05/markdown/"/>
+    <id>https://superych.github.io/2019/09/05/markdown/</id>
+    <published>2019-09-05T10:29:29.000Z</published>
+    <updated>2019-10-23T15:25:27.953Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
+    
+    
+      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
     
   </entry>
   

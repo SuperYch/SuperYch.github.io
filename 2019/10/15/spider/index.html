@@ -6,12 +6,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
     <meta name="description" content="flask web网络flask帮助文档
+flask简介blog
 
-get方法访问网站笔记概要
-
-创建一个服务端，server.py, 一个客户端，client.py客户端GET方式发送数据服务器获取GET发送的数据客户端接收response,并进行解码
-
-知识要">
+Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’Django是一个重型框架官方文档: http://flask.pocoo.or">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -403,14 +400,14 @@ get方法访问网站笔记概要
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        5.9k
+                        6.2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        27 分
+                        28 分
                     </div>
                     
                 
@@ -427,6 +424,38 @@ get方法访问网站笔记概要
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="flask-web网络"><a href="#flask-web网络" class="headerlink" title="flask web网络"></a>flask web网络</h4><p><a href="http://docs.jinkan.org/docs/flask/" target="_blank" rel="noopener">flask帮助文档</a></p>
+<p><em>flask简介</em><br><a href="https://www.cnblogs.com/gugubeng/p/9722668.html" target="_blank" rel="noopener">blog</a></p>
+<blockquote>
+<p>Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’<br>Django是一个重型框架<br>官方文档: <a href="http://flask.pocoo.org/docs/0.12/" target="_blank" rel="noopener">http://flask.pocoo.org/docs/0.12/</a><br>中文文档: <a href="http://docs.jinkan.org/docs/flask/" target="_blank" rel="noopener">http://docs.jinkan.org/docs/flask/</a><br>Flask和Django一样，也是一个基于MVC设计模式的Web框架<br>M:Model   V:View   C:Controller<br>MVVM,MVT</p>
+</blockquote>
+<p><em>Flask依赖三个库</em></p>
+<blockquote>
+<p>Jinja2 模板引擎 { % % } 模板：静态html+模板语言 { %  % } # mardown下{ }要加空格<br>Werkzeug WSGI工具集<br>Itsdangerous 基于Django的签名模块</p>
+</blockquote>
+<p><em>流行的Flask</em></p>
+<blockquote>
+<p>Flask流行的主要原因:<br>1.有非常齐全的官方文档，上手非常方便<br>2.有非常好的扩展机制和第三方扩展环境，工作中常见的软件都会有对应的扩展。自己动手实现扩展也很容易<br>3.社区活跃度非常高<br>4.微型框架的形式给了开发者更大的选择空间</p>
+</blockquote>
+<p>flask实例<br><em>server.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 初始化一个Flask的对象，参数__name__是程序的名称</span>
+<span class="token comment" spellcheck="true"># 用来解决"已修改静态页面代码，静态页面却没有发生变化"</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 调试</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'DEBUG'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">True</span>
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">"你好"</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/he"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">"Hi,你好"</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
 <hr>
 <h4 id="get方法访问网站"><a href="#get方法访问网站" class="headerlink" title="get方法访问网站"></a>get方法访问网站</h4><p><em>笔记概要</em></p>
 <blockquote>
@@ -1293,10 +1322,10 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 </code></pre>
 <p><strong>注意</strong></p>
 <ul>
-<li>s = fobj.readline().strip(“\n”)中的strip不能用sqlit(“\n”)</li>
-<li>import urllib.request</li>
-<li>...与...不要搞混了</li>
-<li>[sqlit3]详细见(<a href="https://blog.csdn.net/sinat_35886587/article/details/80561959" target="_blank" rel="noopener">https://blog.csdn.net/sinat_35886587/article/details/80561959</a>)</li>
+<li><code>s = fobj.readline().strip("\n")</code>中的<code>strip</code>不能用<code>sqlit("\n")</code></li>
+<li><code>import urllib.request</code></li>
+<li><code>&lt;tr&gt;...&lt;/tr&gt;</code>与<code>&lt;td&gt;...&lt;/td&gt;</code>不要搞混了</li>
+<li><a href="https://blog.csdn.net/sinat_35886587/article/details/80561959" target="_blank" rel="noopener">sqlit3</a></li>
 <li>相关细节见代码</li>
 <li>心情不好,细节后续会继续补充</li>
 </ul>
@@ -1538,12 +1567,9 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
                     <div class="summary block-with-text">
                         
                             flask web网络flask帮助文档
+flask简介blog
 
-get方法访问网站笔记概要
-
-创建一个服务端，server.py, 一个客户端，client.py客户端GET方式发送数据服务器获取GET发送的数据客户端接收response,并进行解码
-
-知识要
+Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’Django是一个重型框架官方文档: http://flask.pocoo.or
                         
                     </div>
                     <div class="publish-info">
@@ -1750,7 +1776,7 @@ get方法访问网站笔记概要
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">6k</span>&nbsp;字
+                class="white-color">6.4k</span>&nbsp;字
             
             
             
