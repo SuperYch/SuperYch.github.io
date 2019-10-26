@@ -400,14 +400,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        7.1k
+                        8.5k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        33 分
+                        38 分
                     </div>
                     
                 
@@ -1077,6 +1077,135 @@ except Exception as e:
 
 
 <hr>
+<h4 id="re库的使用"><a href="#re库的使用" class="headerlink" title="re库的使用"></a>re库的使用</h4><p><em>re库主要功能函数</em></p>
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+<th align="left">原型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">re.search()</td>
+<td align="left">在一个字符串中搜索<strong>匹配正则表达式的第一个位置</strong>，返回match对象</td>
+<td align="left">re.search(pattern,string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">re.match()</td>
+<td align="left">从一个字符串的<strong>开始位置</strong>起匹配正则表达式,<strong>返回match对象</strong></td>
+<td align="left">re.match(pattern,string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">re.findall()</td>
+<td align="left">搜索字符串,以<strong>列表类型</strong>返回全部能匹配的子串</td>
+<td align="left">re.findall(pattern,string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">re.split()</td>
+<td align="left">将一个字符串按照正则表达式匹配结果进行分割,<strong>返回列表类型</strong></td>
+<td align="left">re.split(pattern,string,maxsplit=0,flags=0)</td>
+</tr>
+<tr>
+<td align="left">re.finditer()</td>
+<td align="left">搜索字符串,返回一个匹配结果的迭代类型,每个迭代元素是<strong>match对象</strong></td>
+<td align="left">re.finditer(pattern,string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">re.sub</td>
+<td align="left">在一个字符串中替换所有匹配正则表达式的子串,返回替换后的<strong>字符串</strong></td>
+<td align="left">re.sub(pattern,repl,string,count=0,flags=0)</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>pattern</code>:正则表达式的字符串或原生字符串表示<br><code>string</code>:待匹配字符串<br><code>flags</code>:正则表达式使用时的控制标记<br><code>maxsplit</code>:最大分割数,剩余部分作为最后一个元素输出<br><code>repl</code>:替换匹配字符串的字符串<br><code>count</code>:匹配的最大替换次数</p>
+</blockquote>
+<ul>
+<li>flags:正则表达式使用时的控制标记</li>
+</ul>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">常用标记</th>
+<th align="left">说明</th>
+<th align="left">原型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">re.I</td>
+<td align="left">忽略正则表达式的大小写,[A-Z]能够匹配小写字符</td>
+<td align="left">re.IGNORECASE</td>
+</tr>
+<tr>
+<td align="left">re.M</td>
+<td align="left">正则表达式中的^操作符能够将给定字符串的每行当作匹配开始</td>
+<td align="left">re.MULTILINE</td>
+</tr>
+<tr>
+<td align="left">re.S</td>
+<td align="left">正则表达式中的.操作符能够匹配所有字符,默认匹配除换行外的所有字符</td>
+<td align="left">re.DOTALL</td>
+</tr>
+</tbody></table>
+</blockquote>
+<ul>
+<li>maxsplit:最大分割数,剩余部分作为最后一个元素输出<blockquote>
+<p>example:<br><code>re.split(r'[1-9]\d{5}','BIT10081 TSU10084',maxsplit = 1)</code><br><code>&gt;&gt;&gt;['BIT', ’TSU10084‘]</code><br><code>re.split(r'[1-9]\d{5}','BIT10081 TSU10084')</code><br><code>&gt;&gt;&gt;['BIT', 'TSU','']</code></p>
+</blockquote>
+</li>
+</ul>
+<p><em>re库的另一种等价用法</em></p>
+<blockquote>
+<p><code>&gt;&gt;&gt;rst = re.search(r'[1-9]\d{5}','BIT 100081')</code>函数式用法:一次性操作</p>
+</blockquote>
+<blockquote>
+<p><code>&gt;&gt;&gt;regex = re.compile(r'[1-9]\d{5}')</code>面向对象用法:编译后的多次操作<br><code>&gt;&gt;&gt;rst = regex.search('BIT 100081')</code></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+<th align="left">原型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">regex.search()</td>
+<td align="left">在一个字符串中搜索<strong>匹配正则表达式的第一个位置</strong>，<strong>返回match对象</strong></td>
+<td align="left">regex.search(string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">regex.match()</td>
+<td align="left">从一个字符串的<strong>开始位置</strong>起匹配正则表达式,<strong>返回match对象</strong></td>
+<td align="left">regex.match(string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">regex.findall()</td>
+<td align="left">搜索字符串,以<strong>列表类型</strong>返回全部能匹配的子串</td>
+<td align="left">regex.findall(string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">regex.split()</td>
+<td align="left">将一个字符串按照正则表达式匹配结果进行分割,<strong>返回列表类</strong>型</td>
+<td align="left">regex.split(string,maxsplit=0,flags=0)</td>
+</tr>
+<tr>
+<td align="left">regex.finditer()</td>
+<td align="left">搜索字符串,返回一个匹配结果的迭代类型,<strong>每个迭代元素是match对象</strong></td>
+<td align="left">regex.finditer(string,flags=0)</td>
+</tr>
+<tr>
+<td align="left">regex.sub</td>
+<td align="left">在一个字符串中替换所有匹配正则表达式的子串,返回替换后的<strong>字符串</strong></td>
+<td align="left">regex.sub(repl,string,count=0,flags=0)</td>
+</tr>
+</tbody></table>
+<p><em>总结</em></p>
+<blockquote>
+<p>re.方法名 = (regex = re.compile()+regex.方法名)</p>
+</blockquote>
+<hr>
 <h4 id="python正则表达式"><a href="#python正则表达式" class="headerlink" title="python正则表达式"></a>python正则表达式</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><blockquote>
 <p>正则表达式是用来匹配与查找字符串的,从网上爬取数据自然或多或少会用到正则表达式。Python的正则表达式要先引入re模块,正则表达式以r引导,例如:</p>
 </blockquote>
@@ -1471,6 +1600,10 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <blockquote>
 <p>查找文档中的<code>"http://example.com/lacie"</code>的节点元素<code>&lt;a&gt;</code></p>
 </blockquote>
+<p><em>常用方法</em></p>
+<blockquote>
+<p><code>find_all()</code>函数的原型如下:<br>find_all(self, name = None, attrs = {}, recursive = True, text = None, limit = None, *<em>kwargs)<br>self表明它是一个类成员函数;<br>name是要查找的tag元素名称,默认是None,如果不提供,就是查找所以元素;<br>attrs是元素的属性,它是一个字典,默认是空,如果提供就是查找有这个指定属性的元素(在name = None时,只要所以的标签满足attrs,就能打印出来)<br>recursive指定查找是否在元素节点的子树下面全范围进行,默认是True;<br>后面的text,limit,kwargs参数比较复杂,将在后面介绍<br>find_all函数返回查找到的所以指定元素的列表,每个元素是一个bs4.element.Tag对象<br>find_all函数是查找所以满足要求的元素节点,如果我们只查找一个元素节点,那么可以使用find函数<br><code>find</code>函数原型如下:<br>find(self,name = None, attrs = {}, recursive = True, text = None, limit = None, *</em>kwargs)<br>使用方法与find_all类似，不同的是它只返回第一个满足要求的节点,不是一个列表</p>
+</blockquote>
 <p><em>实例</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
 doc <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
@@ -1506,6 +1639,65 @@ tag <span class="token operator">=</span> soup<span class="token punctuation">.<
 <blockquote>
 <p>在程序中我们定义一个筛选函数myFilter(tag),它的参数是tag对象,在调用soup.find_all(myFilter)时程序会把每一个tag元素传递给myFilter函数,由该函数决定这个tag的取舍,如果myFilter返回True就保留这个tag到结果集中,不然就丢掉这个tag。因此程序执行时可以看到上述的结果等一个个tag经过myFilter的筛选,只有节点<code>[&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;]</code>满足要求<br>因此结果为:<br><code>[&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;]</code><br>其中:<br>tag.name是tag的名称;<br>tag.has_attr(attName)判断tag是否有attName属性:<br>tag[attName]是tag的attName属性值;</p>
 </blockquote>
+<p><em>注意</em></p>
+<blockquote>
+<p>return (tag.name == ‘p’ and tag[“class”] ==<code>"story"</code>) –无返回值<br> return (tag.name == ‘p’ and tag[“class”] ==<code>["story"]</code>) –有返回值<br>tag[“class”],它的词一定是个列表,但只有一个元素时,也需要使用列表</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+
+<span class="token string">""</span><span class="token string">""</span><span class="token string">""</span>
+
+<span class="token keyword">def</span> <span class="token function">myFilter</span><span class="token punctuation">(</span>tag<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>tag<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>tag<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">'p'</span> <span class="token operator">and</span> tag<span class="token punctuation">[</span><span class="token string">"class"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token string">"story"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>doc<span class="token punctuation">,</span> <span class="token string">'lxml'</span><span class="token punctuation">)</span>
+tag <span class="token operator">=</span> soup<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span>myFilter<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>tag<span class="token punctuation">)</span>
+</code></pre>
+<p><em>结果</em></p>
+<pre class=" language-html"><code class="language-html">[<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>story<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        Once upon a time there were three little sisters; and their names were
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sister<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://example.com/elsie<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>link1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Elsie<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>,
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sister<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://example.com/lacie<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>link2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Lacie<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>and
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sister<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://example.com/tillie<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>link3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Tillie<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>;
+        and they lived at the bottom og a well.
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>, <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>story<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>]</code></pre>
+<hr>
+<h4 id="BeautifulSoup遍历文档元素"><a href="#BeautifulSoup遍历文档元素" class="headerlink" title="BeautifulSoup遍历文档元素"></a>BeautifulSoup遍历文档元素</h4><table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">作用</th>
+<th align="left">注意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">.parent</td>
+<td align="left">获取元素节点的父节点</td>
+<td align="left"><code>&lt;html&gt;</code>的父节点是名称为[document]的节点，这个节点的父节点是None</td>
+</tr>
+<tr>
+<td align="left">.children</td>
+<td align="left">获取元素节点的直接子元素节点</td>
+<td align="left">包括element,text等类型的节点，迭代获取</td>
+</tr>
+<tr>
+<td align="left">.desendants</td>
+<td align="left">获取元素节点的所有子孙元素节点</td>
+<td align="left">迭代获取</td>
+</tr>
+<tr>
+<td align="left">.next_sibling</td>
+<td align="left">获取元素节点的兄弟节点</td>
+<td align="left">获取下一个兄弟节点,包括element,text等类型的节点</td>
+</tr>
+<tr>
+<td align="left">.previous_sibling</td>
+<td align="left">获取元素节点的兄弟节点</td>
+<td align="left">获取上一个兄弟节点,包括element,text等类型节点</td>
+</tr>
+</tbody></table>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1953,7 +2145,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.3k</span>&nbsp;字
+                class="white-color">8.6k</span>&nbsp;字
             
             
             
