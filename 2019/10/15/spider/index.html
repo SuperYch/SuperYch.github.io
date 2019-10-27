@@ -400,14 +400,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        8.5k
+                        9.2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        38 分
+                        41 分
                     </div>
                     
                 
@@ -1602,7 +1602,10 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 </blockquote>
 <p><em>常用方法</em></p>
 <blockquote>
-<p><code>find_all()</code>函数的原型如下:<br>find_all(self, name = None, attrs = {}, recursive = True, text = None, limit = None, *<em>kwargs)<br>self表明它是一个类成员函数;<br>name是要查找的tag元素名称,默认是None,如果不提供,就是查找所以元素;<br>attrs是元素的属性,它是一个字典,默认是空,如果提供就是查找有这个指定属性的元素(在name = None时,只要所以的标签满足attrs,就能打印出来)<br>recursive指定查找是否在元素节点的子树下面全范围进行,默认是True;<br>后面的text,limit,kwargs参数比较复杂,将在后面介绍<br>find_all函数返回查找到的所以指定元素的列表,每个元素是一个bs4.element.Tag对象<br>find_all函数是查找所以满足要求的元素节点,如果我们只查找一个元素节点,那么可以使用find函数<br><code>find</code>函数原型如下:<br>find(self,name = None, attrs = {}, recursive = True, text = None, limit = None, *</em>kwargs)<br>使用方法与find_all类似，不同的是它只返回第一个满足要求的节点,不是一个列表</p>
+<p><code>find_all()</code>函数的原型如下:<br>1.<code>find_all(self, name = None, attrs = {}, recursive = True, text = None, 
+limit = None, **kwargs)</code><br>2.<code>self</code>表明它是一个类成员函数;<br>3.<code>name</code>是要查找的tag元素名称,默认是None,如果不提供,就是查找所以元素;<br>4.<code>attrs</code>是元素的属性,它是一个字典,默认是空,如果提供就是查找有这个指定属性的元素(<br>在name = None时,只要所以的标签满足attrs,就能打印出来)<br>5.<code>recursive</code>指定查找是否在元素节点的子树下面全范围进行,默认是True;<br>6.后面的<code>text,limit,kwargs</code>参数比较复杂,将在后面介绍<br>7.find_all函数返回查找到的所以指定元素的列表,每个元素是一个bs4.element.Tag对象<br>8.find_all是查找所以满足要求的元素节点,如果我们只查找一个元素节点,那么可以使用find函数</p>
+<p><code>find</code>函数原型如下:<br>1.<code>find(self,name = None, attrs = {}, recursive = True, text = None, limit = 
+None, **kwargs)</code><br>2.使用方法与find_all类似，不同的是它只返回第一个满足要求的节点,不是一个列表</p>
 </blockquote>
 <p><em>实例</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
@@ -1696,6 +1699,128 @@ tag <span class="token operator">=</span> soup<span class="token punctuation">.<
 <td align="left">.previous_sibling</td>
 <td align="left">获取元素节点的兄弟节点</td>
 <td align="left">获取上一个兄弟节点,包括element,text等类型节点</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="BeautifulSoup使用CSS语法查找元素"><a href="#BeautifulSoup使用CSS语法查找元素" class="headerlink" title="BeautifulSoup使用CSS语法查找元素"></a>BeautifulSoup使用CSS语法查找元素</h4><p><em>方法</em></p>
+<blockquote>
+<p>tag.select(css)<br>其中tag是一个bs4.element.Tag对象，即HTML中的一个element节点元素,select是它的查找方法，css是类似css语法的一个字符串，一般结构如下：<br>[tagName][attName[=value]]<br>其中[…]部分是可选的；<br>tagName是元素名称，如果没有指定就是所有元素；<br>attName=value是属性名称，value是它对应的值，可以不指定属性，在指定了属性后也可以不指定值；<br>tag.select(css)返回一个bs4.element.Tag的列表，哪怕只有一个元素也是一个列表；</p>
+</blockquote>
+<ul>
+<li><p>查找元素节点</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">soup.select(“a”)</td>
+<td align="left">查找文档中<strong>所有</strong><code>&lt;a&gt;</code>元素节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“p a”)</td>
+<td align="left">查找文档中<strong>所有</strong><code>&lt;p&gt;</code>节点下的<code>&lt;a&gt;</code>元素节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“p [class=’story’] a”)</td>
+<td align="left">查找文档中<strong>所有属性</strong><code>class='story'</code>的<code>&lt;p&gt;</code>节点下的<strong>所有</strong><code>&lt;a&gt;</code>元素节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“p [class] a”)</td>
+<td align="left">查找文档中<strong>所有具有</strong><code>class</code>属性的<code>&lt;p&gt;</code>节点下的<strong>所有</strong><code>&lt;a&gt;</code>元素节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“a[id = ‘link1’]”)</td>
+<td align="left">查找属性为<code>id = "link1"</code>的<code>&lt;a&gt;</code>节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“body head title”)</td>
+<td align="left">查找<code>&lt;body&gt;</code>下面<code>&lt;head&gt;</code>下面的<code>&lt;title&gt;</code>节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“body [class] “)</td>
+<td align="left">查找<code>&lt;body&gt;</code>下面<strong>所有</strong>具有<code>class</code>属性的节点</td>
+</tr>
+<tr>
+<td align="left">soup.select(“body [class] a”)</td>
+<td align="left">查找<code>&lt;body&gt;</code>下面<strong>所有</strong>具有<code>class</code>属性的节点下面的<code>&lt;a&gt;</code>节点</td>
+</tr>
+</tbody></table>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><em>注意</em> :<strong>写[=value]是value里空格数不同可能导致结果搜索不到，例如：</strong><br><strong>class=”story  xxx”(1个空格)与class=”story  xxx”(两个空格)是不同的，看你所查找的文档树里所包含的空格数 <code>&lt;div class = "story  xxx"&gt;&lt;/div&gt;</code></strong></p>
+</blockquote>
+<ul>
+<li><p>属性语法规则</p>
+<blockquote>
+<p>在CSS结构中[attName=value]中表示attrName与value相等，也可以指定不等，包含等运算关系，具体运算如下表</p>
+</blockquote>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">选择器</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">[attName]</td>
+<td align="left">用于选取带有指定属性的元素</td>
+</tr>
+<tr>
+<td align="left">[attName=value]</td>
+<td align="left">用于选取带有指定属性和值的元素</td>
+</tr>
+<tr>
+<td align="left">[attName^=value]</td>
+<td align="left">匹配属性值以指定值开头的每个元素</td>
+</tr>
+<tr>
+<td align="left">[attName$=value]</td>
+<td align="left">匹配属性值以指定值结尾的每个元素</td>
+</tr>
+<tr>
+<td align="left">[attName*=value]</td>
+<td align="left">匹配属性值中包含指定值的每个元素</td>
+</tr>
+</tbody></table>
+</blockquote>
+</li>
+<li><p>查找</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">举例</th>
+<th align="left">描述</th>
+<th align="center">注意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">select(“div p”)</td>
+<td align="left">查找<code>&lt;div&gt;</code>节点下面的所有子孙<code>&lt;p&gt;</code>节点</td>
+<td align="center">节点元素之间用空格分开</td>
+</tr>
+<tr>
+<td align="left">select(“div &gt; p”)</td>
+<td align="left">查找<code>&lt;div&gt;</code>节点下面的所有直接节点<code>&lt;p&gt;</code>，不包含孙节点</td>
+<td align="center">节点元素之间用<code>&gt;</code>分开，注意<code>&gt;</code>前后至少包含一个空格</td>
+</tr>
+<tr>
+<td align="left">select(“div ~ p”)</td>
+<td align="left">查找<code>&lt;div&gt;</code>后面的所有同级别的<code>&lt;p&gt;</code>兄弟节点</td>
+<td align="center">节点元素之间用<code>~</code>分开，注意<code>~</code>前后至少包含一个空格</td>
+</tr>
+<tr>
+<td align="left">select(“div + p”)</td>
+<td align="left">查找<code>&lt;div&gt;</code>前面<strong>第一个</strong>同级别的<code>&lt;p&gt;</code>兄弟节点</td>
+<td align="center">节点元素之间用<code>+</code>分开，注意<code>+</code>前后至少包含一个空格</td>
 </tr>
 </tbody></table>
 <script>
@@ -2145,7 +2270,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.6k</span>&nbsp;字
+                class="white-color">9.4k</span>&nbsp;字
             
             
             
