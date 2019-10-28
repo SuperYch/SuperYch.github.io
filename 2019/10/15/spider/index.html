@@ -400,14 +400,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        9.2k
+                        10.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        41 分
+                        45 分
                     </div>
                     
                 
@@ -1823,6 +1823,125 @@ tag <span class="token operator">=</span> soup<span class="token punctuation">.<
 <td align="center">节点元素之间用<code>+</code>分开，注意<code>+</code>前后至少包含一个空格</td>
 </tr>
 </tbody></table>
+<hr>
+<h4 id="实践项目–爬取中国天气网"><a href="#实践项目–爬取中国天气网" class="headerlink" title="实践项目–爬取中国天气网"></a>实践项目–爬取中国天气网</h4><p><em>实践要求</em></p>
+<blockquote>
+<p>爬取所查找城市的近7天的天气状况，并创建weather.db储存(city, date, weather, temp)</p>
+</blockquote>
+<p><em>实践准备</em></p>
+<blockquote>
+<p>网址url = “<a href="http://www.weather.com.cn/”" target="_blank" rel="noopener">http://www.weather.com.cn/”</a><br><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/" target="_blank" rel="noopener">BeautifulSoup中文文档</a><br><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#unicode-dammit" target="_blank" rel="noopener">UnicodeDammit文档</a><br><a href="https://stackoverflow.com/questions/436220/determine-the-encoding-of-text-in-python" target="_blank" rel="noopener">UnicodeDammit编码说明</a></p>
+</blockquote>
+<p><em>html界面解析</em></p>
+<blockquote>
+<p>打开网站，选择一个城市，比如福州会发现url = “<a href="http://www.weather.com.cn/weather/101230101.shtml&quot;" target="_blank" rel="noopener">http://www.weather.com.cn/weather/101230101.shtml"</a><br>选择近7天，找到今天，右击检查<br>7天内的信息都存在标签<code>&lt;ul class='t clearfix'&gt;&lt;/ur&gt;</code>里<br>每天的信息都存在标签<code>&lt;li&gt;&lt;&lt;/li&gt;</code>里<br>日期存在标签<code>&lt;h1&gt;&lt;/h1&gt;</code><br>天气存在标签<code>&lt;p class = "wea"&gt;&lt;/p&gt;</code>里<br>温度存在标签<code>&lt;p class = "tem"&gt;&lt;/p&gt;</code>里<br>在<code>&lt;p class = "tem"&gt;&lt;/p&gt;</code>下还有两个子标签<code>&lt;span&gt;&lt;/span&gt;</code>和<code>&lt;i&gt;&lt;/i&gt;</code></p>
+</blockquote>
+<p><em>注意事项</em></p>
+<blockquote>
+<p><strong>1.(其中今天的温度只有)<code>&lt;i&gt;&lt;/i&gt;</code>标签</strong><br><strong>2.标签一定不要写错</strong>(今天只有标签<code>&lt;i&gt;&lt;/i&gt;</code>)<br><strong>3.运用BeautifulSoup查询css文档树,运用select时一定要注意空格的问题,例如：</strong><br><strong><code>soup.select(p[class="tem" span])</code>父节点与attr之间没有空格，而与子孙节点之间有空格</strong><br><strong>4.<code>__init__</code>不要写错了</strong>,(就写错成了<code>__int__</code>)</p>
+</blockquote>
+<p><em>代码实现中遇到的问题</em></p>
+<blockquote>
+<p>1.AttributeError: ‘WeatherForecast’ object has no attribute ‘cityCode’(由于<code>__init__</code>写错了)<br>2.运行时list index out of range,列表越界或者为空(由于select(css)时,里面的空格问题 <code>p [class] i</code>,p与clss之间多打了空格)</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> UnicodeDammit
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> sqlite3
+
+
+<span class="token keyword">class</span> <span class="token class-name">WeatherDB</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">openDB</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>con <span class="token operator">=</span> sqlite3<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token string">"weather.db"</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>cursor <span class="token operator">=</span> self<span class="token punctuation">.</span>con<span class="token punctuation">.</span>cursor<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>
+                "create table weathers <span class="token punctuation">(</span>wCity varchar<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span> wDate varchar<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span>\
+                wWeather varchar<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span> wTemp varchar<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span> constraint pk_weather primary key<span class="token punctuation">(</span>wCity<span class="token punctuation">,</span>wDate<span class="token punctuation">)</span><span class="token punctuation">)</span>"<span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">"delete from weathers"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">closeDB</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>con<span class="token punctuation">.</span>commit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>con<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">insert</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> city<span class="token punctuation">,</span> date<span class="token punctuation">,</span> weather<span class="token punctuation">,</span> temp<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>
+                <span class="token string">"insert into weathers(wCity,wDate,wWeather,wTemp) values(?,?,?,?)"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>city<span class="token punctuation">,</span> date<span class="token punctuation">,</span> weather<span class="token punctuation">,</span> temp<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">"select*from weathers"</span><span class="token punctuation">)</span>
+        rows <span class="token operator">=</span> self<span class="token punctuation">.</span>cursor<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        tplt1 <span class="token operator">=</span> <span class="token string">"{:16}\t{:20}\t{:32}\t{:20}"</span>
+        tplt2 <span class="token operator">=</span> <span class="token string">"{:16}\t{:16}\t{:32}\t{:16}"</span>
+
+        <span class="token keyword">print</span><span class="token punctuation">(</span>tplt1<span class="token punctuation">.</span>format<span class="token punctuation">(</span><span class="token string">"城市"</span><span class="token punctuation">,</span> <span class="token string">"日期"</span><span class="token punctuation">,</span> <span class="token string">"天气"</span><span class="token punctuation">,</span> <span class="token string">"温度"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> row <span class="token keyword">in</span> rows<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>tplt2<span class="token punctuation">.</span>format<span class="token punctuation">(</span>row<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">WeatherForecast</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true"># 伪装成浏览器访问网站</span>
+            <span class="token string">"User-Agent"</span><span class="token punctuation">:</span> <span class="token string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36"</span><span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true"># 默认只能查找这四个城市,后期可能更改根据城市名找到对应码,形成新的url，来获取数据</span>
+        self<span class="token punctuation">.</span>cityCode <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"北京"</span><span class="token punctuation">:</span> <span class="token string">"101010100"</span><span class="token punctuation">,</span> <span class="token string">"上海"</span><span class="token punctuation">:</span> <span class="token string">"101020100"</span><span class="token punctuation">,</span>
+                         <span class="token string">"广州"</span><span class="token punctuation">:</span> <span class="token string">"101280101"</span><span class="token punctuation">,</span> <span class="token string">"深圳"</span><span class="token punctuation">:</span> <span class="token string">"101280601"</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">def</span> <span class="token function">forecastCity</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> city<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 访问城市是否在默认字典里</span>
+        <span class="token keyword">if</span> city <span class="token operator">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>cityCode<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>city <span class="token operator">+</span> <span class="token string">"code cannot be found"</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span>
+
+        url <span class="token operator">=</span> <span class="token string">"http://www.weather.com.cn/weather/"</span> <span class="token operator">+</span> \
+            self<span class="token punctuation">.</span>cityCode<span class="token punctuation">[</span>city<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">".shtml"</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            req <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>self<span class="token punctuation">.</span>headers<span class="token punctuation">)</span>
+            data <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+            data <span class="token operator">=</span> data<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true"># 判断编码类型</span>
+            dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span> <span class="token string">"gbk"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+            soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+            lis <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"ul[class='t clearfix'] li"</span><span class="token punctuation">)</span>
+            n <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment" spellcheck="true"># 判断是否当天</span>
+            <span class="token keyword">for</span> li <span class="token keyword">in</span> lis<span class="token punctuation">:</span>
+                <span class="token keyword">try</span><span class="token punctuation">:</span>
+                    date <span class="token operator">=</span> li<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'h1'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                    weather <span class="token operator">=</span> li<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'p[class="wea"]'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        temp <span class="token operator">=</span> li<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'p[class="tem"] span'</span><span class="token punctuation">)</span><span class="token punctuation">[</span>
+                            <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> li<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'p[class="tem"] i'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                    <span class="token keyword">else</span><span class="token punctuation">:</span>
+                        temp <span class="token operator">=</span> li<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'p[class="tem"] i'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                    n <span class="token operator">=</span> n <span class="token operator">+</span> <span class="token number">1</span>
+                    self<span class="token punctuation">.</span>db<span class="token punctuation">.</span>insert<span class="token punctuation">(</span>city<span class="token punctuation">,</span> date<span class="token punctuation">,</span> weather<span class="token punctuation">,</span> temp<span class="token punctuation">)</span>
+                <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> cities<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>db <span class="token operator">=</span> WeatherDB<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>db<span class="token punctuation">.</span>openDB<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> city <span class="token keyword">in</span> cities<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>forecastCity<span class="token punctuation">(</span>city<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>db<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>db<span class="token punctuation">.</span>closeDB<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+ws <span class="token operator">=</span> WeatherForecast<span class="token punctuation">(</span><span class="token punctuation">)</span>
+ws<span class="token punctuation">.</span>process<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"北京"</span><span class="token punctuation">,</span> <span class="token string">"上海"</span><span class="token punctuation">,</span> <span class="token string">"广州"</span><span class="token punctuation">,</span> <span class="token string">"深圳"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"completed"</span><span class="token punctuation">)</span>
+</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2270,7 +2389,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">9.4k</span>&nbsp;字
+                class="white-color">10.2k</span>&nbsp;字
             
             
             
