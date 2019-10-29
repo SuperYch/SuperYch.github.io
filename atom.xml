@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-10-28T15:31:27.675Z</updated>
+  <updated>2019-10-29T11:11:19.032Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>codeforces</title>
+    <link href="https://superych.github.io/2019/10/29/codeforces/"/>
+    <id>https://superych.github.io/2019/10/29/codeforces/</id>
+    <published>2019-10-28T16:05:03.000Z</published>
+    <updated>2019-10-29T11:11:19.032Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="竞赛" scheme="https://superych.github.io/categories/%E7%AB%9E%E8%B5%9B/"/>
+    
+    
+      <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Python网络爬虫程序技术</title>
