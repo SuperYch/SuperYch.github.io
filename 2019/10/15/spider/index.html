@@ -400,14 +400,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        10.1k
+                        10.9k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        45 分
+                        50 分
                     </div>
                     
                 
@@ -1942,7 +1942,179 @@ ws <span class="token operator">=</span> WeatherForecast<span class="token punct
 ws<span class="token punctuation">.</span>process<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"北京"</span><span class="token punctuation">,</span> <span class="token string">"上海"</span><span class="token punctuation">,</span> <span class="token string">"广州"</span><span class="token punctuation">,</span> <span class="token string">"深圳"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"completed"</span><span class="token punctuation">)</span>
 </code></pre>
-<script>
+<hr>
+<p>@(spider)</p>
+<h3 id="网络树爬取路径"><a href="#网络树爬取路径" class="headerlink" title="网络树爬取路径"></a>网络树爬取路径</h3><p><em>引入</em></p>
+<blockquote>
+<p>一个网站往往由很多相互关联的网页组成，每个网页上都有可能包含我们所关心的数据，那么我们怎么样获取这些数据呢？显然我们必须穿梭于各个网页之间，那么按什么样的规则穿梭呢？常用的有深度优先和广度优先方法。为了说明这两种方法的工作过程，我们特意设计一个简单的网站</p>
+</blockquote>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><ul>
+<li>设计好books.html, program.html, database.html,network.html,mysql.html,java.html,python.html等网页文件以utf-8的编码存储在文件夹，各个文件内容如下代码</li>
+<li>搭建好用Flask设计一个server.py的Web程序来呈现它们</li>
+<li>创建客户端client，分别用递归，dfs ，bfs方法实现路径的爬取</li>
+</ul>
+<p><em>代码</em></p>
+<p><em>server</em></p>
+<pre><code>import flask
+import os
+from datetime import timedelta
+app = flask.Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+
+
+def getFile(fileName):
+    data = b""
+    if os.path.exists(fileName):
+        fobj = open(fileName, "rb")
+        data = fobj.read()
+        fobj.close()
+        return data
+
+
+@app.route("/")
+def index():
+    return getFile("books.html")
+
+
+@app.route("/&lt;section&gt;")
+def process(section):
+    data = ""
+    if section != "":
+        data = getFile(section)
+    return data
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre><ul>
+<li>books.html<pre><code>&lt;h3&gt;计算机&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="database.html"&gt;数据库&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="program.html"&gt;程序设计&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="network.html"&gt;计算机网络&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></li>
+<li>database.html<pre><code>&lt;h3&gt;数据库&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="mysql.html"&gt;MySQL数据库&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></li>
+<li>program.html<pre><code>&lt;h3&gt;程序设计&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="python.html"&gt;Python程序设计&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="java.html"&gt;Java程序设计&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></li>
+<li>network.html<pre><code>&lt;h3&gt;计算机网络&lt;/h3&gt;</code></pre></li>
+<li>mysql.hhtml<pre><code>&lt;h3&gt;MySQL数据库&lt;/h3&gt;</code></pre></li>
+<li>python.html<pre><code>&lt;h3&gt;Python程序设计&lt;/h3&gt;</code></pre></li>
+<li>java.html<pre><code>&lt;h3&gt;Java程序设计&lt;/h3&gt;</code></pre></li>
+</ul>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><p><em>code</em></p>
+<pre><code>from bs4 import BeautifulSoup
+import urllib.request
+
+
+def spider(url):
+    try:
+        resp = urllib.request.urlopen(url)
+        data = resp.read().decode()
+        soup = BeautifulSoup(data, "lxml")
+        print(soup.select("h3")[0].text)
+        links = soup.select("a")
+        for link in links:
+            url = start_url + link["href"]
+            spider(url)
+    except Exception as e:
+        print(e)
+
+if __name__ == '__main__':
+    start_url = "http://127.0.0.1:5000/"
+    spider(start_url)
+    print("The End")
+</code></pre><h4 id="广度优先搜索（bfs"><a href="#广度优先搜索（bfs" class="headerlink" title="广度优先搜索（bfs)"></a>广度优先搜索（bfs)</h4><p><em>code</em></p>
+<pre><code>from bs4 import BeautifulSoup
+import urllib.request
+
+
+class Queue:
+
+    def __init__(self):
+        self.Q = []
+
+    def fetch(self):
+        return self.Q.pop(0)
+
+    def enter(self, obj):
+        self.Q.append(obj)
+
+    def empty(self):
+        return len(self.Q) == 0
+
+
+def bfs_spider(url):
+    queue = Queue()
+    queue.enter(url)
+    while not queue.empty():
+        url = queue.fetch()
+        try:
+            resp = urllib.request.urlopen(url)
+            data = resp.read().decode()
+            soup = BeautifulSoup(data, "lxml")
+            print(soup.select("h3")[0].text)
+            links = soup.select("a")
+            for link in links:
+                url = start_url + link["href"]
+                queue.enter(url)
+        except Exception as e:
+            print(e)
+
+start_url = ""
+
+if __name__ == '__main__':
+    start_url = "http://127.0.0.1:5000/"
+    bfs_spider(start_url)
+    print("The End")
+</code></pre><h4 id="深度优先搜索（dfs）"><a href="#深度优先搜索（dfs）" class="headerlink" title="深度优先搜索（dfs）"></a>深度优先搜索（dfs）</h4><p><em>code</em></p>
+<pre><code>from bs4 import BeautifulSoup
+import urllib.request
+
+
+class Stack:
+
+    def __init__(self):
+        self.st = []
+
+    def pop(self):
+        return self.st.pop()  # 获取最后一个元素
+
+    def push(self, obj):
+        self.st.append(obj)
+
+    def empty(self):
+        return len(self.st) == 0
+
+
+def dfs_spider(url):
+    stack = Stack()
+    stack.push(start_url)
+    while not stack.empty():
+        url = stack.pop()
+        try:
+            resp = urllib.request.urlopen(url)
+            data = resp.read().decode()
+            soup = BeautifulSoup(data, "lxml")
+            print(soup.select("h3")[0].text)
+            links = soup.select("a")
+            for link in links:
+                url = start_url + link["href"]
+                stack.push(url)
+
+        except Exception as e:
+            print(e)
+
+if __name__ == '__main__':
+    start_url = "http://127.0.0.1:5000/"
+    dfs_spider(start_url)
+    print("The End")
+</code></pre><h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -2380,7 +2552,7 @@ ws<span class="token punctuation">.</span>process<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.3k</span>&nbsp;字
+                class="white-color">11.1k</span>&nbsp;字
             
             
             
