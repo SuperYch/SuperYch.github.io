@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>SuperYch</title>
+  <title>スーパーヒツジ</title>
   
-  <subtitle>Never too old to learn</subtitle>
+  <subtitle>しんみりする</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
