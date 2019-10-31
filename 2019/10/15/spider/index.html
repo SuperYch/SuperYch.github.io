@@ -5,10 +5,10 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Python网络爬虫程序技术, SuperYch,github">
-    <meta name="description" content="flask web网络flask帮助文档
+    <meta name="description" content="flask网站搭建与访问flask web网络flask帮助文档
 flask简介blog
 
-Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’Django是一个重型框架官方文档: http://flask.pocoo.or">
+Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’Django是一个重型框架官方文档: http://fl">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -400,7 +400,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        10.8k
+                        11.1k
                     </div>
                     
 
@@ -423,7 +423,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="flask-web网络"><a href="#flask-web网络" class="headerlink" title="flask web网络"></a>flask web网络</h4><p><a href="http://docs.jinkan.org/docs/flask/" target="_blank" rel="noopener">flask帮助文档</a></p>
+                <h3 id="flask网站搭建与访问"><a href="#flask网站搭建与访问" class="headerlink" title="flask网站搭建与访问"></a>flask网站搭建与访问</h3><h4 id="flask-web网络"><a href="#flask-web网络" class="headerlink" title="flask web网络"></a>flask web网络</h4><p><a href="http://docs.jinkan.org/docs/flask/" target="_blank" rel="noopener">flask帮助文档</a></p>
 <p><em>flask简介</em><br><a href="https://www.cnblogs.com/gugubeng/p/9722668.html" target="_blank" rel="noopener">blog</a></p>
 <blockquote>
 <p>Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’<br>Django是一个重型框架<br>官方文档: <a href="http://flask.pocoo.org/docs/0.12/" target="_blank" rel="noopener">http://flask.pocoo.org/docs/0.12/</a><br>中文文档: <a href="http://docs.jinkan.org/docs/flask/" target="_blank" rel="noopener">http://docs.jinkan.org/docs/flask/</a><br>Flask和Django一样，也是一个基于MVC设计模式的Web框架<br>M:Model   V:View   C:Controller<br>MVVM,MVT</p>
@@ -1077,7 +1077,7 @@ except Exception as e:
 
 
 <hr>
-<h4 id="re库的使用"><a href="#re库的使用" class="headerlink" title="re库的使用"></a>re库的使用</h4><p><em>re库主要功能函数</em></p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><h4 id="re库的使用"><a href="#re库的使用" class="headerlink" title="re库的使用"></a>re库的使用</h4><p><em>re库主要功能函数</em></p>
 <table>
 <thead>
 <tr>
@@ -1540,7 +1540,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <li>心情不好,细节后续会继续补充</li>
 </ul>
 <hr>
-<h4 id="BeautifulSoup的使用"><a href="#BeautifulSoup的使用" class="headerlink" title="BeautifulSoup的使用"></a><a href="https://www.cnblogs.com/youxin/p/3190433.html" target="_blank" rel="noopener">BeautifulSoup的使用</a></h4><p><a href="https://blog.csdn.net/lu8000/article/details/82313054" target="_blank" rel="noopener">参考博客</a></p>
+<h3 id="BeautifulSoup"><a href="#BeautifulSoup" class="headerlink" title="BeautifulSoup"></a>BeautifulSoup</h3><h4 id="BeautifulSoup的使用"><a href="#BeautifulSoup的使用" class="headerlink" title="BeautifulSoup的使用"></a><a href="https://www.cnblogs.com/youxin/p/3190433.html" target="_blank" rel="noopener">BeautifulSoup的使用</a></h4><p><a href="https://blog.csdn.net/lu8000/article/details/82313054" target="_blank" rel="noopener">参考博客</a></p>
 <ul>
 <li><p>安装</p>
 <blockquote>
@@ -2125,7 +2125,23 @@ start_url <span class="token operator">=</span> <span class="token string">""</s
     dfs_spider<span class="token punctuation">(</span>start_url<span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
 </code></pre>
-<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><script>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>（待更新）</p>
+<hr>
+<h3 id="网站图爬取路径"><a href="#网站图爬取路径" class="headerlink" title="网站图爬取路径"></a>网站图爬取路径</h3><p><em>引入</em></p>
+<blockquote>
+<p>网站的各个网页之间的关系未必是树的结构，它们可能形成一个复杂的图的结构，如果在前面的网页都加一条<code>&lt;a href = "books.html"&gt;Home&lt;/a&gt;</code>，让每个网页都能回到主界面，那么网站的关系就是一个有回路的图</p>
+</blockquote>
+<h4 id="准备-1"><a href="#准备-1" class="headerlink" title="准备"></a>准备</h4><ul>
+<li>设计好books.html, program.html, database.html,network.html,mysql.html,java.html,python.html等网页文件以utf-8的编码存储在文件夹，各个文件内容见上一章</li>
+<li>搭建好用Flask设计一个server.py的Web程序来呈现它们，相关内容见上一章</li>
+<li>创建客户端client，分别用递归，dfs ，bfs方法实现路径的爬取</li>
+</ul>
+<h4 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h4><p><em>code</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token punctuation">(</span><span class="token number">10</span><span class="token operator">/</span><span class="token number">31</span>晚<span class="token punctuation">)</span></code></pre>
+<h4 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h4><p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">（<span class="token number">10</span><span class="token operator">/</span><span class="token number">31</span>晚）</code></pre>
+<h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><p>（待更新）</p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -2563,7 +2579,7 @@ start_url <span class="token operator">=</span> <span class="token string">""</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">11.1k</span>&nbsp;字
+                class="white-color">11.3k</span>&nbsp;字
             
             
             
