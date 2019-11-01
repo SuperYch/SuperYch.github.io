@@ -2152,65 +2152,73 @@ start_url <span class="token operator">=</span> <span class="token string">""</s
 </ul>
 <p><em>代码</em></p>
 <p><em>server</em></p>
-<pre><code>import flask
-import os
-from datetime import timedelta
-app = flask.Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">import</span> os
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
 
 
-def getFile(fileName):
-    data = b""
-    if os.path.exists(fileName):
-        fobj = open(fileName, "rb")
-        data = fobj.read()
-        fobj.close()
-        return data
+<span class="token keyword">def</span> <span class="token function">getFile</span><span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    data <span class="token operator">=</span> b<span class="token string">""</span>
+    <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span>fileName<span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> fobj<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> data
 
 
-@app.route("/")
-def index():
-# 主界面
-    return getFile("books.html")
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token comment" spellcheck="true"># 主界面</span>
+    <span class="token keyword">return</span> getFile<span class="token punctuation">(</span><span class="token string">"books.html"</span><span class="token punctuation">)</span>
 
 
-@app.route("/&lt;section&gt;")
-# 获取各个网页
-def process(section):
-    data = ""
-    if section != "":
-        data = getFile(section)
-    return data
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/&lt;section>"</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># 获取各个网页</span>
+<span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>section<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    data <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">if</span> section <span class="token operator">!=</span> <span class="token string">""</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> getFile<span class="token punctuation">(</span>section<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> data
 
 
-if __name__ == '__main__':
-    app.run()
-</code></pre><ul>
-<li>books.html<pre><code>&lt;h3&gt;计算机&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="database.html"&gt;数据库&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="program.html"&gt;程序设计&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="network.html"&gt;计算机网络&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</code></pre></li>
-<li>database.html<pre><code>&lt;h3&gt;数据库&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="mysql.html"&gt;MySQL数据库&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
-<li>program.html<pre><code>&lt;h3&gt;程序设计&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="python.html"&gt;Python程序设计&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="java.html"&gt;Java程序设计&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
-<li>network.html<pre><code>&lt;h3&gt;计算机网络&lt;/h3&gt;
-&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
-<li>mysql.hhtml<pre><code>&lt;h3&gt;MySQL数据库&lt;/h3&gt;
-&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
-<li>python.html<pre><code>&lt;h3&gt;Python程序设计&lt;/h3&gt;
-&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
-<li>java.html<pre><code>&lt;h3&gt;Java程序设计&lt;/h3&gt;
-&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li>books.html<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>计算机<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>database.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>数据库<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>program.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>network.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>计算机网络<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>database.html<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>数据库<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>MySQL数据库<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>program.html<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>python.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Python程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Java程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>network.html<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>计算机网络<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>mysql.hhtml<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>MySQL数据库<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>python.html<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>Python程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li>java.html<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>Java程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+</li>
 </ul>
 <h4 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h4><p><em>code</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
@@ -2546,7 +2554,7 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用来整理codeforces的题
+                            用来整理codeforces的题，每周一更
                         
                     </div>
                     <div class="publish-info">
@@ -2583,29 +2591,33 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/13/hello-world/">
+                <a href="/2019/09/05/markdown/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="markdown使用">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">markdown使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                            在编写hexo博客时所有注意的编辑格式
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-05
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            SuperYch
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/标记语言/" class="post-category">
+                                    标记语言
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -2613,16 +2625,8 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/nodejs/">
-                        <span class="chip bg-color">nodejs</span>
-                    </a>
-                    
-                    <a href="/tags/npm/">
-                        <span class="chip bg-color">npm</span>
-                    </a>
-                    
-                    <a href="/tags/nvm/">
-                        <span class="chip bg-color">nvm</span>
+                    <a href="/tags/轻量级/">
+                        <span class="chip bg-color">轻量级</span>
                     </a>
                     
                 </div>
@@ -2748,7 +2752,7 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">12k</span>&nbsp;字
+                class="white-color">11.8k</span>&nbsp;字
             
             
             

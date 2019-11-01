@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-11-01T05:53:23.431Z</updated>
+  <updated>2019-11-01T16:35:39.233Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://superych.github.io/2019/11/01/leetcode/"/>
     <id>https://superych.github.io/2019/11/01/leetcode/</id>
     <published>2019-11-01T05:53:23.000Z</published>
-    <updated>2019-11-01T05:53:23.431Z</updated>
+    <updated>2019-11-01T16:35:39.233Z</updated>
     
     <summary type="html">
     
@@ -41,6 +41,10 @@
     
     
     
+      <category term="java" scheme="https://superych.github.io/tags/java/"/>
+    
+      <category term="竞赛" scheme="https://superych.github.io/tags/%E7%AB%9E%E8%B5%9B/"/>
+    
   </entry>
   
   <entry>
@@ -48,7 +52,7 @@
     <link href="https://superych.github.io/2019/10/29/codeforces/"/>
     <id>https://superych.github.io/2019/10/29/codeforces/</id>
     <published>2019-10-28T16:05:03.000Z</published>
-    <updated>2019-10-29T11:11:19.032Z</updated>
+    <updated>2019-11-01T16:35:55.984Z</updated>
     
     <summary type="html">
     
@@ -79,7 +83,7 @@
     <link href="https://superych.github.io/2019/10/15/spider/"/>
     <id>https://superych.github.io/2019/10/15/spider/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-11-01T14:56:32.310Z</updated>
+    <updated>2019-11-01T15:16:10.515Z</updated>
     
     <summary type="html">
     
@@ -104,40 +108,11 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://superych.github.io/2019/10/13/hello-world/"/>
-    <id>https://superych.github.io/2019/10/13/hello-world/</id>
-    <published>2019-10-13T06:46:00.393Z</published>
-    <updated>2019-10-29T11:39:25.494Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="nodejs" scheme="https://superych.github.io/tags/nodejs/"/>
-    
-      <category term="npm" scheme="https://superych.github.io/tags/npm/"/>
-    
-      <category term="nvm" scheme="https://superych.github.io/tags/nvm/"/>
-    
-  </entry>
-  
-  <entry>
     <title>markdown使用</title>
     <link href="https://superych.github.io/2019/09/05/markdown/"/>
     <id>https://superych.github.io/2019/09/05/markdown/</id>
     <published>2019-09-05T10:29:29.000Z</published>
-    <updated>2019-10-23T15:25:27.953Z</updated>
+    <updated>2019-11-01T16:35:19.289Z</updated>
     
     <summary type="html">
     
@@ -156,10 +131,10 @@
     </summary>
     
     
-      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
+      <category term="标记语言" scheme="https://superych.github.io/categories/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"/>
     
     
-      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
+      <category term="轻量级" scheme="https://superych.github.io/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7/"/>
     
   </entry>
   
