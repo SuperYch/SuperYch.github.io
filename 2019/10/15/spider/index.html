@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        11.1k
+                        11.7k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        50 分
+                        54 分
                     </div>
                     
                 
@@ -2145,15 +2145,171 @@ start_url <span class="token operator">=</span> <span class="token string">""</s
 <p>网站的各个网页之间的关系未必是树的结构，它们可能形成一个复杂的图的结构，如果在前面的网页都加一条<code>&lt;a href = "books.html"&gt;Home&lt;/a&gt;</code>，让每个网页都能回到主界面，那么网站的关系就是一个有回路的图</p>
 </blockquote>
 <h4 id="准备-1"><a href="#准备-1" class="headerlink" title="准备"></a>准备</h4><ul>
-<li>设计好books.html, program.html, database.html,network.html,mysql.html,java.html,python.html等网页文件以utf-8的编码存储在文件夹，各个文件内容见上一章</li>
+<li>设计好books.html, program.html, database.html,network.html,mysql.html,java.html,python.html等网页文件以utf-8的编码存储在文件夹，且除了books.html不需要设置回溯，其他语句都设置了能够回到主菜单的语句<code>&lt;a href="books.html"&gt;&lt;/a&gt;</code></li>
 <li>搭建好用Flask设计一个server.py的Web程序来呈现它们，相关内容见上一章</li>
 <li>创建客户端client，分别用递归，dfs ，bfs方法实现路径的爬取</li>
+<li>在客户端的spider里设置url的列表，用来排除已访问的链接，避免数据重复爬取</li>
+</ul>
+<p><em>代码</em></p>
+<p><em>server</em></p>
+<pre><code>import flask
+import os
+from datetime import timedelta
+app = flask.Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+
+
+def getFile(fileName):
+    data = b""
+    if os.path.exists(fileName):
+        fobj = open(fileName, "rb")
+        data = fobj.read()
+        fobj.close()
+        return data
+
+
+@app.route("/")
+def index():
+# 主界面
+    return getFile("books.html")
+
+
+@app.route("/&lt;section&gt;")
+# 获取各个网页
+def process(section):
+    data = ""
+    if section != "":
+        data = getFile(section)
+    return data
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre><ul>
+<li>books.html<pre><code>&lt;h3&gt;计算机&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="database.html"&gt;数据库&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="program.html"&gt;程序设计&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="network.html"&gt;计算机网络&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></li>
+<li>database.html<pre><code>&lt;h3&gt;数据库&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="mysql.html"&gt;MySQL数据库&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
+<li>program.html<pre><code>&lt;h3&gt;程序设计&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="python.html"&gt;Python程序设计&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="java.html"&gt;Java程序设计&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
+<li>network.html<pre><code>&lt;h3&gt;计算机网络&lt;/h3&gt;
+&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
+<li>mysql.hhtml<pre><code>&lt;h3&gt;MySQL数据库&lt;/h3&gt;
+&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
+<li>python.html<pre><code>&lt;h3&gt;Python程序设计&lt;/h3&gt;
+&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
+<li>java.html<pre><code>&lt;h3&gt;Java程序设计&lt;/h3&gt;
+&lt;a href="books.html"&gt;&lt;/a&gt;</code></pre></li>
 </ul>
 <h4 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h4><p><em>code</em></p>
-<pre class=" language-python"><code class="language-python"><span class="token punctuation">(</span><span class="token number">10</span><span class="token operator">/</span><span class="token number">31</span>晚<span class="token punctuation">)</span></code></pre>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+
+
+<span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>st <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">pop</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>st<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">push</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> obj<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>st<span class="token punctuation">.</span>append<span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">empty</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>st<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span>
+
+
+<span class="token keyword">def</span> <span class="token function">spider</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    stack <span class="token operator">=</span> Stack<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    stack<span class="token punctuation">.</span>push<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token operator">not</span> stack<span class="token punctuation">.</span>empty<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            url <span class="token operator">=</span> stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> url <span class="token operator">not</span> <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+                urls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                <span class="token keyword">try</span><span class="token punctuation">:</span>
+                    resp <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    data <span class="token operator">=</span> resp<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"h3"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+                    links <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span>
+                    <span class="token keyword">for</span> link <span class="token keyword">in</span> links<span class="token punctuation">:</span>
+                        url <span class="token operator">=</span> start_url <span class="token operator">+</span> link<span class="token punctuation">[</span><span class="token string">"href"</span><span class="token punctuation">]</span>
+                        stack<span class="token punctuation">.</span>push<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+start_url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000/"</span>
+spider<span class="token punctuation">(</span>start_url<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+</code></pre>
 <h4 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h4><p><em>code</em></p>
-<pre class=" language-python"><code class="language-python">（<span class="token number">10</span><span class="token operator">/</span><span class="token number">31</span>晚）</code></pre>
-<h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><p>（待更新）</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+
+
+<span class="token keyword">class</span> <span class="token class-name">Queue</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>qe <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">fetch</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>qe<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">enter</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> obj<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>qe<span class="token punctuation">.</span>append<span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">empty</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>qe<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span>
+
+
+<span class="token keyword">def</span> <span class="token function">spider</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    queue <span class="token operator">=</span> Queue<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    queue<span class="token punctuation">.</span>enter<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    <span class="token keyword">while</span> <span class="token operator">not</span> queue<span class="token punctuation">.</span>empty<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            url <span class="token operator">=</span> queue<span class="token punctuation">.</span>fetch<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> url <span class="token operator">not</span> <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+                <span class="token keyword">try</span><span class="token punctuation">:</span>
+                    urls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    resp <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    data <span class="token operator">=</span> resp<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"h3"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+                    links <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span>
+                    <span class="token keyword">for</span> link <span class="token keyword">in</span> links<span class="token punctuation">:</span>
+                        url <span class="token operator">=</span> start_url <span class="token operator">+</span> link<span class="token punctuation">[</span><span class="token string">"href"</span><span class="token punctuation">]</span>
+                        queue<span class="token punctuation">.</span>enter<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+start_url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000/"</span>
+spider<span class="token punctuation">(</span>start_url<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><blockquote>
+<p>list index out of range可以查看html页面是否缺少标题<code>&lt;h3&gt;&lt;/h3&gt;</code><br>html与htm写链接后缀别写错了</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2592,7 +2748,7 @@ start_url <span class="token operator">=</span> <span class="token string">""</s
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">11.3k</span>&nbsp;字
+                class="white-color">12k</span>&nbsp;字
             
             
             
