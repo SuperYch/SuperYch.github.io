@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        11.7k
+                        13.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        54 分
+                        60 分
                     </div>
                     
                 
@@ -2318,6 +2318,230 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
 <h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><blockquote>
 <p>list index out of range可以查看html页面是否缺少标题<code>&lt;h3&gt;&lt;/h3&gt;</code><br>html与htm写链接后缀别写错了</p>
 </blockquote>
+<hr>
+<h3 id="python实现多线程"><a href="#python实现多线程" class="headerlink" title="python实现多线程"></a>python实现多线程</h3><p><em>线程类似于同时执行多个不同程序，多线程运行有如下的优点</em></p>
+<ul>
+<li><p>使用线程可以把占据长时间的程序中的任务放到后台去处理</p>
+</li>
+<li><p>程序的运行速度可能加快</p>
+</li>
+<li><p>在一些等待的任务实现上如用户输入，文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等</p>
+</li>
+<li><h4 id="python的前后台线程"><a href="#python的前后台线程" class="headerlink" title="python的前后台线程"></a>python的前后台线程</h4><blockquote>
+<p>在Python中要启动一个线程，可以使用threading包中的Thread建立一个对象，这个Thread类的基本原型是：<br><code>t = Thread(target, args = None)</code><br>其中target是要执行的线程函数，args是一个元组或者列表为target的函数提供参数，然后调用t.start()就开始线程</p>
+</blockquote>
+</li>
+<li><p><code>r.setDaemon(False)</code></p>
+<blockquote>
+<p>设置线程r为<strong>后台线程</strong>，后台线程<strong>不因主线程结束而结束</strong></p>
+</blockquote>
+</li>
+<li><p><code>r.setDaemon(True)</code></p>
+<blockquote>
+<p>设置线程r为<strong>前台线程</strong>，后台线程因<strong>主线程结束而结束</strong></p>
+</blockquote>
+</li>
+</ul>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> threading
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+
+
+<span class="token keyword">def</span> <span class="token function">reading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"reading"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+r <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>reading<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 写成reading()有区别</span>
+r<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+r<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""结果
+reading 0
+The End
+reading 1
+reading 2
+reading 3
+reading 4
+reading 5
+reading 6
+reading 7
+reading 8
+reading 9
+"""</span></code></pre>
+<h4 id="线程的等待"><a href="#线程的等待" class="headerlink" title="线程的等待"></a>线程的等待</h4><blockquote>
+<p>在多线程的程序中往往一个线程(例如主线程)要等待其他线程执行完毕才继续执行，这可以用join函数，使用方法是：<br><code>线程对象r.join()</code><br>意思是要等待r执行完毕其他线程才能继续执行<br>在一个线程代码中执行这条语句，当前的线程就会停止执行，一直等到指定的线程对象的线程执行完毕后才继续执行，即这条语句启动阻塞等待的作用</p>
+</blockquote>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> threading
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+
+
+<span class="token keyword">def</span> <span class="token function">reading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"reading"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+r <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>reading<span class="token punctuation">)</span>
+r<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+r<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">"""结果
+reading 0
+reading 1
+reading 2
+reading 3
+reading 4
+The End
+"""</span></code></pre>
+<h4 id="等待加后台线程"><a href="#等待加后台线程" class="headerlink" title="等待加后台线程"></a>等待加后台线程</h4><blockquote>
+<p>主线程等待t线程，t线程调用r线程，t线程等待r线程，然后r线程结束，输出”the text end”，然后输出”The End”<br><em>code</em></p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> threading
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+
+
+<span class="token keyword">def</span> <span class="token function">reading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"treading"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    r <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>reading<span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"the text end"</span><span class="token punctuation">)</span>
+
+t <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>test<span class="token punctuation">)</span>
+t<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+<span class="token string">""</span>"结果
+<span class="token keyword">import</span> threading
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+
+
+<span class="token keyword">def</span> <span class="token function">reading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"treading"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    r <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>reading<span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    r<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"the text end"</span><span class="token punctuation">)</span>
+
+t <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>test<span class="token punctuation">)</span>
+t<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+<span class="token string">""</span></code></pre>
+<h4 id="多线程与资源"><a href="#多线程与资源" class="headerlink" title="多线程与资源"></a>多线程与资源</h4><blockquote>
+<p>在多个线程的程序中一个普遍存在的问题是，如果多个线程要竞争同时访问与改写公共资源，那么应该怎么样协调各个线程的关系。一个普遍使用方法是使用线程锁，Python使用threading._RLock()类来创建一个线程锁对象：<br>lock = threading._RLock()<br>这个对象lock有两个重要方法是<code>acquire()</code>和<code>release()</code></p>
+</blockquote>
+<ul>
+<li>lock.acquire()和lock.release()<blockquote>
+<ul>
+<li><p>语句强迫lock获取线程锁，如果已经有另外的线程先调用了<code>acquire()</code>方法获取了线程锁而还没有调用<code>release()</code>释放锁，那么这个<code>lock.acquire()</code>就阻塞当前的线程，一直等待锁的控制权，直到别的线程释放锁后<code>lock.acquire()</code>就获取锁并解除阻塞，线程继续执行，执行后线程要调用<code>lock.release()</code>释放锁，不然别的线程会一直得不到锁的控制权</p>
+</li>
+<li><p>使用<code>acquire/release</code>的工作机制我们可以把一段修改公共资源的代码用<code>acquire()与release()</code>夹起来，这样就保证一次最多只有一个线程在修改公共资源，别的线程如果也要修改就必须等待，直到本线程调用<code>release()</code>释放锁后别的线程才能获取锁的控制权进行资源</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p><em>code</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> threading
+<span class="token keyword">import</span> time
+
+lock <span class="token operator">=</span> threading<span class="token punctuation">.</span>_RLock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+words <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"d"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"p"</span><span class="token punctuation">,</span> <span class="token string">"m"</span><span class="token punctuation">,</span> <span class="token string">"e"</span><span class="token punctuation">,</span> <span class="token string">"f"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">]</span>
+
+
+<span class="token keyword">def</span> <span class="token function">increase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> words
+    <span class="token keyword">for</span> count <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"A acquire"</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>words<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>words<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> words<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    t <span class="token operator">=</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                    words<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> words<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+                    words<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> t
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">,</span> words<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+        lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">decrease</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> words
+    <span class="token keyword">for</span> count <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        lock<span class="token punctuation">.</span>acquire<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"D acquire"</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>words<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>words<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> words<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    t <span class="token operator">=</span> words<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                    words<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> words<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+                    words<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> t
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"D"</span><span class="token punctuation">,</span> words<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+        lock<span class="token punctuation">.</span>release<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+A <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>increase<span class="token punctuation">)</span>
+A<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+A<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+D <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>decrease<span class="token punctuation">)</span>
+D<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+D<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+<span class="token string">""</span>"结果
+A acquire
+A <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'p'</span><span class="token punctuation">]</span>
+The End
+A acquire
+A <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'p'</span><span class="token punctuation">]</span>
+D acquire
+D <span class="token punctuation">[</span><span class="token string">'p'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">]</span>
+D acquire
+D <span class="token punctuation">[</span><span class="token string">'p'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">]</span>
+D acquire
+D <span class="token punctuation">[</span><span class="token string">'p'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">]</span>
+D acquire
+D <span class="token punctuation">[</span><span class="token string">'p'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">]</span>
+A acquire
+A <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'p'</span><span class="token punctuation">]</span>
+D acquire
+D <span class="token punctuation">[</span><span class="token string">'p'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">]</span>
+A acquire
+A <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'p'</span><span class="token punctuation">]</span>
+A acquire
+A <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">,</span> <span class="token string">'e'</span><span class="token punctuation">,</span> <span class="token string">'f'</span><span class="token punctuation">,</span> <span class="token string">'m'</span><span class="token punctuation">,</span> <span class="token string">'p'</span><span class="token punctuation">]</span>
+<span class="token string">""</span>
+</code></pre>
+<p>####注意事项</p>
+<ul>
+<li>有时候sleep太久会导致与理想结果不同</li>
+<li>r = threading.Thread(target = reading)与t = threading.Thread(target = reading())是不同的</li>
+<li><strong>python36通过将方法作为参数传入生成Thread对象 target不能带括号 否则就会由主线程执行…</strong>(别人的见解)</li>
+<li><strong>调用函数，如果带括号，那么是调用函数运行后的结果，调用函数不带括号，调用的是函数本身</strong>(我认为)</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2580,6 +2804,14 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
                         <span class="chip bg-color">算法</span>
                     </a>
                     
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                    <a href="/tags/c-c/">
+                        <span class="chip bg-color">c/c++</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -2740,6 +2972,13 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
 
     <footer class="page-footer bg-color">
     <div class="container row center-align">
@@ -2752,7 +2991,7 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">11.8k</span>&nbsp;字
+                class="white-color">13.6k</span>&nbsp;字
             
             
             

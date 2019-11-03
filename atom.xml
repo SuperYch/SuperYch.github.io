@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-11-01T16:35:39.233Z</updated>
+  <updated>2019-11-02T13:51:03.399Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://superych.github.io/2019/11/01/leetcode/"/>
     <id>https://superych.github.io/2019/11/01/leetcode/</id>
     <published>2019-11-01T05:53:23.000Z</published>
-    <updated>2019-11-01T16:35:39.233Z</updated>
+    <updated>2019-11-02T13:51:03.399Z</updated>
     
     <summary type="html">
     
@@ -29,21 +29,21 @@
       
         
         
-          &lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return; }
-       
+          &lt;h3 id=&quot;中等难度&quot;&gt;&lt;a href=&quot;#中等难度&quot; class=&quot;headerlink&quot; title=&quot;中等难度&quot;&gt;&lt;/a&gt;中等难度&lt;/h3&gt;&lt;h4 id=&quot;加油站&quot;&gt;&lt;a href=&quot;#加油站&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
+      <category term="竞赛" scheme="https://superych.github.io/categories/%E7%AB%9E%E8%B5%9B/"/>
+    
+    
+      <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="java" scheme="https://superych.github.io/tags/java/"/>
     
-      <category term="竞赛" scheme="https://superych.github.io/tags/%E7%AB%9E%E8%B5%9B/"/>
+      <category term="python" scheme="https://superych.github.io/tags/python/"/>
     
   </entry>
   
@@ -52,7 +52,7 @@
     <link href="https://superych.github.io/2019/10/29/codeforces/"/>
     <id>https://superych.github.io/2019/10/29/codeforces/</id>
     <published>2019-10-28T16:05:03.000Z</published>
-    <updated>2019-11-01T16:35:55.984Z</updated>
+    <updated>2019-11-01T16:39:10.385Z</updated>
     
     <summary type="html">
     
@@ -76,6 +76,10 @@
     
       <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
+      <category term="python" scheme="https://superych.github.io/tags/python/"/>
+    
+      <category term="c/c++" scheme="https://superych.github.io/tags/c-c/"/>
+    
   </entry>
   
   <entry>
@@ -83,7 +87,7 @@
     <link href="https://superych.github.io/2019/10/15/spider/"/>
     <id>https://superych.github.io/2019/10/15/spider/</id>
     <published>2019-10-15T11:45:05.000Z</published>
-    <updated>2019-11-01T15:16:10.515Z</updated>
+    <updated>2019-11-03T09:42:33.588Z</updated>
     
     <summary type="html">
     
