@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        13.1k
+                        14.8k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        60 分
+                        69 分
                     </div>
                     
                 
@@ -2400,8 +2400,9 @@ reading 4
 The End
 """</span></code></pre>
 <h4 id="等待加后台线程"><a href="#等待加后台线程" class="headerlink" title="等待加后台线程"></a>等待加后台线程</h4><blockquote>
-<p>主线程等待t线程，t线程调用r线程，t线程等待r线程，然后r线程结束，输出”the text end”，然后输出”The End”<br><em>code</em></p>
+<p>主线程等待t线程，t线程调用r线程，t线程等待r线程，然后r线程结束，输出”the text e<br>nd”，然后输出”The End”</p>
 </blockquote>
+<p><em>code</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> threading
 <span class="token keyword">import</span> time
 <span class="token keyword">import</span> random
@@ -2541,6 +2542,278 @@ A <span class="token punctuation">[</span><span class="token string">'a'</span><
 <li>r = threading.Thread(target = reading)与t = threading.Thread(target = reading())是不同的</li>
 <li><strong>python36通过将方法作为参数传入生成Thread对象 target不能带括号 否则就会由主线程执行…</strong>(别人的见解)</li>
 <li><strong>调用函数，如果带括号，那么是调用函数运行后的结果，调用函数不带括号，调用的是函数本身</strong>(我认为)</li>
+</ul>
+<hr>
+<h3 id="爬取网站复杂数据"><a href="#爬取网站复杂数据" class="headerlink" title="爬取网站复杂数据"></a>爬取网站复杂数据</h3><h4 id="准备-2"><a href="#准备-2" class="headerlink" title="准备"></a>准备</h4><blockquote>
+<p>1.设计好books.html, program.html, database.html,network.html,mysql.html,java.html,python.html等网页文件以utf-8的编码存储在文件夹，个别修改过文件内容如下代码，其他见上一章</p>
+</blockquote>
+<blockquote>
+<p>2.由于我们的Web服务器是本地的，因此下载图像非常快，而实际应用中的Web网站是远程的一个服务器，由于网络原因可能下载会比较慢，为了模拟这个过程，我们在server程序中设置了sleep，在每次返回一个网页或者图像函数getFile中都随机等待1-10秒，这个过程十分类似网络条件较差的情景，即访问任何一个网页或者图像都有1-10秒的延迟</p>
+</blockquote>
+<blockquote>
+<p>3.对于客户端，我们设置了多线程，避免某个线程下载文件过慢，导致线程阻塞</p>
+</blockquote>
+<p><em>code</em></p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>MySQL数据库<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目前属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一。
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql.jpg<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Home<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>Java程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.jpg<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Home<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+</code></pre>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span>Python程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    Python是一种跨平台的计算机程序设计语言。是一种面向对象的动态类型语言，最初被设计用于编写自动化脚本(shell)，随着版本的不断更新和语言新功能的添加，越来越多被用于独立的、大型项目的开发。
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>python.jpg<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>books.html<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Home<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span></code></pre>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p><em>server</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">getFile</span><span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    data <span class="token operator">=</span> b<span class="token string">""</span>
+    <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>fileName<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span>fileName<span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> fobj<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> data
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> getFile<span class="token punctuation">(</span><span class="token string">"books.html"</span><span class="token punctuation">)</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/&lt;section>"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">process</span><span class="token punctuation">(</span>section<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    data <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">if</span> section <span class="token operator">!=</span> <span class="token string">""</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> getFile<span class="token punctuation">(</span>section<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> data
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><em>client</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> threading
+
+
+<span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> fileName<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        resp <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>url<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> resp<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"download"</span> <span class="token operator">+</span> fileName<span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"download"</span><span class="token punctuation">,</span> fileName<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">spider</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> urls
+    <span class="token keyword">if</span> url <span class="token operator">not</span> <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+        urls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            resp <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+            data <span class="token operator">=</span> resp<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">"h3"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+            links <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span>
+            divs <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">)</span>
+            imgs <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"img"</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> len<span class="token punctuation">(</span>divs<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">and</span> len<span class="token punctuation">(</span>imgs<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+                note <span class="token operator">=</span> divs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                <span class="token keyword">print</span><span class="token punctuation">(</span>note<span class="token punctuation">)</span>
+                url <span class="token operator">=</span> start_url <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> imgs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"src"</span><span class="token punctuation">]</span>
+                T <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>
+                    target<span class="token operator">=</span>download<span class="token punctuation">,</span> args<span class="token operator">=</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> imgs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"src"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                T<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+                T<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                threads<span class="token punctuation">.</span>append<span class="token punctuation">(</span>T<span class="token punctuation">)</span>
+            <span class="token keyword">for</span> link <span class="token keyword">in</span> links<span class="token punctuation">:</span>
+                href <span class="token operator">=</span> link<span class="token punctuation">[</span><span class="token string">"href"</span><span class="token punctuation">]</span>
+                url <span class="token operator">=</span> start_url <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> href
+                spider<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                <span class="token keyword">pass</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+start_url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000"</span>
+urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+threads <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+spider<span class="token punctuation">(</span>start_url<span class="token punctuation">)</span>
+<span class="token keyword">for</span> t <span class="token keyword">in</span> threads<span class="token punctuation">:</span>
+    t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+</code></pre>
+<p>####注意事项</p>
+<ul>
+<li><code>soup.find("h3").text</code>是find(“h3”)再<strong>.text</strong></li>
+<li><code>soup.select("h3")[0].text</code></li>
+</ul>
+<hr>
+<h3 id="实践项目-–-爬取网站的图像"><a href="#实践项目-–-爬取网站的图像" class="headerlink" title="实践项目 – 爬取网站的图像"></a>实践项目 – 爬取网站的图像</h3><p><em>实践要求</em></p>
+<blockquote>
+<p>我们指定一个网站(例如中国天气网站)，可以爬取这个网站中的所有图像文件，同时把这些文件保存到程序锁在文件夹images子文件夹中，我们先设计一个单线程的爬取程序，这个程序会因为网站的某个图像下载过程缓慢而效率低下，为了提高爬取的效率我们还设计了一个多线程的爬取程序，在多线程程序中如果一个文件下载缓慢，那么也就是它爬取的那个线程缓慢，不影响别的线程</p>
+</blockquote>
+<p><em>网页解析</em></p>
+<blockquote>
+<p>f12,图片检查</p>
+</blockquote>
+<p><em>准备</em></p>
+<blockquote>
+<p>网站：“<a href="http://www.weather.com.cn/”" target="_blank" rel="noopener">http://www.weather.com.cn/”</a><br>start_url: “<a href="http://www.weather.com.cn/weather1d/101230101.shtml&quot;(这里用福州)" target="_blank" rel="noopener">http://www.weather.com.cn/weather1d/101230101.shtml"(这里用福州)</a><br><code>import threading</code>掌握单线程和多线程<br><code>from bs4 import BeautifulSoup,UnicodeDammit</code><br><code>BeautifulSoup</code>用来解析data,eg:”html”<br><code>UnicodeDammit</code>判断数据的解码形式，eg：”utf-8”,”gbk”<br>在工程目录下<strong>建立images文件夹</strong><br>模拟浏览器访问网站<br><code>urljoin()</code>，<a href="https://www.jianshu.com/p/20065f9b39bb" target="_blank" rel="noopener">参考</a><br>第一个参数是基础母站的url，第二个是需要拼接成绝对路径的url。即使后者完全没有前者的内容，也可以。<br>如果url2，是一个完整的url，则以后者的为准，所以，不管url2是不是短连接，都可以放进去拼接。</p>
+</blockquote>
+<h4 id="单线程爬取图像的程序"><a href="#单线程爬取图像的程序" class="headerlink" title="单线程爬取图像的程序"></a>单线程爬取图像的程序</h4><p><em>code</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> UnicodeDammit
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">"User-Agent"</span><span class="token punctuation">:</span> <span class="token string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36"</span><span class="token punctuation">}</span>
+count <span class="token operator">=</span> <span class="token number">0</span>
+threads <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+start_url <span class="token operator">=</span> <span class="token string">"http://www.weather.com.cn/weather1d/101230101.shtml"</span>
+
+
+<span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> count
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        count <span class="token operator">=</span> count <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>url<span class="token punctuation">[</span>len<span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            ext <span class="token operator">=</span> url<span class="token punctuation">[</span>len<span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">4</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            ext <span class="token operator">=</span> <span class="token string">""</span>
+        req <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> data<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"images\\"</span> <span class="token operator">+</span> str<span class="token punctuation">(</span>count<span class="token punctuation">)</span> <span class="token operator">+</span> ext<span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"download"</span> <span class="token operator">+</span> str<span class="token punctuation">(</span>count<span class="token punctuation">)</span> <span class="token operator">+</span> ext<span class="token punctuation">)</span>
+
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">imageSpider</span><span class="token punctuation">(</span>start_url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> count
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        req <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>start_url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> data<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span> <span class="token string">"gbk"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+        soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+        images <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"img"</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> image <span class="token keyword">in</span> images<span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                src <span class="token operator">=</span> image<span class="token punctuation">[</span><span class="token string">"src"</span><span class="token punctuation">]</span>
+                url <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urljoin<span class="token punctuation">(</span>start_url<span class="token punctuation">,</span> src<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> url <span class="token operator">not</span> <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+                    urls<span class="token punctuation">.</span>append<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    download<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+            <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+imageSpider<span class="token punctuation">(</span>start_url<span class="token punctuation">)</span>
+
+</code></pre>
+<h4 id="多线程爬取图像的程序"><a href="#多线程爬取图像的程序" class="headerlink" title="多线程爬取图像的程序"></a>多线程爬取图像的程序</h4><p><em>code</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> UnicodeDammit
+<span class="token keyword">import</span> urllib<span class="token punctuation">.</span>request
+<span class="token keyword">import</span> threading
+
+headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">"User-Agent"</span><span class="token punctuation">:</span> <span class="token string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36"</span><span class="token punctuation">}</span>
+count <span class="token operator">=</span> <span class="token number">0</span>
+threads <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+start_url <span class="token operator">=</span> <span class="token string">"http://www.weather.com.cn/weather1d/101230101.shtml"</span>
+
+
+<span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>url<span class="token punctuation">[</span>len<span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"."</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            ext <span class="token operator">=</span> url<span class="token punctuation">[</span>len<span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">4</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            ext <span class="token operator">=</span> <span class="token string">""</span>
+        req <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> data<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"images\\"</span> <span class="token operator">+</span> str<span class="token punctuation">(</span>count<span class="token punctuation">)</span> <span class="token operator">+</span> ext<span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"downloaded"</span> <span class="token operator">+</span> str<span class="token punctuation">(</span>count<span class="token punctuation">)</span> <span class="token operator">+</span> ext<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">imageSpider</span><span class="token punctuation">(</span>start_url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> threads
+    <span class="token keyword">global</span> count
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        req <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>start_url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> data<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span> <span class="token string">"gbk"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+        soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+        images <span class="token operator">=</span> soup<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">"img"</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> image <span class="token keyword">in</span> images<span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                src <span class="token operator">=</span> image<span class="token punctuation">[</span><span class="token string">"src"</span><span class="token punctuation">]</span>
+                url <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urljoin<span class="token punctuation">(</span>start_url<span class="token punctuation">,</span> src<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> url <span class="token operator">not</span> <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    count <span class="token operator">=</span> count <span class="token operator">+</span> <span class="token number">1</span>
+                    T <span class="token operator">=</span> threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>download<span class="token punctuation">,</span> args<span class="token operator">=</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    T<span class="token punctuation">.</span>setDaemon<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+                    T<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    threads<span class="token punctuation">.</span>append<span class="token punctuation">(</span>T<span class="token punctuation">)</span>
+            <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+imageSpider<span class="token punctuation">(</span>start_url<span class="token punctuation">)</span>
+<span class="token keyword">for</span> t <span class="token keyword">in</span> threads<span class="token punctuation">:</span>
+    t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="注意事项-2"><a href="#注意事项-2" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li>出现<strong>“python thread group argument must be none for now”</strong>错误时，检查一下调用threading.Thread()中target写了没有</li>
+<li>出现<strong>“FileNotFoundError: [Errno 2] No such file or directory: ‘images/xsad.jpg’”</strong>，手动在工程项目文件夹下建立images文件夹</li>
+<li>出现<strong>“can only concatenate str (not “int”) to str”</strong>，是因为print时数字需要str(count)</li>
+<li>出现<strong>“[Errno 2] No such file or directory: ‘images\1.png’”</strong>，检查一下open()有无选择读入读写，或者读入读写选错</li>
 </ul>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -2991,7 +3264,7 @@ A <span class="token punctuation">[</span><span class="token string">'a'</span><
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.6k</span>&nbsp;字
+                class="white-color">15.4k</span>&nbsp;字
             
             
             
