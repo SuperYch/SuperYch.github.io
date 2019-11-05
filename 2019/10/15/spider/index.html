@@ -413,7 +413,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        14.8k
+                        15k
                     </div>
                     
 
@@ -2670,8 +2670,7 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
     t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
 </code></pre>
-<p>####注意事项</p>
-<ul>
+<h4 id="注意事项-2"><a href="#注意事项-2" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
 <li><code>soup.find("h3").text</code>是find(“h3”)再<strong>.text</strong></li>
 <li><code>soup.select("h3")[0].text</code></li>
 </ul>
@@ -2809,11 +2808,64 @@ imageSpider<span class="token punctuation">(</span>start_url<span class="token p
     t<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
 </code></pre>
-<h4 id="注意事项-2"><a href="#注意事项-2" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<h4 id="注意事项-3"><a href="#注意事项-3" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
 <li>出现<strong>“python thread group argument must be none for now”</strong>错误时，检查一下调用threading.Thread()中target写了没有</li>
 <li>出现<strong>“FileNotFoundError: [Errno 2] No such file or directory: ‘images/xsad.jpg’”</strong>，手动在工程项目文件夹下建立images文件夹</li>
 <li>出现<strong>“can only concatenate str (not “int”) to str”</strong>，是因为print时数字需要str(count)</li>
 <li>出现<strong>“[Errno 2] No such file or directory: ‘images\1.png’”</strong>，检查一下open()有无选择读入读写，或者读入读写选错</li>
+</ul>
+<hr>
+<h4 id="scrapy框架爬虫简介"><a href="#scrapy框架爬虫简介" class="headerlink" title="scrapy框架爬虫简介"></a>scrapy框架爬虫简介</h4><p><em>安装scrapy</em></p>
+<blockquote>
+<p>pip install scrapy</p>
+</blockquote>
+<p><em>建立项目</em></p>
+<blockquote>
+<p>scrapy startproject demo</p>
+</blockquote>
+<p><em>准备</em></p>
+<blockquote>
+<p>在F盘建立example文件夹<br>使用 scrapy startproject demo<br>在demo下还有一个demo<br>我们在example 下建立server服务器<br>在demo/demo/spiders下建立MySpider.py, run.py</p>
+</blockquote>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><p><em>server</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">"测试 scrapy"</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><em>spider</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> scrapy
+
+
+<span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> <span class="token string">"mySpider"</span>
+
+    <span class="token keyword">def</span> <span class="token function">start_requests</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000"</span>
+        <span class="token keyword">yield</span> scrapy<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> callback<span class="token operator">=</span>self<span class="token punctuation">.</span>parse<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+
+</code></pre>
+<p><em>run.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy <span class="token keyword">import</span> cmdline
+cmdline<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">"scrapy crawl mySpider -s LOG_ENABLED=False"</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<h4 id="注意事项-4"><a href="#注意事项-4" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li><strong>start_requests</strong> —request有s</li>
+<li><code>cmdline.execute("scrapy crawl mySpider -s LOG_ENABLED=False".split())</code>用来代替cmd输入指令</li>
+<li>run.py如果不在指定运行的spider下，需要更改setting</li>
 </ul>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -3264,7 +3316,7 @@ imageSpider<span class="token punctuation">(</span>start_url<span class="token p
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.4k</span>&nbsp;字
+                class="white-color">15.5k</span>&nbsp;字
             
             
             
