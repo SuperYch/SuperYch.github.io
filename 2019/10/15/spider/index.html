@@ -2815,7 +2815,7 @@ imageSpider<span class="token punctuation">(</span>start_url<span class="token p
 <li>出现<strong>“[Errno 2] No such file or directory: ‘images\1.png’”</strong>，检查一下open()有无选择读入读写，或者读入读写选错</li>
 </ul>
 <hr>
-<h4 id="scrapy框架爬虫简介"><a href="#scrapy框架爬虫简介" class="headerlink" title="scrapy框架爬虫简介"></a>scrapy框架爬虫简介</h4><p><em>安装scrapy</em></p>
+<h3 id="Scrapy框架"><a href="#Scrapy框架" class="headerlink" title="Scrapy框架"></a>Scrapy框架</h3><h4 id="scrapy框架爬虫简介"><a href="#scrapy框架爬虫简介" class="headerlink" title="scrapy框架爬虫简介"></a>scrapy框架爬虫简介</h4><p><em>安装scrapy</em></p>
 <blockquote>
 <p>pip install scrapy</p>
 </blockquote>
@@ -2862,7 +2862,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <p><em>run.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy <span class="token keyword">import</span> cmdline
 cmdline<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">"scrapy crawl mySpider -s LOG_ENABLED=False"</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
-<h4 id="注意事项-4"><a href="#注意事项-4" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<h5 id="注意事项-4"><a href="#注意事项-4" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
 <li><strong>start_requests</strong> —request有s</li>
 <li><code>cmdline.execute("scrapy crawl mySpider -s LOG_ENABLED=False".split())</code>用来代替cmd输入指令</li>
 <li>run.py如果不在指定运行的spider下，需要更改setting</li>
@@ -3296,13 +3296,6 @@ cmdline<span class="token punctuation">.</span>execute<span class="token punctua
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
     <footer class="page-footer bg-color">
