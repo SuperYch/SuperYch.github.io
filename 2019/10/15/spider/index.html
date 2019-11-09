@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        15k
+                        15.4k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        69 分
+                        71 分
                     </div>
                     
                 
@@ -2846,7 +2846,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> scrapy
 
 
-<span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true"># 继承 scrapy里的Spider类</span>
     name <span class="token operator">=</span> <span class="token string">"mySpider"</span>
 
     <span class="token keyword">def</span> <span class="token function">start_requests</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -2857,7 +2857,6 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
         <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
         data <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token keyword">print</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-
 </code></pre>
 <p><em>run.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy <span class="token keyword">import</span> cmdline
@@ -2865,8 +2864,56 @@ cmdline<span class="token punctuation">.</span>execute<span class="token punctua
 <h5 id="注意事项-4"><a href="#注意事项-4" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
 <li><strong>start_requests</strong> —request有s</li>
 <li><code>cmdline.execute("scrapy crawl mySpider -s LOG_ENABLED=False".split())</code>用来代替cmd输入指令</li>
-<li>run.py如果不在指定运行的spider下，需要更改setting</li>
+<li><em>run.py<em>如果不在指定运行的spider下，需要更改</em>setting.py</em></li>
+<li>·<code>callback</code>不要写错了</li>
 </ul>
+<hr>
+<h4 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h4><p><em>入口函数与入口地址</em></p>
+<blockquote>
+<p>在scrapy中我们使用了入口函数:</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">start_requests</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    url <span class="token operator">=</span> <span class="token string">"http://127.0.0.1:5000"</span>
+    <span class="token keyword">yield</span> scrapy<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url <span class="token operator">=</span> url<span class="token punctuation">,</span> callback <span class="token operator">=</span> self<span class="token punctuation">.</span>parse<span class="token punctuation">)</span></code></pre>
+<blockquote>
+<p>实际上这个函数也可以用start_urls的入口地址来代替：<br><code>start_urls = ["http://127.0.0.1:5000"]</code><br>入口的地址可以有多个，因此start_urls是一个列表，入口函数与入口地址的作用一样的，都是引导函数的开始</p>
+</blockquote>
+<p><em>回调函数parse</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span></code></pre>
+<blockquote>
+<p><code>yield scrapy.Request(url = url, callback = self.parse)</code>建立一个scrapy.Request请求类，向这个类提供url参数，指明要爬取的网页地址，爬取网页完成后就执行默认的回调函数parse<br>回调函数<code>parse</code>包含一个scrapy.Response类的对象response，它是网站相应的一切信息，其中respnse.url是网站的网址，response.body是网站相应的二进制数据，即网页的内容，通过decode()编码后变成字符串</p>
+</blockquote>
+<p><em>yield</em></p>
+<blockquote>
+<p>yield是Python的一种特殊语句，主要作用是返回一个值等待被取走<br>scrapy的框架使用的是异步执行过程，因此大量使用yield语句<br>eg:</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python">
+<span class="token keyword">def</span> <span class="token function">fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    s <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> x <span class="token keyword">in</span> s<span class="token punctuation">:</span>
+        <span class="token keyword">yield</span> x
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"The End"</span><span class="token punctuation">)</span>
+f <span class="token operator">=</span> fun<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+<span class="token keyword">for</span> e <span class="token keyword">in</span> f<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""结果
+&lt;generator object fun at 0x000002E0DA054E58>
+a
+b
+c
+The End
+"""</span></code></pre>
+<p><em>run.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy <span class="token keyword">import</span> cmdline
+cmdline<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">"scrapy crawl mySpider -s LOG_ENABLED=False"</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<blockquote>
+<p><em>run.py</em>用来代替在命令行里执行 scrapy crawl mySpider<br><code>LOG_ENABLED=False</code>不打印日志<br><code>mySpider</code>你给自己爬虫取的名字，不一定是文件名，爬虫的名字在你定义的<br><code>class MySpider(scrapy.Spider):name = "mySpider"</code></p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3309,7 +3356,7 @@ cmdline<span class="token punctuation">.</span>execute<span class="token punctua
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.5k</span>&nbsp;字
+                class="white-color">16k</span>&nbsp;字
             
             
             
