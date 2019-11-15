@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        15.4k
+                        17.8k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        71 分
+                        81 分
                     </div>
                     
                 
@@ -2914,6 +2914,232 @@ cmdline<span class="token punctuation">.</span>execute<span class="token punctua
 <blockquote>
 <p><em>run.py</em>用来代替在命令行里执行 scrapy crawl mySpider<br><code>LOG_ENABLED=False</code>不打印日志<br><code>mySpider</code>你给自己爬虫取的名字，不一定是文件名，爬虫的名字在你定义的<br><code>class MySpider(scrapy.Spider):name = "mySpider"</code></p>
 </blockquote>
+<hr>
+<h4 id="xpath查找HTML元素"><a href="#xpath查找HTML元素" class="headerlink" title="xpath查找HTML元素"></a>xpath查找HTML元素</h4><ol>
+<li>使用”//“表示文档下面的所有节点元素，用”/“表示当前节点的下一级节点</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//title"</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book/title"</span><span class="token punctuation">)</span></code></pre>
+<ol start="2">
+<li>使用”.表示当前节点元素，用xpath可以连续调用，如果前一个xpath返回一个Selector的列表，那么这个列表可以继续调用xpath，功能是为每个列表元素调用xpath，最后结果是全部元素调用xpath汇总</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s  <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./title"</span><span class="token punctuation">)</span></code></pre>
+<ol start="3">
+<li>如果xpath返回的Selector对象列表，再次强调<code>extract()</code>函数会得到这些对象的元素文本的列表，使用<code>extract_first()</code>获取列表中的第一个元素值，如果列表为空extract_first()的值为None</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book/price"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract<span class="token punctuation">(</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book/price"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<ol start="4">
+<li>xpath使用”/@attrName”得到一个Selector元素的attrName属性节点对象，属性节点对象也是一个Selector对象，通过extract()获取属性值</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book/@id"</span><span class="token punctuation">)</span></code></pre>
+<ol start="5">
+<li>xpath使用”/text()”得到一个Selector元素包含的文本值，文本值节点对象也是一个Selector对象，通过extract()获取文本值</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book/title/text()"</span><span class="token punctuation">)</span></code></pre>
+<ol start="6">
+<li>x’path使用”tag[condition]”来限定一个tag元素，其中condition时由这个tag的属性，文本等计算出的一个逻辑值。如果由多个条件，那么可以写成”tag[condition1][condition2]…[conditionN]”或者：”tag[conditon1 and condition2 and … and conditionN]”</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book/title[@lang = 'chinese']/text()"</span><span class="token punctuation">)</span></code></pre>
+<ol start="7">
+<li>xpath可以使用<code>position()</code>来确定其中一个元素的限制，这个选择序号是从1开始的，不是从0开始编号的，还可以通过and，or等构造复杂的表达式</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book[position()=1]/title"</span><span class="token punctuation">)</span></code></pre>
+<ol start="8">
+<li>xpath使用星号”*”代表任何Element节点，不包括Text，Comment的节点。</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//bookstore/*/title"</span><span class="token punctuation">)</span></code></pre>
+<ol start="9">
+<li>xpath使用”@*”代表任何属性，如果标签没有属性，是不会显示的</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book[@*]/title"</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> select<span class="token punctuation">(</span><span class="token string">"//@*"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 搜索文档所有属性节点</span></code></pre>
+<ol start="10">
+<li>xpath使用”element/parent::*”选择element的父节点，这个节点只有一个。如果写成element/parent::tag，就指定element的tag父节点，除非element的父节点正好为&gt;<code>&lt;tag&gt;</code>节点，不然为None。(不包括Text节点)</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//title[@lang='chinese']/parent::*"</span><span class="token punctuation">)</span></code></pre>
+<ol start="11">
+<li>xpath使用”element/following-sibling::*“搜索element后面的同级的所有兄弟节点，使用”element/following-sibling::*[position()=1]”搜索element后面的同级的第一个兄弟节点。(不包括Text节点)</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//a/following-sibling::*[position()=1]"</span><span class="token punctuation">)</span></code></pre>
+<ol start="12">
+<li>xpath使用”element/preceding-sibling::*“搜索element前面的同级的所有兄弟节点，使用”element/preceding-sibling::*[position()=1]”搜索element前面的同级的第一个兄弟节点。(不包括Text节点)</li>
+</ol>
+<p><em>code</em></p>
+<pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//b/preceding-sibling::*[position()=1]"</span><span class="token punctuation">)</span></code></pre>
+<h5 id="注意事项-5"><a href="#注意事项-5" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
+<li>在Selector返回是Selector列表对象的时候可以调用<code>extract()</code>，返回的是Selector对象的时候可以调用<code>extract()</code>和<code>extract_first()</code>;<code>extractor_first()</code>只能用于Selector对象<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy<span class="token punctuation">.</span>selector <span class="token keyword">import</span> Selector
+<span class="token keyword">import</span> os
+</code></pre>
+</li>
+</ul>
+<p>htmlText = b””<br>if os.path.exists(“index.html”):<br>    fobj = open(“index.html”, “rb”)<br>    htmlText = fobj.read()<br>    fobj.close()</p>
+<h1 id="print-htmlText"><a href="#print-htmlText" class="headerlink" title="print(htmlText)"></a>print(htmlText)</h1><p>selector = Selector(text=htmlText)<br>s = selector.xpath(“//book”).xpath(“./title”)<br>print(s[1].extract())//s[1]代表了Selector对象</p>
+<pre><code>
++ 使用text()返回的是文本列表
++ 查询父亲节点，子孙节点，兄弟节点。不包括Text,Comment节点
++ `&lt;html&gt;`之上还有`&lt;document&gt;`标签
++  xpath使用"@*"代表任何属性，如果标签没有属性，是不会显示该标签的
+---
+
+#### scrapy爬取与存储数据
+
+*引入*
+&gt;我们从一个网站爬取到的数据后往往要存储到数据库中，scrapy框架有十分方便的存储方法，为了说明这个存储的过程我们先建立一个简单的网站，然后写一个scrapy爬虫程序爬取数据，最后存储数据
+
+##### 建立Web网站
+*index.html*
+```htmlbars
+&lt;books&gt;
+    &lt;book&gt;
+        &lt;title&gt;Python程序设计&lt;/title&gt;
+        &lt;author&gt;James&lt;/author&gt;
+        &lt;publisher&gt;清华大学出版社&lt;/publisher&gt;
+    &lt;/book&gt;
+    &lt;book&gt;
+        &lt;title&gt;Java程序设计&lt;/title&gt;
+        &lt;author&gt;Robert&lt;/author&gt;
+        &lt;publisher&gt;人民邮政出版社&lt;/publisher&gt;
+    &lt;/book&gt;
+    &lt;book&gt;
+        &lt;title&gt;MySQL数据库&lt;/title&gt;
+        &lt;author&gt;Steven&lt;/author&gt;
+        &lt;publisher&gt;高等教育出版社&lt;/publisher&gt;
+    &lt;/book&gt;
+&lt;/books&gt;</code></pre><p><em>server.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
+<span class="token keyword">import</span> os
+<span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
+
+app <span class="token operator">=</span> flask<span class="token punctuation">.</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SEND_FILE_MAX_AGE_DEFAULT'</span><span class="token punctuation">]</span> <span class="token operator">=</span> timedelta<span class="token punctuation">(</span>seconds<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    html <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">"index.html"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"index.html"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span>
+        html <span class="token operator">=</span> fobj<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true"># print(html)</span>
+    <span class="token keyword">return</span> html
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h5 id="编写数据项目"><a href="#编写数据项目" class="headerlink" title="编写数据项目"></a>编写数据项目</h5><blockquote>
+<p>在新建的工程目录下F:\exmple2\demo\demo目录存在的items.py就是用来设计项目类的，打开这个项目，改造文件如下形式:</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment" spellcheck="true"># Define here the models for your scraped items</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># See documentation in:</span>
+<span class="token comment" spellcheck="true"># https://docs.scrapy.org/en/latest/topics/items.html</span>
+
+<span class="token keyword">import</span> scrapy
+
+
+<span class="token keyword">class</span> <span class="token class-name">BookItem</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    title <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    author <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    publisher <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<blockquote>
+<p>其中BookItem是我们设计的教材项目类，这个类必须从scrapy.Item类继承，在类中定义教材的字段项目，每个字段项目都是一个scrapy.Field对象，这里定义3个字段项目用来存储教材名称title，author，publisher<br>如果item是一个BookItem的对象那么可以通过item[“title”]，item[“author”]，item[“publisher”]来获取与设置各个字段的值</p>
+</blockquote>
+<h5 id="编写爬虫程序mySpider"><a href="#编写爬虫程序mySpider" class="headerlink" title="编写爬虫程序mySpider"></a>编写爬虫程序mySpider</h5><blockquote>
+<p>数据的项目设计好后就可以编写爬虫程序如下:</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> scrapy
+<span class="token keyword">from</span> demo<span class="token punctuation">.</span>items <span class="token keyword">import</span> BookItem
+
+
+<span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> <span class="token string">"mySpider"</span>
+    start_urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'http://127.0.0.1:5000'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            data <span class="token operator">=</span> response<span class="token punctuation">.</span>body<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            selector <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>text<span class="token operator">=</span>data<span class="token punctuation">)</span>
+            books <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book"</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> book <span class="token keyword">in</span> books<span class="token punctuation">:</span>
+                item <span class="token operator">=</span> BookItem<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                item<span class="token punctuation">[</span><span class="token string">"title"</span><span class="token punctuation">]</span> <span class="token operator">=</span> book<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./title/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                item<span class="token punctuation">[</span><span class="token string">"author"</span><span class="token punctuation">]</span> <span class="token operator">=</span> book<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./author/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                item<span class="token punctuation">[</span><span class="token string">"publisher"</span><span class="token punctuation">]</span> <span class="token operator">=</span> book<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./publisher/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">yield</span> item
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+</code></pre>
+<blockquote>
+<p><code>from demo.items import BookItem</code>从demo文件夹的items.py文件中引入BookItem类的定义<br><code>yield item</code>向上一级调用函数返回，接下来scrapy会把这个对象推送给与items.py同目录下的pipelines.py文件中的数据管道执行类处理数据</p>
+</blockquote>
+<h5 id="编写数据管道处理类"><a href="#编写数据管道处理类" class="headerlink" title="编写数据管道处理类"></a>编写数据管道处理类</h5><blockquote>
+<p>在我们的scrapy框架中有的：F:\example2\demo\demo目录下有一个文件pipelines.py就是用来数据管道处理类文件，打开这个文件可以看到一个默认的管道类，修改并设计数据管道类如下；</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment" spellcheck="true"># Define your item pipelines here</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
+<span class="token comment" spellcheck="true"># See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
+
+
+<span class="token comment" spellcheck="true"># class DemoPipeline(object):</span>
+<span class="token comment" spellcheck="true">#     def process_item(self, item, spider):</span>
+<span class="token comment" spellcheck="true">#         return item</span>
+
+<span class="token keyword">class</span> <span class="token class-name">BookPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    count <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword">def</span> <span class="token function">process_item</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        BookPipeline<span class="token punctuation">.</span>count <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> BookPipeline<span class="token punctuation">.</span>count <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+                fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"books.txt"</span><span class="token punctuation">,</span> <span class="token string">"wt"</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"books.txt"</span><span class="token punctuation">,</span> <span class="token string">"at"</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>item<span class="token punctuation">[</span><span class="token string">"title"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> item<span class="token punctuation">[</span><span class="token string">"author"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> item<span class="token punctuation">[</span><span class="token string">"publisher"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            fobj<span class="token punctuation">.</span>write<span class="token punctuation">(</span>item<span class="token punctuation">[</span><span class="token string">"title"</span><span class="token punctuation">]</span> <span class="token operator">+</span> item<span class="token punctuation">[</span><span class="token string">"author"</span><span class="token punctuation">]</span> <span class="token operator">+</span>
+                       item<span class="token punctuation">[</span><span class="token string">"publisher"</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">"\n"</span><span class="token punctuation">)</span>
+            fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> item
+</code></pre>
+<blockquote>
+<p>这个类我们命名为BookPipeline，它继承object类，类中最重要的函数是process_item函数，scrapy爬取数据开始时会建立一个BookPipeline类对象，然后每爬取一个数据类BookItem项目item，mySpider程序会把这个对象推送给BookPipeline对象，同时调用process_item函数一次。process_item函数的参数中的item就是推送来的数据，于是我们就可以在这个函数中保存爬取的数据了。注意scrapy要求process_item对象。<br>在我们这个程序中采用文件存储爬取的数据，BookPipeline类中先定义一个类成员count=0，用它来记录process_item调用的次数。如果是第一次调用(count = 1)那么就使用语句<code>fobj = open("books.txt","wt")</code>新建立一个books.txt的文件，然后把item的数据写到文件中。如果不是第一次调用(count &gt; 1)，就使用语句<code>fobj = open("books.txt","at")</code>打开以存在的文件books.txt，把item的数据追加到文件中。这样我们反复执行爬虫程序的过程保证每次清除掉上次的数据，记录本次爬取的数据</p>
+</blockquote>
+<h5 id="设置scrapy的配置文件"><a href="#设置scrapy的配置文件" class="headerlink" title="设置scrapy的配置文件"></a>设置scrapy的配置文件</h5><blockquote>
+<p>mySpder爬虫程序执行后每爬取一个item项目都会推送到BookPipelines类并调用process_item函数，那么scrapy怎么样知道要这样做呢？前提是我们必须设置这样一个通道。<br>在demo文件夹中有一个settings.py的设置文件，打开这个文件可以看到很多设置项目，大部分是用#注释的语句，找到语句ITEM_PIPELINES的项目，把它设置如下形式:</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># Configure item pipelines</span>
+<span class="token comment" spellcheck="true"># See https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
+ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'demo.pipelines.BookPipeline'</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>其中ITEM_PIPELINES是一个字典，把关键字改成  <code>'demo.pipelines.BookPipeline': 300,</code>,而BookPipelines就是我们在pipelines.py文件中设计的数据管道类的名称，后面的300是一个默认的整数，实际上它可以不是300，它可以是任何整数。<br>这样设置后就连通了爬虫程序mySpider的数据管道处理程序pipelines.py通道，scrapy工作时会把mySpider爬虫程序通过yield返回的每项数据推送给pipelines.py程序的BookPipelines类，并执行process_item函数，这样就可以保存数据了。</p>
+</blockquote>
+<p><strong>从上面的分析可以看到scrapy把数据爬取与数据存储分开处理，它们都是异步执行的，mySpider每爬取到一个数据项目item，就yield推送给pipelines程序存储，等待存储完毕后又再次爬取到一个数据项目item再次yield推送到pipelines.py程序，然后再次存储,……,这个过程一直进行下去，直到爬取过程结束，文件books.txt就存储了所有爬取数据了</strong></p>
+<h5 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h5><ul>
+<li>如果多个爬虫，pipelines该如何对应</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3356,7 +3582,7 @@ cmdline<span class="token punctuation">.</span>execute<span class="token punctua
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16k</span>&nbsp;字
+                class="white-color">18.3k</span>&nbsp;字
             
             
             
