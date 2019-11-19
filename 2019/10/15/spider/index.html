@@ -413,7 +413,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        17.8k
+                        17.7k
                     </div>
                     
 
@@ -2979,45 +2979,53 @@ s <span class="token operator">=</span> select<span class="token punctuation">(<
 <p><em>code</em></p>
 <pre class=" language-python"><code class="language-python">s <span class="token operator">=</span> select<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//b/preceding-sibling::*[position()=1]"</span><span class="token punctuation">)</span></code></pre>
 <h5 id="注意事项-5"><a href="#注意事项-5" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
-<li>在Selector返回是Selector列表对象的时候可以调用<code>extract()</code>，返回的是Selector对象的时候可以调用<code>extract()</code>和<code>extract_first()</code>;<code>extractor_first()</code>只能用于Selector对象<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy<span class="token punctuation">.</span>selector <span class="token keyword">import</span> Selector
-<span class="token keyword">import</span> os
-</code></pre>
-</li>
+<li>在Selector返回是Selector列表对象的时候可以调用<code>extract()</code>，返回的是Selector对象的时候可以调用<code>extract()</code>和<code>extract_first()</code>;<code>extractor_first()</code>只能用于Selector对象</li>
 </ul>
-<p>htmlText = b””<br>if os.path.exists(“index.html”):<br>    fobj = open(“index.html”, “rb”)<br>    htmlText = fobj.read()<br>    fobj.close()</p>
-<h1 id="print-htmlText"><a href="#print-htmlText" class="headerlink" title="print(htmlText)"></a>print(htmlText)</h1><p>selector = Selector(text=htmlText)<br>s = selector.xpath(“//book”).xpath(“./title”)<br>print(s[1].extract())//s[1]代表了Selector对象</p>
-<pre><code>
-+ 使用text()返回的是文本列表
-+ 查询父亲节点，子孙节点，兄弟节点。不包括Text,Comment节点
-+ `&lt;html&gt;`之上还有`&lt;document&gt;`标签
-+  xpath使用"@*"代表任何属性，如果标签没有属性，是不会显示该标签的
----
+<pre class=" language-python"><code class="language-python">
+<span class="token keyword">from</span> scrapy<span class="token punctuation">.</span>selector <span class="token keyword">import</span> Selector
+<span class="token keyword">import</span> os
 
-#### scrapy爬取与存储数据
+htmlText <span class="token operator">=</span> b<span class="token string">""</span>
+<span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">"index.html"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"index.html"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span>
+    htmlText <span class="token operator">=</span> fobj<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token comment" spellcheck="true"># print(htmlText)</span>
 
-*引入*
-&gt;我们从一个网站爬取到的数据后往往要存储到数据库中，scrapy框架有十分方便的存储方法，为了说明这个存储的过程我们先建立一个简单的网站，然后写一个scrapy爬虫程序爬取数据，最后存储数据
-
-##### 建立Web网站
-*index.html*
-```htmlbars
-&lt;books&gt;
-    &lt;book&gt;
-        &lt;title&gt;Python程序设计&lt;/title&gt;
-        &lt;author&gt;James&lt;/author&gt;
-        &lt;publisher&gt;清华大学出版社&lt;/publisher&gt;
-    &lt;/book&gt;
-    &lt;book&gt;
-        &lt;title&gt;Java程序设计&lt;/title&gt;
-        &lt;author&gt;Robert&lt;/author&gt;
-        &lt;publisher&gt;人民邮政出版社&lt;/publisher&gt;
-    &lt;/book&gt;
-    &lt;book&gt;
-        &lt;title&gt;MySQL数据库&lt;/title&gt;
-        &lt;author&gt;Steven&lt;/author&gt;
-        &lt;publisher&gt;高等教育出版社&lt;/publisher&gt;
-    &lt;/book&gt;
-&lt;/books&gt;</code></pre><p><em>server.py</em></p>
+selector <span class="token operator">=</span> Selector<span class="token punctuation">(</span>text<span class="token operator">=</span>htmlText<span class="token punctuation">)</span>
+s <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//book"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./title"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>extract<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">//</span>s<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>代表了Selector对象
+</code></pre>
+<ul>
+<li>使用text()返回的是文本列表</li>
+<li>查询父亲节点，子孙节点，兄弟节点。不包括Text,Comment节点</li>
+<li><code>&lt;html&gt;</code>之上还有<code>&lt;document&gt;</code>标签</li>
+<li>xpath使用”@*”代表任何属性，如果标签没有属性，是不会显示该标签的</li>
+</ul>
+<hr>
+<h4 id="scrapy爬取与存储数据"><a href="#scrapy爬取与存储数据" class="headerlink" title="scrapy爬取与存储数据"></a>scrapy爬取与存储数据</h4><p><em>引入</em></p>
+<blockquote>
+<p>我们从一个网站爬取到的数据后往往要存储到数据库中，scrapy框架有十分方便的存储方法，为了说明这个存储的过程我们先建立一个简单的网站，然后写一个scrapy爬虫程序爬取数据，最后存储数据</p>
+</blockquote>
+<h5 id="建立Web网站"><a href="#建立Web网站" class="headerlink" title="建立Web网站"></a>建立Web网站</h5><p><em>index.html</em></p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>books</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>book</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Python程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>author</span><span class="token punctuation">></span></span>James<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>author</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>publisher</span><span class="token punctuation">></span></span>清华大学出版社<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>publisher</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>book</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>book</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Java程序设计<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>author</span><span class="token punctuation">></span></span>Robert<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>author</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>publisher</span><span class="token punctuation">></span></span>人民邮政出版社<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>publisher</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>book</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>book</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>MySQL数据库<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>author</span><span class="token punctuation">></span></span>Steven<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>author</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>publisher</span><span class="token punctuation">></span></span>高等教育出版社<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>publisher</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>book</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>books</span><span class="token punctuation">></span></span></code></pre>
+<p><em>server.py</em></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> flask
 <span class="token keyword">import</span> os
 <span class="token keyword">from</span> datetime <span class="token keyword">import</span> timedelta
