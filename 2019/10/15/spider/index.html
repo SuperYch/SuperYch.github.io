@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        17.7k
+                        19.2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        81 分
+                        89 分
                     </div>
                     
                 
@@ -3049,13 +3049,12 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <h5 id="编写数据项目"><a href="#编写数据项目" class="headerlink" title="编写数据项目"></a>编写数据项目</h5><blockquote>
 <p>在新建的工程目录下F:\exmple2\demo\demo目录存在的items.py就是用来设计项目类的，打开这个项目，改造文件如下形式:</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+<pre class=" language-python"><code class="language-python">    <span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+    <span class="token comment" spellcheck="true"># Define here the models for your scraped items</span>
+    <span class="token comment" spellcheck="true"># See documentation in:</span>
+    <span class="token comment" spellcheck="true"># https://docs.scrapy.org/en/latest/topics/items.html</span>
 
-<span class="token comment" spellcheck="true"># Define here the models for your scraped items</span>
-<span class="token comment" spellcheck="true">#</span>
-<span class="token comment" spellcheck="true"># See documentation in:</span>
-<span class="token comment" spellcheck="true"># https://docs.scrapy.org/en/latest/topics/items.html</span>
-
+```python
 <span class="token keyword">import</span> scrapy
 
 
@@ -3099,18 +3098,14 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <h5 id="编写数据管道处理类"><a href="#编写数据管道处理类" class="headerlink" title="编写数据管道处理类"></a>编写数据管道处理类</h5><blockquote>
 <p>在我们的scrapy框架中有的：F:\example2\demo\demo目录下有一个文件pipelines.py就是用来数据管道处理类文件，打开这个文件可以看到一个默认的管道类，修改并设计数据管道类如下；</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
-
+<pre class=" language-python"><code class="language-python"><span class="token operator">&lt;</span>!<span class="token operator">-</span><span class="token operator">-</span> <span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
 <span class="token comment" spellcheck="true"># Define your item pipelines here</span>
 <span class="token comment" spellcheck="true">#</span>
 <span class="token comment" spellcheck="true"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
 <span class="token comment" spellcheck="true"># See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
-
-
 <span class="token comment" spellcheck="true"># class DemoPipeline(object):</span>
 <span class="token comment" spellcheck="true">#     def process_item(self, item, spider):</span>
-<span class="token comment" spellcheck="true">#         return item</span>
-
+<span class="token comment" spellcheck="true">#         return item --></span>
 <span class="token keyword">class</span> <span class="token class-name">BookPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
     count <span class="token operator">=</span> <span class="token number">0</span>
 
@@ -3127,8 +3122,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
             fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
             <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> item
-</code></pre>
+        <span class="token keyword">return</span> item</code></pre>
 <blockquote>
 <p>这个类我们命名为BookPipeline，它继承object类，类中最重要的函数是process_item函数，scrapy爬取数据开始时会建立一个BookPipeline类对象，然后每爬取一个数据类BookItem项目item，mySpider程序会把这个对象推送给BookPipeline对象，同时调用process_item函数一次。process_item函数的参数中的item就是推送来的数据，于是我们就可以在这个函数中保存爬取的数据了。注意scrapy要求process_item对象。<br>在我们这个程序中采用文件存储爬取的数据，BookPipeline类中先定义一个类成员count=0，用它来记录process_item调用的次数。如果是第一次调用(count = 1)那么就使用语句<code>fobj = open("books.txt","wt")</code>新建立一个books.txt的文件，然后把item的数据写到文件中。如果不是第一次调用(count &gt; 1)，就使用语句<code>fobj = open("books.txt","at")</code>打开以存在的文件books.txt，把item的数据追加到文件中。这样我们反复执行爬虫程序的过程保证每次清除掉上次的数据，记录本次爬取的数据</p>
 </blockquote>
@@ -3139,8 +3133,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <span class="token comment" spellcheck="true"># See https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
 ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuation">{</span>
     <span class="token string">'demo.pipelines.BookPipeline'</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<span class="token punctuation">}</span></code></pre>
 <blockquote>
 <p>其中ITEM_PIPELINES是一个字典，把关键字改成  <code>'demo.pipelines.BookPipeline': 300,</code>,而BookPipelines就是我们在pipelines.py文件中设计的数据管道类的名称，后面的300是一个默认的整数，实际上它可以不是300，它可以是任何整数。<br>这样设置后就连通了爬虫程序mySpider的数据管道处理程序pipelines.py通道，scrapy工作时会把mySpider爬虫程序通过yield返回的每项数据推送给pipelines.py程序的BookPipelines类，并执行process_item函数，这样就可以保存数据了。</p>
 </blockquote>
@@ -3148,6 +3141,316 @@ ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuat
 <h5 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h5><ul>
 <li>如果多个爬虫，pipelines该如何对应</li>
 </ul>
+<hr>
+<h4 id="实践项目-–爬取网站图书数据"><a href="#实践项目-–爬取网站图书数据" class="headerlink" title="实践项目 –爬取网站图书数据"></a>实践项目 –爬取网站图书数据</h4><p><em>实践要求</em></p>
+<blockquote>
+<p>mongodb数据库 + scrapy框架，实现对当当网的指定类别图书爬取</p>
+</blockquote>
+<p><em>使用工具</em></p>
+<blockquote>
+<p>pycharm ，studio 3t（可选），sublime3（可选）</p>
+</blockquote>
+<p><em>具体步骤</em></p>
+<blockquote>
+<p>1.对网页进行解析<br>2.创建scrapy框架<br>3.连接数据库<br>4.编写爬虫</p>
+</blockquote>
+<ul>
+<li><p>对网页进行解析</p>
+<blockquote>
+<p>进入官网<a href="http://search.dangdang.com/，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在`" target="_blank" rel="noopener">http://search.dangdang.com/，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在`</a></p><li ddt-pit="" class=""><code>标签里，
+**书名(title)**写在了</code></li><li>标签下的<a title="" ddclick=""><code>标签里，
+**价格（price）**写在了</code><p class="price"><span class="search_now_price"></span></p><code>标签里，
+**详细情况（detail）**写在了</code><p class="detail"></p><code>，
+**作者（author）**写在了</code><p class="search_book_author"><span></span></p><code>（第一个span）
+**日期（date）**写在了</code><p class="search_book_author"><span>text</span></p><code>里，（倒数第二个span）
+**出版社（publisher）**写在了</code><p class="search_book_author"><span></span></p><code>里，（最后一个span）
+**翻页**，（ctrl u）分析html界面发现，翻页标签</code>div[@class=’paging’]/ul[@name=’Fy’]/li[@class=’next’]/a/@href”<code>，可以通过网址发现"http://search.dangdang.com/?key=python&amp;act=input&amp;page_index=2"，act = input代表操作（可以不写），page_index代表页码，观察下面代码中</code>class = next`很容易发现</a></li><p></p>
+</blockquote>
+<pre class=" language-html"><code class="language-html">  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>paging<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span>  <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Fy<span class="token punctuation">"</span></span> <span class="token attr-name">dd_name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>底部翻页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                              ........
+                              ........
+                                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>next<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/?key<span class="token punctuation">=</span>python&amp;act<span class="token punctuation">=</span>input&amp;page_index<span class="token punctuation">=</span>3<span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>下一页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>下一页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+                              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>page_input<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>到第<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>t__cp<span class="token punctuation">'</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>text<span class="token punctuation">'</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>number<span class="token punctuation">'</span></span>  <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>2<span class="token punctuation">'</span></span><span class="token punctuation">/></span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>click_get_page<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>确定<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bottom-page-turn<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<hr>
+</li>
+</ul>
+<pre><code>*使用BeautifulSoup解析html界面，然后找到自己需要标签的位置，做好分析*
+
+```python
+from bs4 import BeautifulSoup, UnicodeDammit
+import scrapy
+import os
+# 在网页的&lt;li&gt;标签下右键edit as html，全选，复制，将html储存为books.txt
+if os.path.exists("books.txt"):
+    fobj = open("books.txt", "rb")
+    data = fobj.read()
+    fobj.close()
+    dammit = UnicodeDammit(data, ["utf-8", "gbk", "utf-16"])
+    data = dammit.unicode_markup
+    soup = BeautifulSoup(data, "lxml")
+    print(soup.prettify())
+```
+结果
+![Alt text](./1574772806534.png)
+
+*解析books.txt，想要获取的信息路径是否正确*
+```python
+from bs4 import BeautifulSoup, UnicodeDammit
+import scrapy
+class TestItem:
+    """docstring for TestItem"""
+
+def __init__(self):
+    self.title = ""
+    self.author = ""
+    self.date = ""
+    self.publisher = ""
+    self.price = ""
+    self.detail = ""
+
+def show(self):
+    print(self.title)
+    print(self.author)
+    print(self.date)
+    print(self.price)
+    print(self.publisher)
+    print(self.detail)
+
+try:
+    fobj = open("books.txt", "rb")
+    data = fobj.read()
+    fobj.close()
+    dammit = UnicodeDammit(data, ["utf-8", "utf-16", "gbk"])
+    data = dammit.unicode_markup
+    selector = scrapy.Selector(text=data)
+    li = selector.xpath("//li['@ddt-pit'][starts-with(@class,'line')]")
+    title = li.xpath("./a[position() = 1]/@title").extract_first()
+    price = li.xpath(
+        "./p[@class = 'price']/span[@class = 'search_now_price']/text()").extract_first()
+    author = li.xpath(
+        "./p[@class = 'search_book_author']/span[position()=1]/a/@title").extract_first()
+    publisher = li.xpath(
+        "./p[@class = 'search_book_author']/span[position() = last()]/a/@title").extract_first()
+    date = li.xpath(
+        "./p[@class = 'search_book_author']/span[position() = last()-1]/text()").extract_first()
+    detail = li.xpath("./p[@class = 'detail']/text()").extract_first()
+
+    item = TestItem()
+    # strip()用于移除字符串头尾指定的字符（默认空格或换行）或字符序列
+    item.title = title.strip() if title else ""
+    item.author = author.strip() if author else ""
+    item.date = date.strip()[1:] if date else ""
+    item.publisher = publisher.strip() if publisher else ""
+    item.price = price.strip() if price else ""
+    item.detail = detail.strip() if detail else ""
+
+    item.show()
+except Exception as e:
+    print(e)
+
+```
+结果
+![Alt text](./1574772761792.png)</code></pre><hr>
+<ul>
+<li><p>创建scrapy</p>
+<blockquote>
+<p>cmdline中， f: -&gt; md example3 -&gt; cd example3 -&gt;crawl startproject demo</p>
+</blockquote>
+</li>
+<li><p>连接数据库</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_41281596/article/details/83088384" target="_blank" rel="noopener">参考博客</a><br>写在数据管道处理类，open_spider开启事务的同时连接mongodb数据库</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python">  <span class="token keyword">from</span> pymongo <span class="token keyword">import</span> MongoClient
+  <span class="token keyword">class</span> <span class="token class-name">BookPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+      <span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+          <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"opened"</span><span class="token punctuation">)</span>
+          <span class="token keyword">try</span><span class="token punctuation">:</span>
+              self<span class="token punctuation">.</span>client <span class="token operator">=</span> MongoClient<span class="token punctuation">(</span><span class="token string">'localhost'</span><span class="token punctuation">,</span> <span class="token number">27017</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># 连接本地服务器</span>
+              self<span class="token punctuation">.</span>mongodb <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span><span class="token string">'SpiderDB'</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true"># 连接数据库</span>
+              self<span class="token punctuation">.</span>user <span class="token operator">=</span> self<span class="token punctuation">.</span>mongodb<span class="token punctuation">[</span><span class="token string">'books'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 连接关系（表）</span>
+              <span class="token comment" spellcheck="true"># print(self.user)</span>
+              self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 清空关系里的数据</span>
+              self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">True</span> <span class="token comment" spellcheck="true"># 数据库已连接</span>
+              self<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
+          <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+              <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+              self<span class="token punctuation">.</span>open <span class="token operator">=</span> <span class="token boolean">False</span></code></pre>
+</li>
+<li><p>编写爬虫</p>
+<p>  <em>f:/example3/demo/demo/spider/Myspider.py</em></p>
+<pre class=" language-python"><code class="language-python">  <span class="token keyword">import</span> scrapy
+  <span class="token keyword">from</span> demo<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>items <span class="token keyword">import</span> BookItem
+  <span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
+
+</code></pre>
+</li>
+</ul>
+<pre><code>class MySpider(scrapy.Spider):  # 继承 scrapy里的Spider类
+    name = "mySpider"
+    key = 'python'
+    source_url = 'http://search.dangdang.com/'
+
+    def start_requests(self):
+            # 搜索python时的网址
+        url = MySpider.source_url + "?key=" + MySpider.key
+        print(url)
+        yield scrapy.Request(url=url, callback=self.parse)
+
+    def parse(self, response):
+        try:
+            dammit = UnicodeDammit(response.body, ["utf-8", "utf-16", "gbk"])
+            data = dammit.unicode_markup
+            selector = scrapy.Selector(text=data)
+            lis = selector.xpath(
+                    # starts-with()可以获取类似标签的信息。
+                "//li['@ddt-pit'][starts-with(@class,'line')]")
+            # print(lis)
+            for li in lis:
+                # li = selector.xpath("//li")
+                title = li.xpath("./a[position() = 1]/@title").extract_first()
+                price = li.xpath(
+                    "./p[@class = 'price']/span[@class = 'search_now_price']/text()").extract_first()
+                author = li.xpath(
+                    "./p[@class = 'search_book_author']/span[position()=1]/a/@title").extract_first()
+                publisher = li.xpath(
+                    "./p[@class = 'search_book_author']/span[position() = last()]/a/@title").extract_first()
+                date = li.xpath(
+                    "./p[@class = 'search_book_author']/span[position() = last()-1]/text()").extract_first()
+                detail = li.xpath(
+                    "./p[@class = 'detail']/text()").extract_first()
+                item = BookItem()
+
+                # strip()用于移除字符串头尾指定的字符（默认空格或换行）或字符序列
+                item["title"] = title.strip() if title else ""
+                item["author"] = author.strip() if author else ""
+                # date.strip()[1:]原文本第一个字符为/,所以从下表1开始
+                item["date"] = date.strip()[1:] if date else ""
+                item["publisher"] = publisher.strip() if publisher else ""
+                item["price"] = price.strip() if price else ""
+                item["detail"] = detail.strip() if detail else ""
+                yield item
+            # 翻页处理
+            link = selector.xpath(
+                            "//div[@class='paging']/ul[@name='Fy']/li[@class='next']/a/@href").extract_first()
+                  # 如果为空则为最后一页
+            if link:
+            # 通过response.urljoin函数整理成绝对地址，这样调用parse函数，实现下一个网页的爬取
+                url = response.urljoin(link)
+                yield scrapy.Request(url=url, callback=self.parse)
+        except Exception as e:
+            print(e)
+
+```
+
+*f:/example3/demo/demo/items.py*
+```python
+# -*- coding: utf-8 -*-
+
+# Define here the models for your scraped items
+#
+# See documentation in:
+# https://docs.scrapy.org/en/latest/topics/items.html
+
+import scrapy
+class BookItem(scrapy.Item):
+    title = scrapy.Field() # scrapy字段
+    author = scrapy.Field()
+    date = scrapy.Field()
+    publisher = scrapy.Field()
+    detail = scrapy.Field()
+    price = scrapy.Field()
+
+```
+
+*f:/example3/demo/demo/pipelines.py*
+```python
+# -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+from pymongo import MongoClient
+
+# class DemoPipeline(object):
+#     def process_item(self, item, spider):
+#         return item
+
+
+class BookPipeline(object):
+
+def open_spider(self, spider):
+    print("opened")
+    try:
+        self.client = MongoClient('localhost', 27017)
+        self.mongodb = self.client['SpiderDB']
+        self.user = self.mongodb['books']
+        # print(self.user)
+        self.user.remove({})
+        self.opened = True
+        self.count = 0
+    except Exception as e:
+        print(e)
+        self.open = False
+
+def close_spider(self, spider):
+    if self.opened:
+        self.client.close()
+        self.opened = False
+        print("closed")
+        print("总共爬取", self.count, "本书籍")
+
+def process_item(self, item, spider):
+    try:
+        # print(item["title"])
+        # print(item["author"])
+        # print(item["publisher"])
+        # print(item["date"])
+        # print(item["price"])
+        # print(item["detail"])
+        # print()
+        if self.opened:
+            self.user.insert_one({'title': item["title"], 'author': item["author"], 'publisher': item["publisher"],
+                                  'date': item["date"], 'price': item["price"], 'detail': item["detail"]})
+            self.count += 1
+
+    except Exception as e:
+        print(e)
+    return item
+
+```
+
+*demo/demo/settings.py*
+```python
+# Configure item pipelines
+# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+ITEM_PIPELINES = {
+    'demo.pipelines.BookPipeline': 300,
+}
+```
+
+*demo/demo/spiders/run.py*
+```python
+from scrapy import cmdline
+cmdline.execute("scrapy crawl mySpider -s LOG_ENABLED=False".split())
+
+```</code></pre><h5 id="注意事项-6"><a href="#注意事项-6" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
+<li>防反爬虫<br>在settings.py里打开<pre class=" language-python"><code class="language-python">DEFAULT_REQUEST_HEADERS <span class="token operator">=</span> <span class="token punctuation">{</span>
+<span class="token string">'Accept'</span><span class="token punctuation">:</span> <span class="token string">'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'</span><span class="token punctuation">,</span>
+<span class="token string">'Accept-Language'</span><span class="token punctuation">:</span> <span class="token string">'en'</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<p>```</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3590,7 +3893,7 @@ ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuat
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">18.3k</span>&nbsp;字
+                class="white-color">19.8k</span>&nbsp;字
             
             
             
