@@ -3098,7 +3098,7 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <h5 id="编写数据管道处理类"><a href="#编写数据管道处理类" class="headerlink" title="编写数据管道处理类"></a>编写数据管道处理类</h5><blockquote>
 <p>在我们的scrapy框架中有的：F:\example2\demo\demo目录下有一个文件pipelines.py就是用来数据管道处理类文件，打开这个文件可以看到一个默认的管道类，修改并设计数据管道类如下；</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python"><span class="token operator">&lt;</span>!<span class="token operator">-</span><span class="token operator">-</span> <span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># &lt;!--  -*- coding: utf-8 -*-</span>
 <span class="token comment" spellcheck="true"># Define your item pipelines here</span>
 <span class="token comment" spellcheck="true">#</span>
 <span class="token comment" spellcheck="true"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
@@ -3155,108 +3155,99 @@ ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuat
 <p>1.对网页进行解析<br>2.创建scrapy框架<br>3.连接数据库<br>4.编写爬虫</p>
 </blockquote>
 <ul>
-<li><p>对网页进行解析</p>
+<li>对网页进行解析</li>
+</ul>
 <blockquote>
 <p>进入官网<a href="http://search.dangdang.com/，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在`" target="_blank" rel="noopener">http://search.dangdang.com/，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在`</a></p><li ddt-pit="" class=""><code>标签里，
-**书名(title)**写在了</code></li><li>标签下的<a title="" ddclick=""><code>标签里，
-**价格（price）**写在了</code><p class="price"><span class="search_now_price"></span></p><code>标签里，
-**详细情况（detail）**写在了</code><p class="detail"></p><code>，
-**作者（author）**写在了</code><p class="search_book_author"><span></span></p><code>（第一个span）
-**日期（date）**写在了</code><p class="search_book_author"><span>text</span></p><code>里，（倒数第二个span）
-**出版社（publisher）**写在了</code><p class="search_book_author"><span></span></p><code>里，（最后一个span）
-**翻页**，（ctrl u）分析html界面发现，翻页标签</code>div[@class=’paging’]/ul[@name=’Fy’]/li[@class=’next’]/a/@href”<code>，可以通过网址发现"http://search.dangdang.com/?key=python&amp;act=input&amp;page_index=2"，act = input代表操作（可以不写），page_index代表页码，观察下面代码中</code>class = next`很容易发现</a></li><p></p>
+书名(title)写在了</code></li><li>标签下的<a title="" ddclick=""><code>标签里，
+价格（price）写在了</code><p class="price"><span class="search_now_price"></span></p><code>标签里，
+详细情况（detail）写在了</code><p class="detail"></p><code>，
+作者（author）写在了</code><p class="search_book_author"><span></span></p><code>（第一个span）
+日期（date） 写在了</code><p class="search_book_author"><span>text</span></p><code>里，（倒数第二个span）
+出版社（publisher） 写在了</code><p class="search_book_author"><span></span></p><code>里，（最后一个span）
+翻页，（ctrl u）分析html界面发现，翻页标签</code>div[@class=’paging’]/ul[@name=’Fy’]/li[@class=’next’]/a/@href”<code>，可以通过网址发现"http://search.dangdang.com/?key=python&amp;act=input&amp;page_index=2"，act = input代表操作（可以不写），page_index代表页码，观察下面代码中</code>class = next`很容易发现</a></li><p></p>
 </blockquote>
-<pre class=" language-html"><code class="language-html">  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>paging<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span>  <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Fy<span class="token punctuation">"</span></span> <span class="token attr-name">dd_name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>底部翻页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-                              ........
-                              ........
-                                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>next<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/?key<span class="token punctuation">=</span>python&amp;act<span class="token punctuation">=</span>input&amp;page_index<span class="token punctuation">=</span>3<span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>下一页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>下一页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
-                              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>page_input<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>到第<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>t__cp<span class="token punctuation">'</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>text<span class="token punctuation">'</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>number<span class="token punctuation">'</span></span>  <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>2<span class="token punctuation">'</span></span><span class="token punctuation">/></span></span>
-                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
-                  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>click_get_page<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>确定<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bottom-page-turn<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-html"><code class="language-html">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>paging<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span>  <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Fy<span class="token punctuation">"</span></span> <span class="token attr-name">dd_name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>底部翻页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                                ........
+                                ........
+                                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>next<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/?key<span class="token punctuation">=</span>python&amp;act<span class="token punctuation">=</span>input&amp;page_index<span class="token punctuation">=</span>3<span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>下一页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>下一页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+                                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>page_input<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>到第<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>t__cp<span class="token punctuation">'</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>text<span class="token punctuation">'</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>number<span class="token punctuation">'</span></span>  <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>2<span class="token punctuation">'</span></span><span class="token punctuation">/></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>页<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>click_get_page<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>确定<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bottom-page-turn<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<p><em>使用BeautifulSoup解析html界面，然后找到自己需要标签的位置，做好分析</em></p>
+<pre class=" language-python"><code class="language-python">    <span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
+    <span class="token keyword">import</span> scrapy
+    <span class="token keyword">import</span> os
+    <span class="token comment" spellcheck="true"># 在网页的&lt;li>标签下右键edit as html，全选，复制，将html储存为books.txt</span>
+    <span class="token keyword">if</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">"books.txt"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"books.txt"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> fobj<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span> <span class="token string">"gbk"</span><span class="token punctuation">,</span> <span class="token string">"utf-16"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+        soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token string">"lxml"</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>soup<span class="token punctuation">.</span>prettify<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>结果<br><img src="./1574772806534.png" alt="Alt text"></p>
+<p><em>解析books.txt，想要获取的信息路径是否正确</em></p>
+<pre class=" language-python"><code class="language-python">    <span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
+    <span class="token keyword">import</span> scrapy
+    <span class="token keyword">class</span> <span class="token class-name">TestItem</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">"""docstring for TestItem"""</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>title <span class="token operator">=</span> <span class="token string">""</span>
+        self<span class="token punctuation">.</span>author <span class="token operator">=</span> <span class="token string">""</span>
+        self<span class="token punctuation">.</span>date <span class="token operator">=</span> <span class="token string">""</span>
+        self<span class="token punctuation">.</span>publisher <span class="token operator">=</span> <span class="token string">""</span>
+        self<span class="token punctuation">.</span>price <span class="token operator">=</span> <span class="token string">""</span>
+        self<span class="token punctuation">.</span>detail <span class="token operator">=</span> <span class="token string">""</span>
+
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>title<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>author<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>date<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>price<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>publisher<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>detail<span class="token punctuation">)</span>
+
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        fobj <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"books.txt"</span><span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> fobj<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fobj<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span> <span class="token string">"utf-16"</span><span class="token punctuation">,</span> <span class="token string">"gbk"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+        selector <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>text<span class="token operator">=</span>data<span class="token punctuation">)</span>
+        li <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//li['@ddt-pit'][starts-with(@class,'line')]"</span><span class="token punctuation">)</span>
+        title <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./a[position() = 1]/@title"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        price <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+            <span class="token string">"./p[@class = 'price']/span[@class = 'search_now_price']/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        author <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+            <span class="token string">"./p[@class = 'search_book_author']/span[position()=1]/a/@title"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        publisher <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+            <span class="token string">"./p[@class = 'search_book_author']/span[position() = last()]/a/@title"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        date <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+            <span class="token string">"./p[@class = 'search_book_author']/span[position() = last()-1]/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        detail <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./p[@class = 'detail']/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        item <span class="token operator">=</span> TestItem<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true"># strip()用于移除字符串头尾指定的字符（默认空格或换行）或字符序列</span>
+        item<span class="token punctuation">.</span>title <span class="token operator">=</span> title<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> title <span class="token keyword">else</span> <span class="token string">""</span>
+        item<span class="token punctuation">.</span>author <span class="token operator">=</span> author<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> author <span class="token keyword">else</span> <span class="token string">""</span>
+        item<span class="token punctuation">.</span>date <span class="token operator">=</span> date<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token keyword">if</span> date <span class="token keyword">else</span> <span class="token string">""</span>
+        item<span class="token punctuation">.</span>publisher <span class="token operator">=</span> publisher<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> publisher <span class="token keyword">else</span> <span class="token string">""</span>
+        item<span class="token punctuation">.</span>price <span class="token operator">=</span> price<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> price <span class="token keyword">else</span> <span class="token string">""</span>
+        item<span class="token punctuation">.</span>detail <span class="token operator">=</span> detail<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> detail <span class="token keyword">else</span> <span class="token string">""</span>
+
+        item<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+</code></pre>
+<p>结果<br><img src="./1574772761792.png" alt="Alt text"></p>
 <hr>
-</li>
-</ul>
-<pre><code>*使用BeautifulSoup解析html界面，然后找到自己需要标签的位置，做好分析*
-
-```python
-from bs4 import BeautifulSoup, UnicodeDammit
-import scrapy
-import os
-# 在网页的&lt;li&gt;标签下右键edit as html，全选，复制，将html储存为books.txt
-if os.path.exists("books.txt"):
-    fobj = open("books.txt", "rb")
-    data = fobj.read()
-    fobj.close()
-    dammit = UnicodeDammit(data, ["utf-8", "gbk", "utf-16"])
-    data = dammit.unicode_markup
-    soup = BeautifulSoup(data, "lxml")
-    print(soup.prettify())
-```
-结果
-![Alt text](./1574772806534.png)
-
-*解析books.txt，想要获取的信息路径是否正确*
-```python
-from bs4 import BeautifulSoup, UnicodeDammit
-import scrapy
-class TestItem:
-    """docstring for TestItem"""
-
-def __init__(self):
-    self.title = ""
-    self.author = ""
-    self.date = ""
-    self.publisher = ""
-    self.price = ""
-    self.detail = ""
-
-def show(self):
-    print(self.title)
-    print(self.author)
-    print(self.date)
-    print(self.price)
-    print(self.publisher)
-    print(self.detail)
-
-try:
-    fobj = open("books.txt", "rb")
-    data = fobj.read()
-    fobj.close()
-    dammit = UnicodeDammit(data, ["utf-8", "utf-16", "gbk"])
-    data = dammit.unicode_markup
-    selector = scrapy.Selector(text=data)
-    li = selector.xpath("//li['@ddt-pit'][starts-with(@class,'line')]")
-    title = li.xpath("./a[position() = 1]/@title").extract_first()
-    price = li.xpath(
-        "./p[@class = 'price']/span[@class = 'search_now_price']/text()").extract_first()
-    author = li.xpath(
-        "./p[@class = 'search_book_author']/span[position()=1]/a/@title").extract_first()
-    publisher = li.xpath(
-        "./p[@class = 'search_book_author']/span[position() = last()]/a/@title").extract_first()
-    date = li.xpath(
-        "./p[@class = 'search_book_author']/span[position() = last()-1]/text()").extract_first()
-    detail = li.xpath("./p[@class = 'detail']/text()").extract_first()
-
-    item = TestItem()
-    # strip()用于移除字符串头尾指定的字符（默认空格或换行）或字符序列
-    item.title = title.strip() if title else ""
-    item.author = author.strip() if author else ""
-    item.date = date.strip()[1:] if date else ""
-    item.publisher = publisher.strip() if publisher else ""
-    item.price = price.strip() if price else ""
-    item.detail = detail.strip() if detail else ""
-
-    item.show()
-except Exception as e:
-    print(e)
-
-```
-结果
-![Alt text](./1574772761792.png)</code></pre><hr>
 <ul>
 <li><p>创建scrapy</p>
 <blockquote>
@@ -3267,190 +3258,177 @@ except Exception as e:
 <blockquote>
 <p><a href="https://blog.csdn.net/qq_41281596/article/details/83088384" target="_blank" rel="noopener">参考博客</a><br>写在数据管道处理类，open_spider开启事务的同时连接mongodb数据库</p>
 </blockquote>
-<pre class=" language-python"><code class="language-python">  <span class="token keyword">from</span> pymongo <span class="token keyword">import</span> MongoClient
-  <span class="token keyword">class</span> <span class="token class-name">BookPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-
-      <span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
-          <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"opened"</span><span class="token punctuation">)</span>
-          <span class="token keyword">try</span><span class="token punctuation">:</span>
-              self<span class="token punctuation">.</span>client <span class="token operator">=</span> MongoClient<span class="token punctuation">(</span><span class="token string">'localhost'</span><span class="token punctuation">,</span> <span class="token number">27017</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># 连接本地服务器</span>
-              self<span class="token punctuation">.</span>mongodb <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span><span class="token string">'SpiderDB'</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true"># 连接数据库</span>
-              self<span class="token punctuation">.</span>user <span class="token operator">=</span> self<span class="token punctuation">.</span>mongodb<span class="token punctuation">[</span><span class="token string">'books'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 连接关系（表）</span>
-              <span class="token comment" spellcheck="true"># print(self.user)</span>
-              self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 清空关系里的数据</span>
-              self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">True</span> <span class="token comment" spellcheck="true"># 数据库已连接</span>
-              self<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
-          <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
-              <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
-              self<span class="token punctuation">.</span>open <span class="token operator">=</span> <span class="token boolean">False</span></code></pre>
-</li>
-<li><p>编写爬虫</p>
-<p>  <em>f:/example3/demo/demo/spider/Myspider.py</em></p>
-<pre class=" language-python"><code class="language-python">  <span class="token keyword">import</span> scrapy
-  <span class="token keyword">from</span> demo<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>items <span class="token keyword">import</span> BookItem
-  <span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
-
-</code></pre>
 </li>
 </ul>
-<pre><code>class MySpider(scrapy.Spider):  # 继承 scrapy里的Spider类
-    name = "mySpider"
-    key = 'python'
-    source_url = 'http://search.dangdang.com/'
+<pre class=" language-python"><code class="language-python">    <span class="token keyword">from</span> pymongo <span class="token keyword">import</span> MongoClient
+    <span class="token keyword">class</span> <span class="token class-name">BookPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-    def start_requests(self):
-            # 搜索python时的网址
-        url = MySpider.source_url + "?key=" + MySpider.key
-        print(url)
-        yield scrapy.Request(url=url, callback=self.parse)
-
-    def parse(self, response):
-        try:
-            dammit = UnicodeDammit(response.body, ["utf-8", "utf-16", "gbk"])
-            data = dammit.unicode_markup
-            selector = scrapy.Selector(text=data)
-            lis = selector.xpath(
-                    # starts-with()可以获取类似标签的信息。
-                "//li['@ddt-pit'][starts-with(@class,'line')]")
-            # print(lis)
-            for li in lis:
-                # li = selector.xpath("//li")
-                title = li.xpath("./a[position() = 1]/@title").extract_first()
-                price = li.xpath(
-                    "./p[@class = 'price']/span[@class = 'search_now_price']/text()").extract_first()
-                author = li.xpath(
-                    "./p[@class = 'search_book_author']/span[position()=1]/a/@title").extract_first()
-                publisher = li.xpath(
-                    "./p[@class = 'search_book_author']/span[position() = last()]/a/@title").extract_first()
-                date = li.xpath(
-                    "./p[@class = 'search_book_author']/span[position() = last()-1]/text()").extract_first()
-                detail = li.xpath(
-                    "./p[@class = 'detail']/text()").extract_first()
-                item = BookItem()
-
-                # strip()用于移除字符串头尾指定的字符（默认空格或换行）或字符序列
-                item["title"] = title.strip() if title else ""
-                item["author"] = author.strip() if author else ""
-                # date.strip()[1:]原文本第一个字符为/,所以从下表1开始
-                item["date"] = date.strip()[1:] if date else ""
-                item["publisher"] = publisher.strip() if publisher else ""
-                item["price"] = price.strip() if price else ""
-                item["detail"] = detail.strip() if detail else ""
-                yield item
-            # 翻页处理
-            link = selector.xpath(
-                            "//div[@class='paging']/ul[@name='Fy']/li[@class='next']/a/@href").extract_first()
-                  # 如果为空则为最后一页
-            if link:
-            # 通过response.urljoin函数整理成绝对地址，这样调用parse函数，实现下一个网页的爬取
-                url = response.urljoin(link)
-                yield scrapy.Request(url=url, callback=self.parse)
-        except Exception as e:
-            print(e)
-
-```
-
-*f:/example3/demo/demo/items.py*
-```python
-# -*- coding: utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
-
-import scrapy
-class BookItem(scrapy.Item):
-    title = scrapy.Field() # scrapy字段
-    author = scrapy.Field()
-    date = scrapy.Field()
-    publisher = scrapy.Field()
-    detail = scrapy.Field()
-    price = scrapy.Field()
-
-```
-
-*f:/example3/demo/demo/pipelines.py*
-```python
-# -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-from pymongo import MongoClient
-
-# class DemoPipeline(object):
-#     def process_item(self, item, spider):
-#         return item
+        <span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"opened"</span><span class="token punctuation">)</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>client <span class="token operator">=</span> MongoClient<span class="token punctuation">(</span><span class="token string">'localhost'</span><span class="token punctuation">,</span> <span class="token number">27017</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># 连接本地服务器</span>
+                self<span class="token punctuation">.</span>mongodb <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span><span class="token string">'SpiderDB'</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true"># 连接数据库</span>
+                self<span class="token punctuation">.</span>user <span class="token operator">=</span> self<span class="token punctuation">.</span>mongodb<span class="token punctuation">[</span><span class="token string">'books'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true"># 连接关系（表）</span>
+                <span class="token comment" spellcheck="true"># print(self.user)</span>
+                self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 清空关系里的数据</span>
+                self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">True</span> <span class="token comment" spellcheck="true"># 数据库已连接</span>
+                self<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
+            <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>open <span class="token operator">=</span> <span class="token boolean">False</span></code></pre>
+<ul>
+<li>编写爬虫</li>
+</ul>
+<p><em>f:/example3/demo/demo/spider/Myspider.py</em></p>
+<pre class=" language-python"><code class="language-python">    <span class="token keyword">import</span> scrapy
+    <span class="token keyword">from</span> demo<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>items <span class="token keyword">import</span> BookItem
+    <span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
 
 
-class BookPipeline(object):
+    <span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true"># 继承 scrapy里的Spider类</span>
+        name <span class="token operator">=</span> <span class="token string">"mySpider"</span>
+        key <span class="token operator">=</span> <span class="token string">'python'</span>
+        source_url <span class="token operator">=</span> <span class="token string">'http://search.dangdang.com/'</span>
 
-def open_spider(self, spider):
-    print("opened")
-    try:
-        self.client = MongoClient('localhost', 27017)
-        self.mongodb = self.client['SpiderDB']
-        self.user = self.mongodb['books']
-        # print(self.user)
-        self.user.remove({})
-        self.opened = True
-        self.count = 0
-    except Exception as e:
-        print(e)
-        self.open = False
+        <span class="token keyword">def</span> <span class="token function">start_requests</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token comment" spellcheck="true"># 搜索python时的网址</span>
+            url <span class="token operator">=</span> MySpider<span class="token punctuation">.</span>source_url <span class="token operator">+</span> <span class="token string">"?key="</span> <span class="token operator">+</span> MySpider<span class="token punctuation">.</span>key
+            <span class="token keyword">print</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+            <span class="token keyword">yield</span> scrapy<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> callback<span class="token operator">=</span>self<span class="token punctuation">.</span>parse<span class="token punctuation">)</span>
 
-def close_spider(self, spider):
-    if self.opened:
-        self.client.close()
-        self.opened = False
-        print("closed")
-        print("总共爬取", self.count, "本书籍")
+        <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>response<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span> <span class="token string">"utf-16"</span><span class="token punctuation">,</span> <span class="token string">"gbk"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+                selector <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>text<span class="token operator">=</span>data<span class="token punctuation">)</span>
+                lis <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                        <span class="token comment" spellcheck="true"># starts-with()可以获取类似标签的信息。</span>
+                    <span class="token string">"//li['@ddt-pit'][starts-with(@class,'line')]"</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(lis)</span>
+                <span class="token keyword">for</span> li <span class="token keyword">in</span> lis<span class="token punctuation">:</span>
+                    <span class="token comment" spellcheck="true"># li = selector.xpath("//li")</span>
+                    title <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./a[position() = 1]/@title"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    price <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                        <span class="token string">"./p[@class = 'price']/span[@class = 'search_now_price']/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    author <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                        <span class="token string">"./p[@class = 'search_book_author']/span[position()=1]/a/@title"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    publisher <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                        <span class="token string">"./p[@class = 'search_book_author']/span[position() = last()]/a/@title"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    date <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                        <span class="token string">"./p[@class = 'search_book_author']/span[position() = last()-1]/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    detail <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                        <span class="token string">"./p[@class = 'detail']/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    item <span class="token operator">=</span> BookItem<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-def process_item(self, item, spider):
-    try:
-        # print(item["title"])
-        # print(item["author"])
-        # print(item["publisher"])
-        # print(item["date"])
-        # print(item["price"])
-        # print(item["detail"])
-        # print()
-        if self.opened:
-            self.user.insert_one({'title': item["title"], 'author': item["author"], 'publisher': item["publisher"],
-                                  'date': item["date"], 'price': item["price"], 'detail': item["detail"]})
-            self.count += 1
+                    <span class="token comment" spellcheck="true"># strip()用于移除字符串头尾指定的字符（默认空格或换行）或字符序列</span>
+                    item<span class="token punctuation">[</span><span class="token string">"title"</span><span class="token punctuation">]</span> <span class="token operator">=</span> title<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> title <span class="token keyword">else</span> <span class="token string">""</span>
+                    item<span class="token punctuation">[</span><span class="token string">"author"</span><span class="token punctuation">]</span> <span class="token operator">=</span> author<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> author <span class="token keyword">else</span> <span class="token string">""</span>
+                    <span class="token comment" spellcheck="true"># date.strip()[1:]原文本第一个字符为/,所以从下表1开始</span>
+                    item<span class="token punctuation">[</span><span class="token string">"date"</span><span class="token punctuation">]</span> <span class="token operator">=</span> date<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token keyword">if</span> date <span class="token keyword">else</span> <span class="token string">""</span>
+                    item<span class="token punctuation">[</span><span class="token string">"publisher"</span><span class="token punctuation">]</span> <span class="token operator">=</span> publisher<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> publisher <span class="token keyword">else</span> <span class="token string">""</span>
+                    item<span class="token punctuation">[</span><span class="token string">"price"</span><span class="token punctuation">]</span> <span class="token operator">=</span> price<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> price <span class="token keyword">else</span> <span class="token string">""</span>
+                    item<span class="token punctuation">[</span><span class="token string">"detail"</span><span class="token punctuation">]</span> <span class="token operator">=</span> detail<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> detail <span class="token keyword">else</span> <span class="token string">""</span>
+                    <span class="token keyword">yield</span> item
+                <span class="token comment" spellcheck="true"># 翻页处理</span>
+                link <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                                <span class="token string">"//div[@class='paging']/ul[@name='Fy']/li[@class='next']/a/@href"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                      <span class="token comment" spellcheck="true"># 如果为空则为最后一页</span>
+                <span class="token keyword">if</span> link<span class="token punctuation">:</span>
+                <span class="token comment" spellcheck="true"># 通过response.urljoin函数整理成绝对地址，这样调用parse函数，实现下一个网页的爬取</span>
+                    url <span class="token operator">=</span> response<span class="token punctuation">.</span>urljoin<span class="token punctuation">(</span>link<span class="token punctuation">)</span>
+                    <span class="token keyword">yield</span> scrapy<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> callback<span class="token operator">=</span>self<span class="token punctuation">.</span>parse<span class="token punctuation">)</span>
+            <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+</code></pre>
+<p><em>f:/example3/demo/demo/items.py</em></p>
+<pre class=" language-python"><code class="language-python">    <span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
 
-    except Exception as e:
-        print(e)
-    return item
+    <span class="token comment" spellcheck="true"># Define here the models for your scraped items</span>
+    <span class="token comment" spellcheck="true">#</span>
+    <span class="token comment" spellcheck="true"># See documentation in:</span>
+    <span class="token comment" spellcheck="true"># https://docs.scrapy.org/en/latest/topics/items.html</span>
 
-```
+    <span class="token keyword">import</span> scrapy
+    <span class="token keyword">class</span> <span class="token class-name">BookItem</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        title <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># scrapy字段</span>
+        author <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        date <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        publisher <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        detail <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        price <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><em>f:/example3/demo/demo/pipelines.py</em></p>
+<pre class=" language-python"><code class="language-python">    <span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
 
-*demo/demo/settings.py*
-```python
-# Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'demo.pipelines.BookPipeline': 300,
-}
-```
+    <span class="token comment" spellcheck="true"># Define your item pipelines here</span>
+    <span class="token comment" spellcheck="true">#</span>
+    <span class="token comment" spellcheck="true"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
+    <span class="token comment" spellcheck="true"># See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
+    <span class="token keyword">from</span> pymongo <span class="token keyword">import</span> MongoClient
 
-*demo/demo/spiders/run.py*
-```python
-from scrapy import cmdline
-cmdline.execute("scrapy crawl mySpider -s LOG_ENABLED=False".split())
+    <span class="token comment" spellcheck="true"># class DemoPipeline(object):</span>
+    <span class="token comment" spellcheck="true">#     def process_item(self, item, spider):</span>
+    <span class="token comment" spellcheck="true">#         return item</span>
 
-```</code></pre><h5 id="注意事项-6"><a href="#注意事项-6" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
+
+    <span class="token keyword">class</span> <span class="token class-name">BookPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"opened"</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>client <span class="token operator">=</span> MongoClient<span class="token punctuation">(</span><span class="token string">'localhost'</span><span class="token punctuation">,</span> <span class="token number">27017</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>mongodb <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span><span class="token string">'SpiderDB'</span><span class="token punctuation">]</span>
+            self<span class="token punctuation">.</span>user <span class="token operator">=</span> self<span class="token punctuation">.</span>mongodb<span class="token punctuation">[</span><span class="token string">'books'</span><span class="token punctuation">]</span>
+            <span class="token comment" spellcheck="true"># print(self.user)</span>
+            self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">True</span>
+            self<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>open <span class="token operator">=</span> <span class="token boolean">False</span>
+
+    <span class="token keyword">def</span> <span class="token function">close_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>opened<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">False</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"closed"</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"总共爬取"</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>count<span class="token punctuation">,</span> <span class="token string">"本书籍"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">process_item</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># print(item["title"])</span>
+            <span class="token comment" spellcheck="true"># print(item["author"])</span>
+            <span class="token comment" spellcheck="true"># print(item["publisher"])</span>
+            <span class="token comment" spellcheck="true"># print(item["date"])</span>
+            <span class="token comment" spellcheck="true"># print(item["price"])</span>
+            <span class="token comment" spellcheck="true"># print(item["detail"])</span>
+            <span class="token comment" spellcheck="true"># print()</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>opened<span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>insert_one<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">'title'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"title"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'author'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"author"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'publisher'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"publisher"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                      <span class="token string">'date'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"date"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'price'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"price"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'detail'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"detail"</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>count <span class="token operator">+=</span> <span class="token number">1</span>
+
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> item
+</code></pre>
+<p><em>demo/demo/settings.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># Configure item pipelines</span>
+<span class="token comment" spellcheck="true"># See https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
+ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'demo.pipelines.BookPipeline'</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre>
+<p><em>demo/demo/spiders/run.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> scrapy <span class="token keyword">import</span> cmdline
+cmdline<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">"scrapy crawl mySpider -s LOG_ENABLED=False"</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h5 id="注意事项-6"><a href="#注意事项-6" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
 <li>防反爬虫<br>在settings.py里打开<pre class=" language-python"><code class="language-python">DEFAULT_REQUEST_HEADERS <span class="token operator">=</span> <span class="token punctuation">{</span>
 <span class="token string">'Accept'</span><span class="token punctuation">:</span> <span class="token string">'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'</span><span class="token punctuation">,</span>
 <span class="token string">'Accept-Language'</span><span class="token punctuation">:</span> <span class="token string">'en'</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<span class="token punctuation">}</span></code></pre>
 </li>
 </ul>
-<p>```</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3893,7 +3871,7 @@ cmdline.execute("scrapy crawl mySpider -s LOG_ENABLED=False".split())
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">19.8k</span>&nbsp;字
+                class="white-color">19.7k</span>&nbsp;字
             
             
             
