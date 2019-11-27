@@ -413,7 +413,7 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        19.2k
+                        19.3k
                     </div>
                     
 
@@ -3155,18 +3155,8 @@ ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuat
 <p>1.对网页进行解析<br>2.创建scrapy框架<br>3.连接数据库<br>4.编写爬虫</p>
 </blockquote>
 <ul>
-<li>对网页进行解析</li>
+<li>对网页进行解析<br>进入官网” <a href="http://search.dangdang.com/" target="_blank" rel="noopener">http://search.dangdang.com/</a> “，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在 <code>&lt;li ddt-pit='' class = ''&gt;</code> 标签里，<br>书名(title)写在了 <code>&lt;li&gt;标签下的&lt;a title ='' ddclick=''&gt;</code> 标签里，<br>价格（price）写在了<code>&lt;p class = 'price'&gt;&lt;span class = 'search_now_price'&gt;&lt;/p&gt;</code>标签里，<br>详细情况（detail）写在了<code>&lt;p class = 'detail'&gt;&lt;/p&gt;</code>，<br>作者（author）写在了<code>&lt;p class = 'search_book_author'&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;</code>（第一个span）<br>日期（date） 写在了<code>&lt;p class = 'search_book_author'&gt;&lt;span&gt;text&lt;/span&gt;&lt;/p&gt;</code>里，（倒数第二个span）<br>出版社（publisher） 写在了<code>&lt;p class = 'search_book_author'&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;</code>里，（最后一个span）<br>翻页，（ctrl u）分析html界面发现，翻页标签<code>div[@class='paging']/ul[@name='Fy']/li[@class='next']/a/@href"</code>，可以通过网址发现” <a href="http://search.dangdang.com/?key=python&amp;act=input&amp;page_index=2" target="_blank" rel="noopener">http://search.dangdang.com/?key=python&amp;act=input&amp;page_index=2</a> “，act = input代表操作（可以不写），page_index代表页码，观察下面代码中 <code>class = next</code> 很容易发现</li>
 </ul>
-<blockquote>
-<p>进入官网<a href="http://search.dangdang.com/，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在`" target="_blank" rel="noopener">http://search.dangdang.com/，搜索python，随便找本书，右键检查，可以发现每本书的具体内容都写在`</a></p><li ddt-pit="" class=""><code>标签里，
-书名(title)写在了</code></li><li>标签下的<a title="" ddclick=""><code>标签里，
-价格（price）写在了</code><p class="price"><span class="search_now_price"></span></p><code>标签里，
-详细情况（detail）写在了</code><p class="detail"></p><code>，
-作者（author）写在了</code><p class="search_book_author"><span></span></p><code>（第一个span）
-日期（date） 写在了</code><p class="search_book_author"><span>text</span></p><code>里，（倒数第二个span）
-出版社（publisher） 写在了</code><p class="search_book_author"><span></span></p><code>里，（最后一个span）
-翻页，（ctrl u）分析html界面发现，翻页标签</code>div[@class=’paging’]/ul[@name=’Fy’]/li[@class=’next’]/a/@href”<code>，可以通过网址发现"http://search.dangdang.com/?key=python&amp;act=input&amp;page_index=2"，act = input代表操作（可以不写），page_index代表页码，观察下面代码中</code>class = next`很容易发现</a></li><p></p>
-</blockquote>
 <pre class=" language-html"><code class="language-html">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>paging<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
             <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span>  <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Fy<span class="token punctuation">"</span></span> <span class="token attr-name">dd_name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>底部翻页<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
                                 ........
@@ -3871,7 +3861,7 @@ cmdline<span class="token punctuation">.</span>execute<span class="token punctua
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">19.7k</span>&nbsp;字
+                class="white-color">19.8k</span>&nbsp;字
             
             
             
