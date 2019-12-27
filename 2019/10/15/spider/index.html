@@ -413,14 +413,14 @@ Flask是一个基于Python实现的Web开发‘微’框架 ‘MicroFramework’
                     
                     <div class="info-break-policy">
                         <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        20.3k
+                        21.9k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        94 分
+                        103 分
                     </div>
                     
                 
@@ -2321,23 +2321,19 @@ spider<span class="token punctuation">(</span>start_url<span class="token punctu
 <hr>
 <h3 id="python实现多线程"><a href="#python实现多线程" class="headerlink" title="python实现多线程"></a>python实现多线程</h3><p><em>线程类似于同时执行多个不同程序，多线程运行有如下的优点</em></p>
 <ul>
-<li><p>使用线程可以把占据长时间的程序中的任务放到后台去处理</p>
-</li>
-<li><p>程序的运行速度可能加快</p>
-</li>
-<li><p>在一些等待的任务实现上如用户输入，文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等</p>
-</li>
-<li><h4 id="python的前后台线程"><a href="#python的前后台线程" class="headerlink" title="python的前后台线程"></a>python的前后台线程</h4><blockquote>
-<p>在Python中要启动一个线程，可以使用threading包中的Thread建立一个对象，这个Thread类的基本原型是：<br><code>t = Thread(target, args = None)</code><br>其中target是要执行的线程函数，args是一个元组或者列表为target的函数提供参数，然后调用t.start()就开始线程</p>
+<li>使用线程可以把占据长时间的程序中的任务放到后台去处理</li>
+<li>程序的运行速度可能加快</li>
+<li>在一些等待的任务实现上如用户输入，文件读写和网络收发数据等，线程就比较有用了。在这种情况下我们可以释放一些珍贵的资源如内存占用等等</li>
+</ul>
+<h4 id="python的前后台线程"><a href="#python的前后台线程" class="headerlink" title="python的前后台线程"></a>python的前后台线程</h4><blockquote>
+<p>在Python中要启动一个线程，可以使用threading包中的Thread建立一个对象，这个Thread类的基本原型是：<br><code>t = Thread(target, args = None)</code>&gt;其中target是要执行的线程函数，args是一个元组或者列表为target的函数提供参数，然后调用t.start()就开始线程</p>
 </blockquote>
-</li>
-<li><p><code>r.setDaemon(False)</code></p>
-<blockquote>
+<ul>
+<li><code>r.setDaemon(False)</code><blockquote>
 <p>设置线程r为<strong>后台线程</strong>，后台线程<strong>不因主线程结束而结束</strong></p>
 </blockquote>
 </li>
-<li><p><code>r.setDaemon(True)</code></p>
-<blockquote>
+<li><code>r.setDaemon(True)</code><blockquote>
 <p>设置线程r为<strong>前台线程</strong>，后台线程因<strong>主线程结束而结束</strong></p>
 </blockquote>
 </li>
@@ -3620,6 +3616,354 @@ ITEM_PIPELINES = {
 <blockquote>
 <p>我们发现图片主要存储在data-original中，如果这里没有就在src中，使用chrome看到的src都有图片，但是下载的静态HTML网页中src找不到图片，估计这些src值是通过随后的JavaScript填入的，好在静态下载的HTML中的data-original有图片信息</p>
 </blockquote>
+<hr>
+<h4 id="实践项目-–爬取招商银行外汇"><a href="#实践项目-–爬取招商银行外汇" class="headerlink" title="实践项目 –爬取招商银行外汇"></a>实践项目 –爬取招商银行外汇</h4><p><em>实践要求</em></p>
+<blockquote>
+<p>爬取外汇表<br><img src="./1576336052024.png" alt="Alt text"></p>
+</blockquote>
+<p><em>实践工具</em></p>
+<blockquote>
+<p>pycharm，studio 3T</p>
+</blockquote>
+<p><em>网页解析</em><br><img src="./1576336122110.png" alt="Alt text"><br><img src="./1576336239307.png" alt="Alt text"></p>
+<p>注:tbody应该是JavaScript嵌入的</p>
+<h5 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h5><p><em>spider.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> scrapy
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span>  BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
+<span class="token keyword">from</span> demo<span class="token punctuation">.</span>items <span class="token keyword">import</span> BankItem
+
+<span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> <span class="token string">"mySpider"</span>
+    start_urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'http://fx.cmbchina.com/hq/'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>response<span class="token punctuation">.</span>body<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">'utf-8'</span><span class="token punctuation">,</span><span class="token string">'gbk'</span><span class="token punctuation">,</span><span class="token string">'utf-16'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+            selector <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>text <span class="token operator">=</span> data<span class="token punctuation">)</span>
+            trs <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//div[@id = 'realRateInfo']//table//tr[position() != 1]"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 不取headertitle</span>
+            <span class="token comment" spellcheck="true"># print(trs)</span>
+            <span class="token keyword">for</span> tr <span class="token keyword">in</span> trs<span class="token punctuation">:</span>
+                name <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[@class = 'fontbold']//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(name)</span>
+                price <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[@align = 'center']//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(price)</span>
+                basic <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[position() = 3]//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(basic)</span>
+                ex_selling_rate <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[position() = 4]//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(ex_selling_rate)</span>
+                mo_selling_rate <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[position() = 5]//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(mo_selling_rate)</span>
+                ex_buying_rate <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[position() = 6]//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(ex_buying_rate)</span>
+                mo_buying_rate <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[position() = 7]//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(mo_buying_rate)</span>
+                time <span class="token operator">=</span> tr<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./td[position() = last()-1]//text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(time)</span>
+
+                item <span class="token operator">=</span> BankItem<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                item<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span> <span class="token operator">=</span> name<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> name <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"price"</span><span class="token punctuation">]</span> <span class="token operator">=</span> price<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> price <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"basic"</span><span class="token punctuation">]</span> <span class="token operator">=</span> basic<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> basic <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"ex_selling_rate"</span><span class="token punctuation">]</span> <span class="token operator">=</span> ex_selling_rate<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> ex_selling_rate <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"mo_selling_rate"</span><span class="token punctuation">]</span> <span class="token operator">=</span> mo_selling_rate<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> mo_selling_rate <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"ex_buying_rate"</span><span class="token punctuation">]</span> <span class="token operator">=</span> ex_buying_rate<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> ex_buying_rate <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"mo_buying_rate"</span><span class="token punctuation">]</span> <span class="token operator">=</span> mo_buying_rate<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> mo_buying_rate <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"time"</span><span class="token punctuation">]</span> <span class="token operator">=</span> time<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> time <span class="token keyword">else</span> <span class="token string">""</span>
+
+                <span class="token keyword">yield</span> item
+
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span></code></pre>
+<p><em>items.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment" spellcheck="true"># Define here the models for your scraped items</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># See documentation in:</span>
+<span class="token comment" spellcheck="true"># https://docs.scrapy.org/en/latest/topics/items.html</span>
+
+<span class="token keyword">import</span> scrapy
+
+
+<span class="token keyword">class</span> <span class="token class-name">BankItem</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    price <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    basic <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ex_selling_rate <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    mo_selling_rate <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ex_buying_rate <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    mo_buying_rate <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    time <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><em>pipelines.py</em></p>
+<pre class=" language-python"><code class="language-python">
+<span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment" spellcheck="true"># Define your item pipelines here</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
+<span class="token comment" spellcheck="true"># See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
+<span class="token keyword">from</span> pymongo <span class="token keyword">import</span> MongoClient
+
+
+<span class="token keyword">class</span> <span class="token class-name">BankPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"open"</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>client <span class="token operator">=</span> MongoClient<span class="token punctuation">(</span><span class="token string">'localhost'</span><span class="token punctuation">,</span> <span class="token number">27017</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"># 连接客户端</span>
+            self<span class="token punctuation">.</span>mongodb <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span><span class="token string">'SpiderDB'</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true"># 连接数据库</span>
+            self<span class="token punctuation">.</span>user <span class="token operator">=</span> self<span class="token punctuation">.</span>mongodb<span class="token punctuation">[</span><span class="token string">'bank'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">#连接关系</span>
+            self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#清除关系里的数据</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">True</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">False</span>
+
+    <span class="token keyword">def</span> <span class="token function">close_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>opened<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">False</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"close"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">process_item</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>opened<span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>insert_one<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'price'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'price'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'basic'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'basic'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                      <span class="token string">'ex_selling_rate'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'ex_selling_rate'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                      <span class="token string">'mo_selling_rate'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'mo_selling_rate'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'ex_buying_rate'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'ex_buying_rate'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                      <span class="token string">'mo_buying_rate'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'mo_buying_rate'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                      <span class="token string">'time'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'time'</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> item
+</code></pre>
+<p><em>settings.py</em></p>
+<pre class=" language-python"><code class="language-python">ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuation">{</span>
+   <span class="token string">'demo.pipelines.BankPipeline'</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre>
+<h5 id="注意事项-8"><a href="#注意事项-8" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
+<li><code>from demo.items import BankItem</code>与<code>from demo.demo.items import BankItem</code>有区别，虽然第一种在pycharm会报错，但程序是可以执行的</li>
+<li><code>TypeError: 'str' object doesn't support item deletion</code>可以查看一下Items.py是否缺少了相关的字段</li>
+<li><code>from pymongo import MongoClient</code>连接MongoDB</li>
+</ul>
+<hr>
+<h4 id="实践项目-–爬取景区信息"><a href="#实践项目-–爬取景区信息" class="headerlink" title="实践项目 –爬取景区信息"></a>实践项目 –爬取景区信息</h4><p><em>实践要求</em></p>
+<blockquote>
+<p>爬取景区的名字，类别，时间，等级，资源，酒店，图片等<br>网址：’<a href="http://scenic.cthy.com/scenicSearch/0-0-0-0-0-1.html'" target="_blank" rel="noopener">http://scenic.cthy.com/scenicSearch/0-0-0-0-0-1.html'</a></p>
+</blockquote>
+<p><em>实践工具</em></p>
+<blockquote>
+<p>pycharm，studio 3T</p>
+</blockquote>
+<p><em>具体步骤</em></p>
+<blockquote>
+<p>1.对网页进行解析<br>2.创建scrapy框架<br>3.用studio 3T创建关系表visit<br>4.连接数据库<br>5.编写爬虫</p>
+</blockquote>
+<p><em>页面解析</em></p>
+<blockquote>
+<p>常规（看代码就懂了）<br><img src="./1576940000850.png" alt="Alt text"><br><img src="./1576940016423.png" alt="Alt text"></p>
+</blockquote>
+<p><em>代码</em></p>
+<p><em>MySpider.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> scrapy
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup<span class="token punctuation">,</span> UnicodeDammit
+<span class="token keyword">from</span> demo<span class="token punctuation">.</span>items <span class="token keyword">import</span> VisitItem
+<span class="token keyword">import</span> os
+
+
+<span class="token keyword">class</span> <span class="token class-name">MySpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> <span class="token string">"mySpider"</span>
+    <span class="token comment" spellcheck="true"># start_urls = ['http://scenic.cthy.com/scenicSearch/0-0-201-0-0-1.html']</span>
+    <span class="token comment" spellcheck="true"># source_url = 'http://scenic.cthy.com/scenicSearch'</span>
+
+    <span class="token keyword">def</span> <span class="token function">start_requests</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token comment" spellcheck="true"># print(MySpider.source_url)</span>
+        self<span class="token punctuation">.</span>clearImages<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        url <span class="token operator">=</span> <span class="token string">"http://scenic.cthy.com/scenicSearch/0-0-0-0-0-1.html"</span>
+        <span class="token comment" spellcheck="true"># print(url)</span>
+        <span class="token keyword">yield</span> scrapy<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> callback<span class="token operator">=</span>self<span class="token punctuation">.</span>parse<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            dammit <span class="token operator">=</span> UnicodeDammit<span class="token punctuation">(</span>response<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'utf-8'</span><span class="token punctuation">,</span> <span class="token string">'gbk'</span><span class="token punctuation">,</span> <span class="token string">'utf-16'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            data <span class="token operator">=</span> dammit<span class="token punctuation">.</span>unicode_markup
+            <span class="token comment" spellcheck="true"># 写着写着就忘记写这句话了，程序一直报'str' object has no attribute 'xpath'，尴尬</span>
+            selector <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Selector<span class="token punctuation">(</span>text<span class="token operator">=</span>data<span class="token punctuation">)</span>
+            sights <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//div[@class = 'sightshow']"</span><span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true"># print(sights)</span>
+            <span class="token comment" spellcheck="true"># print("here")</span>
+            <span class="token keyword">for</span> sight <span class="token keyword">in</span> sights<span class="token punctuation">:</span>
+                detail <span class="token operator">=</span> sight<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./div[@class = 'sightdetail']"</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(detail)</span>
+                name <span class="token operator">=</span> detail<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./h4[position() = 1]/a/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(name)</span>
+                form <span class="token operator">=</span> detail<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./ul[@class = 'sightbase']/li[position()=1]/a/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(form)</span>
+                source <span class="token operator">=</span> detail<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./ul[@class = 'sightbase']/li[position()=2]/a/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(source)</span>
+                grade <span class="token operator">=</span> detail<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./ul[@class = 'sightbase']/li[position()=3]/span[position() = 1]/a/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(grade)</span>
+                season <span class="token operator">=</span> detail<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./ul[@class = 'sightbase']/li[position()=3]/a/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(season)</span>
+
+                hotels <span class="token operator">=</span> detail<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span>
+                    <span class="token string">"./ul[@class = 'sighthotel']//a/text()"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(hotels)</span>
+                url <span class="token operator">=</span> sight<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"./div[@class = 'sightimg']/a[*]/img/@src"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># print(url)</span>
+
+                self<span class="token punctuation">.</span>count <span class="token operator">+=</span> <span class="token number">1</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>str<span class="token punctuation">(</span>self<span class="token punctuation">.</span>count<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">":"</span><span class="token operator">+</span>name<span class="token punctuation">)</span>
+                ID <span class="token operator">=</span> str<span class="token punctuation">(</span>self<span class="token punctuation">.</span>count<span class="token punctuation">)</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span>len<span class="token punctuation">(</span>ID<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    ID <span class="token operator">=</span> <span class="token string">"0"</span><span class="token operator">+</span>ID
+                ext <span class="token operator">=</span> <span class="token string">""</span>
+                <span class="token keyword">if</span> url<span class="token punctuation">:</span>
+                    ext <span class="token operator">=</span> self<span class="token punctuation">.</span>getFileExt<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    url <span class="token operator">=</span> response<span class="token punctuation">.</span>urljoin<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                    request <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>dont_filter<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> url<span class="token operator">=</span>url<span class="token punctuation">,</span> callback<span class="token operator">=</span>self<span class="token punctuation">.</span>download<span class="token punctuation">)</span>
+                    request<span class="token punctuation">.</span>meta<span class="token punctuation">[</span><span class="token string">"ID"</span><span class="token punctuation">]</span> <span class="token operator">=</span> ID
+                    request<span class="token punctuation">.</span>meta<span class="token punctuation">[</span><span class="token string">"ext"</span><span class="token punctuation">]</span> <span class="token operator">=</span> ext
+                    request<span class="token punctuation">.</span>meta<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span> <span class="token operator">=</span> name
+                    <span class="token keyword">yield</span> request
+
+                item <span class="token operator">=</span> VisitItem<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                item<span class="token punctuation">[</span><span class="token string">"source"</span><span class="token punctuation">]</span> <span class="token operator">=</span> source<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> source <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span> <span class="token operator">=</span> name<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> name <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"form"</span><span class="token punctuation">]</span> <span class="token operator">=</span> form <span class="token keyword">if</span> form <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"season"</span><span class="token punctuation">]</span> <span class="token operator">=</span> season<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> season <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"hotels"</span><span class="token punctuation">]</span> <span class="token operator">=</span> hotels <span class="token keyword">if</span> hotels <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"grade"</span><span class="token punctuation">]</span> <span class="token operator">=</span> grade<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> grade <span class="token keyword">else</span> <span class="token string">""</span>
+                item<span class="token punctuation">[</span><span class="token string">"ID"</span><span class="token punctuation">]</span> <span class="token operator">=</span> ID
+                item<span class="token punctuation">[</span><span class="token string">"ext"</span><span class="token punctuation">]</span> <span class="token operator">=</span> ext
+                <span class="token keyword">yield</span> item
+            link <span class="token operator">=</span> selector<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">"//div[@id = 'pagelist']/ul[@id = 'PagerList']/li[position()=last()-1]/a/@href"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>link<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> link<span class="token punctuation">:</span>
+                url <span class="token operator">=</span> response<span class="token punctuation">.</span>urljoin<span class="token punctuation">(</span>link<span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+                <span class="token comment" spellcheck="true"># scrapy TypeError: parse() missing 1 required positional argument: 'response'</span>
+                <span class="token comment" spellcheck="true">#self.parse() 和 self.parse 前者是执行 后者是地址</span>
+                <span class="token keyword">yield</span> scrapy<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url <span class="token operator">=</span> url<span class="token punctuation">,</span> callback<span class="token operator">=</span> self<span class="token punctuation">.</span>parse<span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">clearImages</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        fs <span class="token operator">=</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span><span class="token string">"images"</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> s <span class="token keyword">in</span> fs<span class="token punctuation">:</span>
+            t <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token string">"images"</span><span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+            os<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">getFileExt</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        p <span class="token operator">=</span> url<span class="token punctuation">.</span>rindex<span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> p <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            s <span class="token operator">=</span> url<span class="token punctuation">[</span>p<span class="token punctuation">:</span><span class="token punctuation">]</span>
+            s <span class="token operator">=</span> s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span>len<span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> s <span class="token keyword">if</span> s <span class="token keyword">else</span> <span class="token string">""</span>
+
+    <span class="token keyword">def</span> <span class="token function">download</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            ID <span class="token operator">=</span> response<span class="token punctuation">.</span>meta<span class="token punctuation">[</span><span class="token string">"ID"</span><span class="token punctuation">]</span>
+            ext <span class="token operator">=</span> response<span class="token punctuation">.</span>meta<span class="token punctuation">[</span><span class="token string">"ext"</span><span class="token punctuation">]</span>
+            name <span class="token operator">=</span> response<span class="token punctuation">.</span>meta<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span>
+            <span class="token comment" spellcheck="true"># print(ext.strip() == 'gif')</span>
+            <span class="token comment" spellcheck="true"># print(ext[len(ext)-1])</span>
+            <span class="token keyword">if</span> <span class="token operator">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span><span class="token string">"images"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                b <span class="token operator">=</span> os<span class="token punctuation">.</span>getcwd<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                os<span class="token punctuation">.</span>mkdir<span class="token punctuation">(</span>b<span class="token operator">+</span><span class="token string">"\\images"</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>ext<span class="token punctuation">[</span>len<span class="token punctuation">(</span>ext<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token string">"f"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                f <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"images\\"</span><span class="token operator">+</span>ID<span class="token operator">+</span>name<span class="token operator">+</span>ext<span class="token punctuation">,</span><span class="token string">"wb"</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>response<span class="token punctuation">.</span>body<span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"download"</span><span class="token operator">+</span>ID<span class="token operator">+</span>ext<span class="token punctuation">)</span>
+
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span></code></pre>
+<p><em>items.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment" spellcheck="true"># Define here the models for your scraped items</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># See documentation in:</span>
+<span class="token comment" spellcheck="true"># https://docs.scrapy.org/en/latest/topics/items.html</span>
+
+<span class="token keyword">import</span> scrapy
+
+
+<span class="token keyword">class</span> <span class="token class-name">VisitItem</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># define the fields for your item here like:</span>
+    <span class="token comment" spellcheck="true"># name = scrapy.Field()</span>
+    ext <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ID <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    name <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    form <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    season <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    hotels <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    grade <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    source <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><em>Pipelines.py</em></p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment" spellcheck="true"># Define your item pipelines here</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
+<span class="token comment" spellcheck="true"># See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html</span>
+<span class="token keyword">from</span> pymongo <span class="token keyword">import</span> MongoClient
+
+
+<span class="token keyword">class</span> <span class="token class-name">VisPipeline</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">open_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"open"</span><span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>client <span class="token operator">=</span> MongoClient<span class="token punctuation">(</span><span class="token string">'localhost'</span><span class="token punctuation">,</span> <span class="token number">27017</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>mongodb <span class="token operator">=</span> self<span class="token punctuation">.</span>client<span class="token punctuation">[</span><span class="token string">'SpiderDB'</span><span class="token punctuation">]</span>
+            self<span class="token punctuation">.</span>user <span class="token operator">=</span> self<span class="token punctuation">.</span>mongodb<span class="token punctuation">[</span><span class="token string">'visit'</span><span class="token punctuation">]</span>
+            self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>remove<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">True</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">False</span>
+
+    <span class="token keyword">def</span> <span class="token function">close_spider</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>opened<span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>client<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>opened <span class="token operator">=</span> <span class="token boolean">False</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"close"</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">process_item</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># pass</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>opened<span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>user<span class="token punctuation">.</span>insert_one<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">'名字'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'类型'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'form'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'时间'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span>
+                                     <span class="token string">'season'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'等级'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'grade'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'资源'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'source'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'酒店'</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">'hotels'</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> item
+</code></pre>
+<p><em>settings.py</em></p>
+<pre class=" language-python"><code class="language-python">
+ROBOTSTXT_OBEY <span class="token operator">=</span> <span class="token boolean">False</span>
+ITEM_PIPELINES <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'demo.pipelines.VisPipeline'</span><span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h5 id="注意事项-9"><a href="#注意事项-9" class="headerlink" title="注意事项"></a>注意事项</h5><ul>
+<li>若出现<code>scrapy TypeError: parse() missing 1 required positional argument: 'response'</code>可能是parse与parse()的问题， self.parse() 和 self.parse 前者是执行 后者是地址</li>
+<li>若出现<code>'str' object has no attribute 'xpath'</code>,一可能是<code>selector = scrapy.Selector(text = data)</code>没写，二可能是，xpath提取的不是Selector对象，eg：A = selector.xpath().extract()，B = A.xpath()。<strong>extract()/extract_first()方法本身都是用去提取节点的内容的，不是用来提取页面元素的Selector封装，所以无法对于这些提取的节点，使用xpath来做下一步的选取。</strong></li>
+<li><strong>由于gif图片无图</strong>，所以在程序中跳过了<code>if ext[len(ext)-1] != 'f'</code>，（如果写<code>ext != 'gif'</code>）不正确，（注’is’与’=’的区别）</li>
+<li><code>if not os.path.exists("images"): b = os.getcwd() os.mkdir(b+"\\images")</code>新建文件夹，<code>os.getcwd()</code><strong>获取当前文件所在目录</strong>，<code>os.mkdir()</code><strong>创建文件夹</strong></li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -4062,7 +4406,7 @@ ITEM_PIPELINES = {
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">20.9k</span>&nbsp;字
+                class="white-color">22.5k</span>&nbsp;字
             
             
             
