@@ -41,9 +41,9 @@
     
       <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="java" scheme="https://superych.github.io/tags/java/"/>
-    
       <category term="python" scheme="https://superych.github.io/tags/python/"/>
+    
+      <category term="java" scheme="https://superych.github.io/tags/java/"/>
     
   </entry>
   
@@ -143,7 +143,7 @@
     <link href="https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/"/>
     <id>https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/</id>
     <published>2019-09-05T10:29:29.000Z</published>
-    <updated>2020-03-30T08:36:38.341Z</updated>
+    <updated>2020-03-30T12:30:37.924Z</updated>
     
     <summary type="html">
     
@@ -151,11 +151,7 @@
       
         
         
-          &lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return; }
-       
+          &lt;h1 id=&quot;实现Typora-PC端与移动端同步&quot;&gt;&lt;a href=&quot;#实现Typora-PC端与移动端同步&quot; class=&quot;headerlink&quot; title=&quot;实现Typora PC端与移动端同步&quot;&gt;&lt;/a&gt;实现Typora PC端与移动端同步&lt;/h1&gt;&lt;h2
         
       
     
