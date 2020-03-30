@@ -52,7 +52,7 @@
     <link href="https://superych.github.io/2019/10/29/codeforces/"/>
     <id>https://superych.github.io/2019/10/29/codeforces/</id>
     <published>2019-10-28T16:05:03.000Z</published>
-    <updated>2019-11-01T16:39:10.385Z</updated>
+    <updated>2020-03-30T08:25:41.981Z</updated>
     
     <summary type="html">
     
@@ -60,11 +60,7 @@
       
         
         
-          &lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return; }
-       
+          &lt;h1 id=&quot;Codeforces&quot;&gt;&lt;a href=&quot;#Codeforces&quot; class=&quot;headerlink&quot; title=&quot;Codeforces&quot;&gt;&lt;/a&gt;Codeforces&lt;/h1&gt;&lt;h2 id=&quot;Codeforces-Round-629-Div-3&quot;&gt;&lt;a
         
       
     
@@ -139,6 +135,37 @@
     
     
       <category term="轻量级" scheme="https://superych.github.io/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PC端和移动端实现Typora数据同步</title>
+    <link href="https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/"/>
+    <id>https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/</id>
+    <published>2019-09-05T10:29:29.000Z</published>
+    <updated>2020-03-30T08:36:38.341Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="markdown" scheme="https://superych.github.io/categories/markdown/"/>
+    
+    
+      <category term="Typora" scheme="https://superych.github.io/tags/Typora/"/>
     
   </entry>
   

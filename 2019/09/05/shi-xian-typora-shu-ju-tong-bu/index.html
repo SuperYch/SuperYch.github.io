@@ -4,8 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="力扣, SuperYch,github">
-    <meta name="description" content="每日一更">
+    <meta name="keywords" content="PC端和移动端实现Typora数据同步, SuperYch,github">
+    <meta name="description" content="Typora数据同步">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>力扣 | スーパーヒツジ</title>
+    <title>PC端和移动端实现Typora数据同步 | スーパーヒツジ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">力扣</h1>
+                    <h1 class="description center-align post-title">PC端和移动端实现Typora数据同步</h1>
                 </div>
             </div>
         </div>
@@ -425,16 +425,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/算法/">
-                                <span class="chip bg-color">算法</span>
-                            </a>
-                        
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
-                            </a>
-                        
-                            <a href="/tags/python/">
-                                <span class="chip bg-color">python</span>
+                            <a href="/tags/Typora/">
+                                <span class="chip bg-color">Typora</span>
                             </a>
                         
                     </div>
@@ -445,8 +437,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/竞赛/" class="post-category">
-                                竞赛
+                            <a href="/categories/markdown/" class="post-category">
+                                markdown
                             </a>
                         
                     </div>
@@ -458,7 +450,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-01
+                    2019-09-05
                 </div>
                 
 
@@ -475,47 +467,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="中等难度"><a href="#中等难度" class="headerlink" title="中等难度"></a>中等难度</h3><h4 id="加油站"><a href="#加油站" class="headerlink" title="加油站"></a><a href="https://leetcode-cn.com/problems/gas-station/" target="_blank" rel="noopener">加油站</a></h4><p><strong>考点</strong>:<em>贪心，数组</em><br><em>题意：</em></p>
-<blockquote>
-<p>给你一条路线，从加油站1到加油站2的花费的油量，以及到加油站2所能补充的油量，问是否能走完<strong>一圈</strong>，若能，求出出发点</p>
-</blockquote>
-<p><em>思路</em></p>
-<blockquote>
-<p>判断能否走完全程：总油量sum，花费cost，<strong>sum-cost&lt; 0</strong>时，一定不能走完全程<br>求出发点：若当前i站的<strong>(curr_tank +=gas[i] - cost[i]) &lt; 0</strong>,则此站行不通，sta = i + 1</p>
-</blockquote>
-<p><em>思考</em><br>为什么不是上一站的sta + 1</p>
-<blockquote>
-<ul>
-<li>原因是作为起始站，首先它要保证到自己时<em>curr_tank &gt;= 0</em>，上一个站使得<em>curr_tank &lt; 0</em>，必然起始站<em>gas-cost &gt;= 0</em>，(如果你觉是在它之前的<strong>i-1</strong>站让<em>curr_tank</em>变到很多，到当前i站即使为负，<em>curr_tank &gt;= 0</em>，这就想歪了，这种情况必然取<strong>i-1</strong>站作为起始) </li>
-</ul>
-</blockquote>
-<blockquote>
-<ul>
-<li>这样以来以i站开始，到i+k时，<em>curr_tank &lt;0</em>,那么不可能再从<strong>i+1</strong>开始，因为i站的<em>gas-cost &gt;= 0</em>，也就是说</li>
-<li>$\sum_{i}^k({gas-cost}) $ &gt;$ \sum_{i+1}^k({gas-cost})$ </li>
-<li>$(curr\_tank(i-&gt;k) &gt; curr\_tank(i+1-&gt;k))$</li>
-<li>类似的从<strong>i+1~(k)</strong>出发的<em>curr_rank</em>都小于从<strong>i</strong>出发的<em>curr_rank</em>，所以 <strong>sta = k+1</strong>(k为失败那一站)</li>
-</ul>
-</blockquote>
-<p><em>code</em></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">canCompleteCircuit</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> gas<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cost<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">int</span> total_tank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> curr_tank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> n <span class="token operator">=</span> gas<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> sta <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            total_tank <span class="token operator">+=</span>gas<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span>cost<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            curr_tank <span class="token operator">+=</span>gas<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span>cost<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>curr_tank <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                curr_tank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-                sta <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span>  total_tank <span class="token operator">>=</span> <span class="token number">0</span><span class="token operator">?</span> sta<span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
+                <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -558,7 +510,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://superych.github.io/2019/11/01/leetcode/">https://superych.github.io/2019/11/01/leetcode/</a>
+                    <a href="https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/">https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -596,16 +548,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/算法/">
-                                    <span class="chip bg-color">算法</span>
-                                </a>
-                            
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
-                                </a>
-                            
-                                <a href="/tags/python/">
-                                    <span class="chip bg-color">python</span>
+                                <a href="/tags/Typora/">
+                                    <span class="chip bg-color">Typora</span>
                                 </a>
                             
                         </div>
@@ -771,56 +715,46 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/01/leetcode/">
+                <a href="/2019/09/05/markdown/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="力扣">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="markdown使用">
                         
-                        <span class="card-title">力扣</span>
+                        <span class="card-title">markdown使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            每日一更
+                            在编写hexo博客时所有注意的编辑格式
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-09-05
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/竞赛/" class="post-category">
-                                    竞赛
+                            <a href="/categories/标记语言/" class="post-category">
+                                    标记语言
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/算法/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/轻量级/">
+                        <span class="chip bg-color">轻量级</span>
                     </a>
                     
                 </div>
@@ -831,53 +765,46 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/29/codeforces/">
+                <a href="/2019/09/05/shi-xian-typora-shu-ju-tong-bu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="codeforces">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="PC端和移动端实现Typora数据同步">
                         
-                        <span class="card-title">codeforces</span>
+                        <span class="card-title">PC端和移动端实现Typora数据同步</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用来整理codeforces的题，每周一更
+                            Typora数据同步
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-05
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/竞赛/" class="post-category">
-                                    竞赛
+                            <a href="/categories/markdown/" class="post-category">
+                                    markdown
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/算法/">
-                        <span class="chip bg-color">算法</span>
-                    </a>
-                    
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
-                    </a>
-                    
-                    <a href="/tags/c-c/">
-                        <span class="chip bg-color">c/c++</span>
+                    <a href="/tags/Typora/">
+                        <span class="chip bg-color">Typora</span>
                     </a>
                     
                 </div>
