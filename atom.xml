@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://superych.github.io/"/>
-  <updated>2019-11-02T13:51:03.399Z</updated>
+  <updated>2020-05-13T09:12:38.360Z</updated>
   <id>https://superych.github.io/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>javaweb</title>
+    <link href="https://superych.github.io/2020/05/08/javaweb/"/>
+    <id>https://superych.github.io/2020/05/08/javaweb/</id>
+    <published>2020-05-08T13:56:43.519Z</published>
+    <updated>2020-05-13T09:12:38.360Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;基础加强&quot;&gt;&lt;a href=&quot;#基础加强&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="web" scheme="https://superych.github.io/categories/web/"/>
+    
+    
+      <category term="java" scheme="https://superych.github.io/tags/java/"/>
+    
+      <category term="web" scheme="https://superych.github.io/tags/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>codeforces</title>
+    <link href="https://superych.github.io/2020/04/15/icpc/"/>
+    <id>https://superych.github.io/2020/04/15/icpc/</id>
+    <published>2020-04-15T15:53:00.000Z</published>
+    <updated>2020-09-26T08:48:41.896Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;2019-2020-ICPC-Southeastern-European-Regional-Programming-Contest-SEERC-2019&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="竞赛" scheme="https://superych.github.io/categories/%E7%AB%9E%E8%B5%9B/"/>
+    
+    
+      <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="c/c++" scheme="https://superych.github.io/tags/c-c/"/>
+    
+  </entry>
   
   <entry>
     <title>力扣</title>
@@ -41,9 +99,9 @@
     
       <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="python" scheme="https://superych.github.io/tags/python/"/>
-    
       <category term="java" scheme="https://superych.github.io/tags/java/"/>
+    
+      <category term="python" scheme="https://superych.github.io/tags/python/"/>
     
   </entry>
   
@@ -52,7 +110,7 @@
     <link href="https://superych.github.io/2019/10/29/codeforces/"/>
     <id>https://superych.github.io/2019/10/29/codeforces/</id>
     <published>2019-10-28T16:05:03.000Z</published>
-    <updated>2020-04-01T10:48:37.955Z</updated>
+    <updated>2020-05-07T12:32:45.662Z</updated>
     
     <summary type="html">
     
@@ -72,9 +130,9 @@
     
       <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="python" scheme="https://superych.github.io/tags/python/"/>
-    
       <category term="c/c++" scheme="https://superych.github.io/tags/c-c/"/>
+    
+      <category term="python" scheme="https://superych.github.io/tags/python/"/>
     
   </entry>
   
@@ -104,6 +162,37 @@
       <category term="python" scheme="https://superych.github.io/tags/python/"/>
     
       <category term="flask" scheme="https://superych.github.io/tags/flask/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TypeScript声明文件</title>
+    <link href="https://superych.github.io/2019/09/05/first/"/>
+    <id>https://superych.github.io/2019/09/05/first/</id>
+    <published>2019-09-05T10:29:29.000Z</published>
+    <updated>2020-09-10T16:51:38.438Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
+    
+    
+      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
     
   </entry>
   
@@ -143,7 +232,7 @@
     <link href="https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/"/>
     <id>https://superych.github.io/2019/09/05/shi-xian-typora-shu-ju-tong-bu/</id>
     <published>2019-09-05T10:29:29.000Z</published>
-    <updated>2020-04-01T17:02:02.008Z</updated>
+    <updated>2020-05-08T15:58:09.010Z</updated>
     
     <summary type="html">
     

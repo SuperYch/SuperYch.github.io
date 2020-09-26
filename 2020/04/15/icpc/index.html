@@ -4,8 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="力扣, SuperYch,github">
-    <meta name="description" content="每日一更">
+    <meta name="keywords" content="codeforces, SuperYch,github">
+    <meta name="description" content="计蒜客复刻ICPC补题">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>力扣 | スーパーヒツジ</title>
+    <title>codeforces | スーパーヒツジ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">力扣</h1>
+                    <h1 class="description center-align post-title">codeforces</h1>
                 </div>
             </div>
         </div>
@@ -366,12 +366,8 @@
                                 <span class="chip bg-color">算法</span>
                             </a>
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
-                            </a>
-                        
-                            <a href="/tags/python/">
-                                <span class="chip bg-color">python</span>
+                            <a href="/tags/c-c/">
+                                <span class="chip bg-color">c/c++</span>
                             </a>
                         
                     </div>
@@ -395,7 +391,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-01
+                    2020-04-15
                 </div>
                 
 
@@ -412,46 +408,113 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="中等难度"><a href="#中等难度" class="headerlink" title="中等难度"></a>中等难度</h3><h4 id="加油站"><a href="#加油站" class="headerlink" title="加油站"></a><a href="https://leetcode-cn.com/problems/gas-station/" target="_blank" rel="noopener">加油站</a></h4><p><strong>考点</strong>:<em>贪心，数组</em><br><em>题意：</em></p>
+                <h2 id="2019-2020-ICPC-Southeastern-European-Regional-Programming-Contest-SEERC-2019"><a href="#2019-2020-ICPC-Southeastern-European-Regional-Programming-Contest-SEERC-2019" class="headerlink" title="2019-2020 ICPC Southeastern European Regional Programming Contest (SEERC 2019)"></a>2019-2020 ICPC Southeastern European Regional Programming Contest (SEERC 2019)</h2><p>-[✔] D - Cycle String?</p>
+<p>-[✔] F - Game on a Tree</p>
+<p>-[✔] I - Absolute Game</p>
+<p>-[✔] J - Graph and Cycles</p>
+<h3 id="J-Graph-and-Cycles"><a href="#J-Graph-and-Cycles" class="headerlink" title="J - Graph and Cycles"></a>J - Graph and Cycles</h3><hr>
+<h4 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h4><p>给出一个有n（n为奇数）个点的无向完全图，可以从这张图中分割出任意个圈，任意两个分割出来的圈没有重叠的边，而且图中的每一条边必定属于其中一个圈。圈分割出来后，对于其中的每个顶点的两条边取最大值然后相加作为该圈的重量，问如何分割这张图能使所有圈的重量和最小。</p>
+<h4 id="官方题解："><a href="#官方题解：" class="headerlink" title="官方题解："></a>官方题解：</h4><p>我们从点的角度出发,对于一个 <code>cycle-array</code> 的贡献其实就是对每个点连着的两条边取一个最大值。现在我们考虑全局的的代价，每个点要贡献 $\frac{n-1}2$ 次，要把 $n-1$ 条连着的边配成 $\frac{n-1}2$ 对并且是的总代价尽可能小。所以我们贪心地考虑，我们每次把尽量大的两条边配对即可。</p>
 <blockquote>
-<p>给你一条路线，从加油站1到加油站2的花费的油量，以及到加油站2所能补充的油量，问是否能走完<strong>一圈</strong>，若能，求出出发点</p>
+<p>补充：由于是奇数点，又因为是完全图，那么每个点的度为偶数。根据<strong>欧拉环游：</strong><br>$$<br>图 G 称为偶图(even graph)，如果G 中每个顶点的度数为偶数。容易发现，连通的偶图即为欧拉图。<br>$$<br>那么必然每个点的任意两条边为一对，n个点组合起来必为一个欧拉图。以此类推，每个点其他两条边组合（不与之前边重合）为一对，这样又是一个欧拉图。奇数点的Kn完全图，每个点必有（n-1）边（偶数个），最后一定可以形成1个或多个边不重合的环。这样我们就可以贪心的将每个点连接边按从大到小排序，两两组合。</p>
+<p>（钻牛角尖：仔细思考一下，每个点两条边进行比较，每个环的和已经包括开始的边与结束的边的比较的最大值，因为它围成了一个环，可以画个奇数点的图出来看看）【所有说每次钻牛角尖都是想当然，动笔才是关键】</p>
 </blockquote>
-<p><em>思路</em></p>
-<blockquote>
-<p>判断能否走完全程：总油量sum，花费cost，<strong>sum-cost&lt; 0</strong>时，一定不能走完全程<br>求出发点：若当前i站的<strong>(curr_tank +=gas[i] - cost[i]) &lt; 0</strong>,则此站行不通，sta = i + 1</p>
-</blockquote>
-<p><em>思考</em><br>为什么不是上一站的sta + 1</p>
-<blockquote>
-<ul>
-<li>原因是作为起始站，首先它要保证到自己时<em>curr_tank &gt;= 0</em>，上一个站使得<em>curr_tank &lt; 0</em>，必然起始站<em>gas-cost &gt;= 0</em>，(如果你觉是在它之前的<strong>i-1</strong>站让<em>curr_tank</em>变到很多，到当前i站即使为负，<em>curr_tank &gt;= 0</em>，这就想歪了，这种情况必然取<strong>i-1</strong>站作为起始) </li>
-</ul>
-</blockquote>
-<blockquote>
-<ul>
-<li>这样以来以i站开始，到i+k时，<em>curr_tank &lt;0</em>,那么不可能再从<strong>i+1</strong>开始，因为i站的<em>gas-cost &gt;= 0</em>，也就是说</li>
-<li>$\sum_{i}^k({gas-cost}) $ &gt;$ \sum_{i+1}^k({gas-cost})$ </li>
-<li>$(curr\_tank(i-&gt;k) &gt; curr\_tank(i+1-&gt;k))$</li>
-<li>类似的从<strong>i+1~(k)</strong>出发的<em>curr_rank</em>都小于从<strong>i</strong>出发的<em>curr_rank</em>，所以 <strong>sta = k+1</strong>(k为失败那一站)</li>
-</ul>
-</blockquote>
-<p><em>code</em></p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">canCompleteCircuit</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> gas<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> cost<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">int</span> total_tank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> curr_tank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> n <span class="token operator">=</span> gas<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> sta <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            total_tank <span class="token operator">+=</span>gas<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span>cost<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            curr_tank <span class="token operator">+=</span>gas<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span>cost<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>curr_tank <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                curr_tank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-                sta <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span>  total_tank <span class="token operator">>=</span> <span class="token number">0</span><span class="token operator">?</span> sta<span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> ll long long</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> pb push_back</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> mod <span class="token operator">=</span> <span class="token number">1e9</span> <span class="token operator">+</span> <span class="token number">7</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> maxn <span class="token operator">=</span> <span class="token number">2e5</span> <span class="token operator">+</span> <span class="token number">233</span><span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> g<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> n<span class="token punctuation">;</span>cin<span class="token operator">>></span>n<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token operator">*</span><span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>z<span class="token punctuation">;</span>
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>x<span class="token punctuation">,</span><span class="token operator">&amp;</span>y<span class="token punctuation">,</span><span class="token operator">&amp;</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">pb</span><span class="token punctuation">(</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        g<span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">pb</span><span class="token punctuation">(</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
+    ll ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">sort</span><span class="token punctuation">(</span>g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>greater<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token number">-1</span><span class="token punctuation">;</span>j<span class="token operator">+</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+            ans <span class="token operator">+</span><span class="token operator">=</span> g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    cout <span class="token operator">&lt;&lt;</span> ans <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<blockquote>
+<p>greater表示内置类型从大到小排序，less表示内置类型从小到大排序。</p>
+</blockquote>
+<h3 id="F-Game-on-a-Tree"><a href="#F-Game-on-a-Tree" class="headerlink" title="F - Game on a Tree"></a>F - Game on a Tree</h3><hr>
+<h4 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h4><p>给定一棵根结点为 的树，一开始全白，alice和bob轮流玩，Alice选择一个点，将其染黑，接下来Bob将这个点的某个祖先点或其子树点染黑，2个人轮流来，双方都采取最优策略，问最终谁获胜</p>
+<h4 id="官方题解"><a href="#官方题解" class="headerlink" title="官方题解"></a>官方题解</h4><p>首先我们考虑这样一个游戏：在一张无向图上，游戏的条件和题设基本相同，除了我们只能沿着边走。下面直接给出上述游戏结论，若该无向图存在完美匹配，那么后手必胜，否则先手必胜。证明：无向图存在完美匹配时后手只需沿着匹配走就可以了。当不存在完美匹配时，取一个最大匹配，先手任选一个不在匹配中的点作为起点，然后每次走后手选的点的匹配即可。因为后手不可能选择一个不在匹配中的点，否则将构成增广路与最大匹配矛盾。</p>
+<p>对于原问题，我们重构一张无向图。若两点 $x,y$ 在原树上是子孙关系，我们就在新图中给他们连一条无向边。此时问题转换为求新图是否存在完美匹配。结合图的性质，在原树上深度越小的点，在新图中度数就越大，通用性相较于他的后代更强。所以我们可以贪心地让每个点尽量匹配深度较大的点。设 $f[x]$ 为在原树中以 $x$ 为根的子树所生成的无向图中最少无法匹配上的点的数量。设 $sum = \sum f[y]$其中 $y$ 为 $x$ 的儿子。如果 $sum&gt;0$ 表示子树中还有点没有被配对，选一个点和 $x$ 配对得 $f[x] = sum-1$，否则 $x$ 无法被配对 $f[x] = 1$。即 $f[x] = \begin{cases} sum-1,&amp;sum&gt;0\  1,&amp;sum=0\end{cases}$。后手获胜当且仅当 $f[x]=0$。综上，时间复杂度 $O(n)$。</p>
+<blockquote>
+<p>补充：<a href="http://m.mamicode.com/info-detail-2970115.html" target="_blank" rel="noopener">参考博客</a></p>
+<p>注：此题可看成一个图，每个点必有点与之相连</p>
+<p>若存在完美匹配，则后手必胜，最后一个结点必为后手。（所有点都连起来了）</p>
+<p>若不存在完美匹配。先手一定选择不在匹配内的点。</p>
+<ul>
+<li><p>①若后序后手一直选择匹配内的点，则先手可以按完美匹配那样，先手必为最后一点。</p>
+</li>
+<li><p>②若后序存在后手选择不匹配的点，则矛盾：假设n个点最大匹配为（&lt;v1,v2&gt;,&lt;v3,v4&gt;,&lt;v5,v6&gt;,….,&lt;vk-1,vk&gt;）（k &lt; n）; 现在有先手和后手分别走了不在匹配内的点a,b。则（&lt;a,v1&gt;,&lt;v2,v3&gt;,&lt;v4,b&gt;,&lt;v5,v6&gt;,….,&lt;vk-1,vk&gt;），此时a~b都是连通可达的。那么就与最大匹配数不符。所有后手走不了匹配外的点。</p>
+</li>
+</ul>
+<p>此题的答案就是判断是否存在完美匹配。我们从根结点开始找，找到的最大匹配数一定最优。</p>
+<p>此题也可以使用树dp寻找最大匹配数。</p>
+</blockquote>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> MAXV <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> f<span class="token punctuation">[</span>MAXV<span class="token punctuation">]</span><span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> son<span class="token punctuation">[</span>MAXV<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/*
+例如：                                   other
+                                        /  \
+                                       fa   other
+                                      /\
+                                     x  other
+                                    / \
+                                  y   z
+
+    递归到叶子结点y,f[y] = 1 -->接着到y的父节点x f[x] = 1,（f[x]+=f[y]） =2，
+    说明这两点(x,y)还未匹配，则执行f[x]-=2; 这样会使得x的父节点fa,f[fa]+f[x] =
+   f[fa],说明fa此时不能与x进行匹配，因为x已匹配过，fa需另寻其他能与它匹配的子结点
+*/</span>
+<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> fa<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    f<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//自身点</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> y <span class="token operator">:</span> son<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>y <span class="token operator">==</span> fa<span class="token punctuation">)</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        f<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> f<span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//子结点有与之相匹配的点</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>f<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">>=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        f<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">-</span><span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> n<span class="token punctuation">;</span>
+    cin <span class="token operator">>></span> n<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> u<span class="token punctuation">,</span> v<span class="token punctuation">;</span>
+        cin <span class="token operator">>></span> u <span class="token operator">>></span> v<span class="token punctuation">;</span>
+        son<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        son<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>f<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Alice"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Bob"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+<blockquote>
+<p>附：<a href="https://blog.csdn.net/sixdaycoder/article/details/47720471" target="_blank" rel="noopener">二分图-KM算法</a>，<a href="https://blog.csdn.net/sixdaycoder/article/details/47680831" target="_blank" rel="noopener">二分图的最大匹配-匈牙利算法</a> 【关于增广路讲的十分不错】</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -495,7 +558,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://superych.github.io/2019/11/01/leetcode/">https://superych.github.io/2019/11/01/leetcode/</a>
+                    <a href="https://superych.github.io/2020/04/15/icpc/">https://superych.github.io/2020/04/15/icpc/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -537,12 +600,8 @@
                                     <span class="chip bg-color">算法</span>
                                 </a>
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
-                                </a>
-                            
-                                <a href="/tags/python/">
-                                    <span class="chip bg-color">python</span>
+                                <a href="/tags/c-c/">
+                                    <span class="chip bg-color">c/c++</span>
                                 </a>
                             
                         </div>
@@ -712,31 +771,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/15/icpc/">
+                <a href="/2020/05/08/javaweb/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="codeforces">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="javaweb">
                         
-                        <span class="card-title">codeforces</span>
+                        <span class="card-title">javaweb</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            计蒜客复刻ICPC补题
+                            javaweb的学习笔记
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-15
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-08
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/竞赛/" class="post-category">
-                                    竞赛
+                            <a href="/categories/web/" class="post-category">
+                                    web
                                 </a>
                             
                             
@@ -746,12 +805,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/算法/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
-                    <a href="/tags/c-c/">
-                        <span class="chip bg-color">c/c++</span>
+                    <a href="/tags/web/">
+                        <span class="chip bg-color">web</span>
                     </a>
                     
                 </div>
@@ -765,24 +824,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/29/codeforces/">
+                <a href="/2019/11/01/leetcode/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="codeforces">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="力扣">
                         
-                        <span class="card-title">codeforces</span>
+                        <span class="card-title">力扣</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用来整理codeforces的题，每周一更
+                            每日一更
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-01
                             </span>
                         <span class="publish-author">
                             
@@ -803,8 +862,8 @@
                         <span class="chip bg-color">算法</span>
                     </a>
                     
-                    <a href="/tags/c-c/">
-                        <span class="chip bg-color">c/c++</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                     <a href="/tags/python/">
