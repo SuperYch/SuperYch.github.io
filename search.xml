@@ -76,9 +76,9 @@
             
             <tag> 算法 </tag>
             
-            <tag> python </tag>
-            
             <tag> java </tag>
+            
+            <tag> python </tag>
             
         </tags>
       
@@ -105,9 +105,9 @@
             
             <tag> 算法 </tag>
             
-            <tag> python </tag>
-            
             <tag> c/c++ </tag>
+            
+            <tag> python </tag>
             
         </tags>
       
@@ -143,31 +143,6 @@
     
     
     <entry>
-      <title>markdown使用</title>
-      <link href="/2019/09/05/markdown/"/>
-      <url>/2019/09/05/markdown/</url>
-      
-        <content type="html"><![CDATA[<script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      <categories>
-          
-          <category> 标记语言 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 轻量级 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>TypeScript声明文件</title>
       <link href="/2019/09/05/first/"/>
       <url>/2019/09/05/first/</url>
@@ -185,6 +160,31 @@
         <tags>
             
             <tag> TypeScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>markdown使用</title>
+      <link href="/2019/09/05/markdown/"/>
+      <url>/2019/09/05/markdown/</url>
+      
+        <content type="html"><![CDATA[<script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 标记语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 轻量级 </tag>
             
         </tags>
       
