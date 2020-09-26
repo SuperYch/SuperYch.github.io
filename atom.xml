@@ -99,9 +99,9 @@
     
       <category term="算法" scheme="https://superych.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
-      <category term="python" scheme="https://superych.github.io/tags/python/"/>
-    
       <category term="java" scheme="https://superych.github.io/tags/java/"/>
+    
+      <category term="python" scheme="https://superych.github.io/tags/python/"/>
     
   </entry>
   
@@ -166,37 +166,6 @@
   </entry>
   
   <entry>
-    <title>TypeScript声明文件</title>
-    <link href="https://superych.github.io/2019/09/05/first/"/>
-    <id>https://superych.github.io/2019/09/05/first/</id>
-    <published>2019-09-05T10:29:29.000Z</published>
-    <updated>2020-09-10T16:51:38.438Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return; }
-       
-        
-      
-    
-    </summary>
-    
-    
-      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
-    
-    
-      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
     <title>markdown使用</title>
     <link href="https://superych.github.io/2019/09/05/markdown/"/>
     <id>https://superych.github.io/2019/09/05/markdown/</id>
@@ -224,6 +193,37 @@
     
     
       <category term="轻量级" scheme="https://superych.github.io/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TypeScript声明文件</title>
+    <link href="https://superych.github.io/2019/09/05/first/"/>
+    <id>https://superych.github.io/2019/09/05/first/</id>
+    <published>2019-09-05T10:29:29.000Z</published>
+    <updated>2020-09-10T16:51:38.438Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="TypeScript" scheme="https://superych.github.io/categories/TypeScript/"/>
+    
+    
+      <category term="TypeScript" scheme="https://superych.github.io/tags/TypeScript/"/>
     
   </entry>
   
